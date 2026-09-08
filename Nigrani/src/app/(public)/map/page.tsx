@@ -54,7 +54,11 @@ export default function PublicMapPage() {
       setDistrictMetrics([]);
       return;
     }
-    fetch(`${API_BASE_URL}/dashboard/district-summary?state=${encodeURIComponent(selectedStateId)}`)
+
+    // Find the real state name from the slug ID
+    const actualStateName = stateMetrics.find(s => s.id === selectedStateId)?.name || selectedStateId;
+
+    fetch(`${API_BASE_URL}/dashboard/district-summary?state=${encodeURIComponent(actualStateName)}`)
       .then(res => res.json())
       .then(data => {
         const metrics = data.districts.map((d: any) => ({
@@ -72,7 +76,7 @@ export default function PublicMapPage() {
         setDistrictMetrics(metrics);
       })
       .catch(console.error);
-  }, [selectedStateId]);
+  }, [selectedStateId, stateMetrics]);
 
   const filteredStates = useMemo(() => {
     // 1. Get base data (State metrics OR District metrics if a state is selected)
