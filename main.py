@@ -465,16 +465,37 @@ def get_anomalies():
         "count": len(response.data),
         "anomalies": response.data
     }
-@app.get("/dashboard/stats")
-def get_dashboard_stats():
+@app.get("/dashboard/overview")
+def get_dashboard_overview():
 
-    # Total projects
-    projects_response = (
+    # Fetch all projects to compute global stats
+    projects_resp = (
         supabase
         .table("projects")
-        .select("work_id", count="exact")
+        .select("status, sanctioned_amount, released_amount")
         .execute()
     )
+    projects = projects_resp.data
+
+    in_progress = 0
+    completed = 0
+    sanction_delays = 0
+    total_sanctioned = 0.0
+    total_released = 0.0
+
+    for p in projects:
+        status = p.get("status", "")
+        if status == "In Progress":
+            in_progress += 1
+        elif status == "Completed":
+            completed += 1
+        
+        # A simple proxy for sanction delay
+        if status == "Sanctioned" and not p.get("released_amount"):
+            sanction_delays += 1
+
+        total_sanctioned += float(p.get("sanctioned_amount") or 0)
+        total_released += float(p.get("released_amount") or 0)
 
     # Critical
     critical_response = (
@@ -513,14 +534,21 @@ def get_dashboard_stats():
     )
 
     return {
-        "total_projects": projects_response.count,
+        "total_projects": len(projects),
         "flagged_projects": critical_response.count
             + high_response.count
             + medium_response.count,
-        "critical": critical_response.count,
-        "high_risk": high_response.count,
-        "medium_risk": medium_response.count,
-        "normal": normal_response.count
+        "risk_distribution": {
+            "critical": critical_response.count,
+            "high_risk": high_response.count,
+            "medium_risk": medium_response.count,
+            "normal": normal_response.count
+        },
+        "in_progress": in_progress,
+        "completed": completed,
+        "sanction_delays": sanction_delays,
+        "total_sanctioned_amount": total_sanctioned,
+        "total_released_amount": total_released
     }
 @app.get("/dashboard/state-summary")
 def state_summary():
