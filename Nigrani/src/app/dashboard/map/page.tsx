@@ -3,6 +3,7 @@
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import nextDynamic from "next/dynamic";
 import { LargePageHeader } from "@/components/ui";
+import { API_BASE_URL } from "@/lib/api";
 
 const IndiaMap = nextDynamic(() => import("@/components/IndiaMap").then(mod => ({ default: mod.IndiaMap })), { ssr: false });
 
@@ -23,7 +24,7 @@ export default function DashboardMapPage() {
 
   // Fetch state metrics on mount
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/dashboard/state-summary")
+    fetch(`${API_BASE_URL}/dashboard/state-summary`)
       .then(res => res.json())
       .then(data => {
         const metrics = data.states.map((s: any) => ({
@@ -49,7 +50,7 @@ export default function DashboardMapPage() {
       setDistrictMetrics([]);
       return;
     }
-    fetch(`http://127.0.0.1:8000/dashboard/district-summary?state=${encodeURIComponent(selectedStateId)}`)
+    fetch(`${API_BASE_URL}/dashboard/district-summary?state=${encodeURIComponent(selectedStateId)}`)
       .then(res => res.json())
       .then(data => {
         const metrics = data.districts.map((d: any) => ({

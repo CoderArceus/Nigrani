@@ -1407,3 +1407,9 @@ def get_demographics():
 @app.get("/dashboard/insights/statistical-outliers")
 def get_statistical_outliers():
     return insights_store.get_statistical_outliers()
+
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=False)

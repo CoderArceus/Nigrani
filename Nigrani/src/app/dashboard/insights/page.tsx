@@ -2,11 +2,12 @@ import { KPITile, Card } from "@/components/ui";
 import { InsightsCharts } from "@/components/InsightsCharts";
 import { ProjectsAttention } from "@/components/ProjectsAttention";
 import { Suspense } from "react";
+import { API_BASE_URL } from "@/lib/api";
 
 export const dynamic = "force-dynamic";
 
 async function fetchData(endpoint: string) {
-  const res = await fetch(`http://127.0.0.1:8000/dashboard/insights/${endpoint}`, { cache: "no-store" });
+  const res = await fetch(`${API_BASE_URL}/dashboard/insights/${endpoint}`, { cache: "no-store" });
   if (!res.ok) return [];
   return res.json();
 }

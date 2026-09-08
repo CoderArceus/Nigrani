@@ -3,11 +3,12 @@ import { AccentRule, Card } from "@/components/ui";
 import { SortControls } from "@/components/SortControls";
 import { PaginationControls } from "@/components/PaginationControls";
 import { Suspense } from "react";
+import { API_BASE_URL } from "@/lib/api";
 
 export const dynamic = "force-dynamic";
 
 async function fetchProjects(searchParams: any, page: number, limit: number) {
-  const url = new URL("http://127.0.0.1:8000/projects/search");
+  const url = new URL(`${API_BASE_URL}/projects/search`);
   url.searchParams.append("page", page.toString());
   url.searchParams.append("limit", limit.toString());
   

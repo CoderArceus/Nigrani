@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { ChangeEvent, useState, useEffect } from "react";
+import { API_BASE_URL } from "@/lib/api";
 
 const STATUSES = ["In Progress", "Completed", "Sanctioned"];
 
@@ -58,12 +59,12 @@ export function UnifiedSearchBar({ placeholder = "Search by ID, name, or locatio
   const hasActiveFilters = activeState || activeDistrict || activeSector || activeStatus;
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/dashboard/state-summary")
+    fetch(`${API_BASE_URL}/dashboard/state-summary`)
       .then(res => res.json())
       .then(data => setStatesList(data.states.map((s: any) => s.state).sort()))
       .catch(console.error);
       
-    fetch("http://127.0.0.1:8000/dashboard/category-summary")
+    fetch(`${API_BASE_URL}/dashboard/category-summary`)
       .then(res => res.json())
       .then(data => setSectorsList(data.categories.map((c: any) => c.work_category).sort()))
       .catch(console.error);
@@ -71,7 +72,7 @@ export function UnifiedSearchBar({ placeholder = "Search by ID, name, or locatio
 
   useEffect(() => {
     if (activeState) {
-      fetch(`http://127.0.0.1:8000/dashboard/district-summary?state=${encodeURIComponent(activeState)}`)
+      fetch(`${API_BASE_URL}/dashboard/district-summary?state=${encodeURIComponent(activeState)}`)
         .then(res => res.json())
         .then(data => setDistrictsList(data.districts.map((d: any) => d.district).sort()))
         .catch(console.error);
