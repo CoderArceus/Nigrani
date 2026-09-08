@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MPLADS Sentinel - Project Detail</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Config injected from instructions -->
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "on-tertiary-fixed-variant": "#8e1400",
+                "primary-container": "#1e2bfa",
+                "secondary-container": "#dfe1f3",
+                "inverse-surface": "#2d3133",
+                "surface-container-lowest": "#ffffff",
+                "on-secondary": "#ffffff",
+                "on-primary": "#ffffff",
+                "surface-container-low": "#f2f4f7",
+                "surface-container-high": "#e6e8eb",
+                "surface-container": "#eceef1",
+                "surface-tint": "#303dff",
+                "outline": "#757589",
+                "on-secondary-fixed-variant": "#434654",
+                "secondary": "#5b5e6d",
+                "primary": "#000ccd",
+                "background": "#fbf8ff",
+                "on-surface-variant": "#454557",
+                "tertiary": "#7c1000",
+                "inverse-on-surface": "#eff1f4",
+                "on-primary-container": "#c1c5ff",
+                "on-tertiary-fixed": "#3e0400",
+                "error-container": "#ffdad6",
+                "tertiary-fixed-dim": "#ffb4a5",
+                "inverse-primary": "#bec2ff",
+                "on-primary-fixed": "#00036b",
+                "surface-bright": "#fbf8ff",
+                "surface-container-highest": "#e0e3e6",
+                "outline-variant": "#c5c5da",
+                "secondary-fixed": "#dfe1f3",
+                "on-surface": "#1a1b25",
+                "on-error-container": "#93000a",
+                "primary-fixed": "#e0e0ff",
+                "primary-fixed-dim": "#bec2ff",
+                "on-secondary-fixed": "#181b28",
+                "on-background": "#1a1b25",
+                "tertiary-container": "#a71900",
+                "surface-dim": "#d8dadd",
+                "on-secondary-container": "#616473",
+                "on-primary-fixed-variant": "#000fe9",
+                "surface-variant": "#e0e3e6",
+                "on-tertiary": "#ffffff",
+                "on-error": "#ffffff",
+                "secondary-fixed-dim": "#c3c6d7",
+                "tertiary-fixed": "#ffdad3",
+                "error": "#ba1a1a",
+                "surface": "#fbf8ff",
+                "on-tertiary-container": "#ffb8a9",
+                "accent-subtle": "rgba(30, 43, 250, 0.04)",
+                "accent-low": "rgba(30, 43, 250, 0.08)",
+                "border-translucent": "rgba(30, 43, 250, 0.2)",
+                "text-muted": "#6b6b6b"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px",
+                "card-lg": "14px"
+        },
+        "spacing": {
+                "topbar-height": "64px",
+                "gutter": "16px",
+                "container-margin": "24px",
+                "sidebar-width": "260px",
+                "card-padding": "20px",
+                "accent-rule-w": "60px",
+                "accent-rule-h": "4px"
+        },
+        "fontFamily": {
+                "display-bold": [
+                        "Space Grotesk"
+                ],
+                "body-md": [
+                        "Inter"
+                ],
+                "headline-sm": [
+                        "Space Grotesk"
+                ],
+                "numerical-callout": [
+                        "Space Grotesk"
+                ],
+                "label-caps": [
+                        "Inter"
+                ],
+                "inter": ["'Inter'", "sans-serif"],
+                "space": ["'Space Grotesk'", "sans-serif"]
+        },
+        "fontSize": {
+                "display-bold": [
+                        "36px",
+                        {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-sm": [
+                        "20px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "numerical-callout": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "label-caps": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "600"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        .card-tinted {
+            background: rgba(30, 43, 250, 0.04);
+            border: 1.5px solid rgba(30, 43, 250, 0.2);
+            border-radius: 14px;
+        }
+
+        /* Custom scrollbar for data tables if needed */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(30, 43, 250, 0.2); }
+    </style>
+</head>
+<body class="bg-background text-on-surface flex h-screen overflow-hidden font-inter antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopAppBar (System Status Strip) -->
+<div class="fixed top-0 left-0 w-full h-[28px] z-[60] flex items-center justify-center px-4 bg-secondary dark:bg-secondary-container text-on-secondary dark:text-on-secondary-container font-inter text-[12px] font-semibold uppercase tracking-wider">
+        Synthetic demonstration data
+    </div>
+<div class="flex flex-1 mt-[28px] overflow-hidden w-full">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col h-full border-r border-outline-variant bg-surface-container-lowest text-primary docked left-0 w-64 flex-shrink-0 z-40 transition-all duration-150 ease-in-out">
+<div class="p-6 pb-8 border-b border-outline-variant">
+<div class="font-space text-[24px] font-bold text-primary mb-1 tracking-tight">MPLADS Sentinel</div>
+<div class="font-inter text-[12px] text-secondary uppercase tracking-wider font-semibold">Monitoring Platform</div>
+</div>
+<div class="flex-1 py-4 flex flex-col gap-1 px-3">
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container-low transition-all duration-150 ease-in-out font-inter text-[15.2px] font-semibold rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="">Overview</span>
+</a>
+<!-- Active Tab: Review Queue -->
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container border-l-4 border-primary font-inter text-[15.2px] font-semibold transition-all duration-150 ease-in-out rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-weight="fill">checklist</span>
+<span class="">Review Queue</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container-low transition-all duration-150 ease-in-out font-inter text-[15.2px] font-semibold rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">account_tree</span>
+<span class="">Projects</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container-low transition-all duration-150 ease-in-out font-inter text-[15.2px] font-semibold rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+<span class="">Insights</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container-low transition-all duration-150 ease-in-out font-inter text-[15.2px] font-semibold mt-auto rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">admin_panel_settings</span>
+<span class="">Administration</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col h-full overflow-hidden bg-background relative">
+<!-- TopNavBar (Utility) -->
+<header class="flex justify-between items-center h-[72px] px-8 w-full z-50 border-b border-outline-variant bg-surface flex-shrink-0">
+<div class="flex items-center gap-4">
+<h1 class="font-space text-[clamp(28.8px,3vw,41.6px)] font-semibold text-on-surface leading-[1.1] tracking-[-0.02em]">Project Detail</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden md:block w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 font-inter text-[13.6px] text-on-surface focus:ring-1 focus:ring-primary outline-none transition-shadow" placeholder="Search ID..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-primary hover:bg-surface-container-low transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-primary hover:bg-surface-container-low transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined text-[22px]">settings</span>
+</button>
+<div class="flex items-center gap-2 pl-4 border-l border-outline-variant">
+<div class="w-8 h-8 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center font-bold text-sm">OF</div>
+<span class="font-inter text-[15.2px] font-semibold text-on-surface hidden lg:block">Officer</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 overflow-y-auto p-8">
+<div class="max-w-[1400px] mx-auto flex flex-col gap-8">
+<!-- Breadcrumb -->
+<div>
+<a class="inline-flex items-center gap-1 text-primary hover:text-on-surface font-inter text-[15.2px] font-medium transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">arrow_left</span>
+                    Back to review queue
+                </a>
+</div>
+<!-- Header Section -->
+<div>
+<h1 class="font-space text-[clamp(44.8px,5vw,67.2px)] font-bold text-on-surface leading-[1.1] tracking-[-0.02em] mb-2">Community Water Facility</h1>
+<p class="font-space text-[16px] font-semibold text-primary tracking-[0.08em]">ID: PRJ-9924-CW-DL</p>
+</div>
+<!-- Status Row Panels -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-[1.2rem] mb-4">
+<div class="bg-accent-subtle border-[1.5px] border-border-translucent rounded-lg p-[1.5rem_1.6rem] flex flex-col justify-between">
+<span class="font-inter text-[15.2px] font-semibold text-on-surface-variant mb-4">Sector</span>
+<span class="font-space text-[clamp(25.6px,2.4vw,33.6px)] font-bold text-primary">Water Resources</span>
+</div>
+<div class="bg-accent-subtle border-[1.5px] border-border-translucent rounded-lg p-[1.5rem_1.6rem] flex flex-col justify-between">
+<span class="font-inter text-[15.2px] font-semibold text-on-surface-variant mb-4">Sanctioned Cost</span>
+<span class="font-space text-[clamp(35.2px,3.4vw,48px)] font-bold text-primary tracking-tight">₹14,500,000</span>
+</div>
+<div class="bg-accent-subtle border-[1.5px] border-border-translucent rounded-lg p-[1.5rem_1.6rem] flex flex-col justify-between">
+<span class="font-inter text-[15.2px] font-semibold text-on-surface-variant mb-4">Current Status</span>
+<span class="font-space text-[clamp(25.6px,2.4vw,33.6px)] font-bold text-primary">Implementation ongoing</span>
+</div>
+</section>
+<!-- Grid Layout for Signal Analysis & Action Panel -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Signal Analysis Section (Main Content) -->
+<div class="lg:col-span-8 flex flex-col gap-6">
+<div>
+<h2 class="font-space text-[clamp(28.8px,3vw,41.6px)] font-semibold text-on-surface leading-[1.1] tracking-[-0.02em] mb-6">Why does this project require review?</h2>
+<!-- Differentiated Equal-Weight Panels -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-[1.2rem]">
+<!-- Panel 1: Rule Signal -->
+<div class="bg-accent-subtle border-[1.5px] border-border-translucent rounded-lg p-[1.5rem_1.6rem]">
+<h3 class="font-space text-[clamp(17.6px,1.8vw,24px)] font-semibold text-on-surface mb-3">Rule Signal</h3>
+<div class="w-accent-rule-w h-accent-rule-h bg-primary rounded-full mb-6"></div>
+<p class="font-inter text-[15.2px] text-on-surface font-semibold mb-6">Sanction delay</p>
+<div class="space-y-4 mb-6 font-inter text-[13.6px]">
+<div class="flex justify-between items-end border-b border-border-translucent pb-2">
+<span class="text-text-muted">Observed</span>
+<span class="font-space text-[24px] text-primary font-bold">82 days</span>
+</div>
+<div class="flex justify-between items-end border-b border-border-translucent pb-2">
+<span class="text-text-muted">Threshold</span>
+<span class="font-space text-[24px] text-on-surface font-bold">75 days</span>
+</div>
+<div class="flex justify-between items-end font-semibold">
+<span class="text-on-surface">Delta</span>
+<span class="font-space text-[24px] text-primary font-bold">+7 days</span>
+</div>
+</div>
+<p class="font-inter text-[12.5px] text-text-muted leading-[1.5] border-t border-border-translucent pt-4">
+                                    Operational signal triggered. Processing time exceeded standard statutory limits for Tier 2 allocations.
+                                </p>
+</div>
+<!-- Panel 2: Peer Comparison -->
+<div class="bg-accent-subtle border-[1.5px] border-border-translucent rounded-lg p-[1.5rem_1.6rem]">
+<h3 class="font-space text-[clamp(17.6px,1.8vw,24px)] font-semibold text-on-surface mb-3">Peer Comparison</h3>
+<div class="w-accent-rule-w h-accent-rule-h bg-primary rounded-full mb-6"></div>
+<p class="font-inter text-[15.2px] text-on-surface font-semibold mb-6">Cost deviation</p>
+<div class="space-y-4 mb-6 font-inter text-[13.6px]">
+<div class="flex justify-between items-end border-b border-border-translucent pb-2">
+<span class="text-text-muted">Project cost</span>
+<span class="font-space text-[24px] text-primary font-bold">₹14.5M</span>
+</div>
+<div class="flex justify-between items-end border-b border-border-translucent pb-2">
+<span class="text-text-muted">Peer median</span>
+<span class="font-space text-[24px] text-on-surface font-bold">₹11.3M</span>
+</div>
+<div class="flex justify-between items-end">
+<span class="text-text-muted">Sample size</span>
+<span class="font-space text-[24px] text-on-surface font-bold">24 projects</span>
+</div>
+</div>
+<p class="font-inter text-[12.5px] text-text-muted leading-[1.5] border-t border-border-translucent pt-4">
+                                    Cost anomaly detected against similar water facilities within equivalent regional geography.
+                                </p>
+</div>
+<!-- Panel 3: ML Detection -->
+<div class="bg-accent-subtle border-[1.5px] border-border-translucent rounded-lg p-[1.5rem_1.6rem] flex flex-col">
+<h3 class="font-space text-[clamp(17.6px,1.8vw,24px)] font-semibold text-on-surface mb-3">ML Detection</h3>
+<div class="w-accent-rule-w h-accent-rule-h bg-primary rounded-full mb-6"></div>
+<p class="font-inter text-[15.2px] text-on-surface font-semibold mb-6">Unusual multi-signal pattern</p>
+<div class="mb-6 flex-1">
+<div class="flex justify-between items-end mb-2">
+<span class="font-inter text-[15.2px] font-semibold text-on-surface">Anomaly Score</span>
+<span class="font-space text-[clamp(25.6px,2.4vw,33.6px)] text-primary font-bold">0.82</span>
+</div>
+<div class="w-full bg-accent-low h-2 rounded-full overflow-hidden mt-2">
+<div class="bg-primary h-full rounded-full" style="width: 82%"></div>
+</div>
+</div>
+<p class="font-inter text-[12.5px] text-text-muted leading-[1.5] border-t border-border-translucent pt-4 mt-auto">
+                                    Model identified high-probability pattern correlation between vendor history and cost deviation.
+                                </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Officer Action Panel (Right Sidebar) -->
+<div class="lg:col-span-4">
+<div class="bg-accent-subtle border-[1.5px] border-border-translucent rounded-lg p-[1.5rem_1.6rem] sticky top-8">
+<h2 class="font-space text-[clamp(17.6px,1.8vw,24px)] font-semibold text-on-surface leading-[1.3] tracking-[-0.02em] pb-3 border-b border-border-translucent mb-6">Officer Actions</h2>
+<div class="space-y-6">
+<!-- Status Dropdown -->
+<div>
+<label class="block font-inter text-[13.6px] font-semibold text-on-surface-variant mb-2">Update Status</label>
+<select class="w-full bg-surface-container-lowest border border-outline-variant rounded-md p-3 font-inter text-[13.6px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none appearance-none">
+<option>Under Investigation</option>
+<option>Cleared</option>
+<option>Requires Field Audit</option>
+<option>Escalated to District Collector</option>
+</select>
+</div>
+<!-- Record Remark -->
+<div>
+<label class="block font-inter text-[13.6px] font-semibold text-on-surface-variant mb-2">Record Remark</label>
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant rounded-md p-3 font-inter text-[13.6px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none resize-none" placeholder="Enter findings or justification..." rows="4"></textarea>
+</div>
+<!-- Action Buttons -->
+<div class="pt-2 space-y-3">
+<button class="w-full bg-primary text-on-primary rounded-full py-3 px-6 font-inter text-[15.2px] font-semibold hover:shadow-md hover:bg-opacity-90 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">done_all</span>
+                                    Mark as Reviewed
+                                </button>
+<button class="w-full bg-transparent text-primary border-[1.5px] border-primary rounded-full py-3 px-6 font-inter text-[15.2px] font-semibold hover:bg-accent-subtle transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">priority_high</span>
+                                    Escalate Issue
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

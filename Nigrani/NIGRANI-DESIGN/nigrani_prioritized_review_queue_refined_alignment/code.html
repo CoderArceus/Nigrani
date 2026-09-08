@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Review Queue - MPLADS Sentinel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "on-tertiary-fixed-variant": "#8e1400",
+                "primary-container": "#1e2bfa",
+                "secondary-container": "#e3e0ce",
+                "inverse-surface": "#2d3133",
+                "surface-container-lowest": "#ffffff",
+                "on-secondary": "#ffffff",
+                "on-primary": "#ffffff",
+                "surface-container-low": "#f4f2ff",
+                "surface-container-high": "#e8e6f6",
+                "surface-container": "#eeecfc",
+                "surface-tint": "#303dff",
+                "outline": "#757589",
+                "on-secondary-fixed-variant": "#434654",
+                "secondary": "#605f51",
+                "primary": "#000ccd",
+                "background": "#fbf8ff",
+                "on-surface-variant": "#454557",
+                "tertiary": "#7c1000",
+                "inverse-on-surface": "#f1effe",
+                "on-primary-container": "#c1c5ff",
+                "on-tertiary-fixed": "#3e0400",
+                "error-container": "#ffdad6",
+                "tertiary-fixed-dim": "#ffb4a5",
+                "inverse-primary": "#bec2ff",
+                "on-primary-fixed": "#00036b",
+                "surface-bright": "#fbf8ff",
+                "surface-container-highest": "#e3e1f0",
+                "outline-variant": "#c5c5da",
+                "secondary-fixed": "#e6e3d1",
+                "on-surface": "#1a1b25",
+                "on-error-container": "#93000a",
+                "primary-fixed": "#e0e0ff",
+                "primary-fixed-dim": "#bec2ff",
+                "on-secondary-fixed": "#1c1c11",
+                "on-background": "#1a1b25",
+                "tertiary-container": "#a71900",
+                "surface-dim": "#dad8e7",
+                "on-secondary-container": "#646355",
+                "on-primary-fixed-variant": "#000fe9",
+                "surface-variant": "#e3e1f0",
+                "on-tertiary": "#ffffff",
+                "on-error": "#ffffff",
+                "secondary-fixed-dim": "#c9c7b5",
+                "tertiary-fixed": "#ffdad3",
+                "error": "#ba1a1a",
+                "surface": "#fbf8ff",
+                "on-tertiary-container": "#ffb8a9",
+                "text-muted": "#6b6b6b",
+                "text-light": "#9a9a9a",
+                "negative": "#dc2626",
+                "border-translucent": "rgba(30, 43, 250, 0.2)",
+                "accent-subtle": "rgba(30, 43, 250, 0.04)"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px",
+                "card-lg": "14px"
+        },
+        "spacing": {
+                "topbar-height": "64px",
+                "gutter": "16px",
+                "container-margin": "24px",
+                "sidebar-width": "260px",
+                "card-padding": "20px",
+                "row-height-standard": "72px"
+        },
+        "fontFamily": {
+                "display-bold": [
+                        "Space Grotesk"
+                ],
+                "body-md": [
+                        "Inter"
+                ],
+                "headline-sm": [
+                        "Space Grotesk"
+                ],
+                "numerical-callout": [
+                        "Space Grotesk"
+                ],
+                "label-caps": [
+                        "Inter"
+                ],
+                "h2": ["'Space Grotesk', sans-serif"],
+                "h3": ["'Space Grotesk', sans-serif"],
+                "body": ["'Inter', sans-serif"],
+                "metric-label": ["'Inter', sans-serif"],
+                "data-tabular": ["'Space Grotesk', sans-serif"],
+                "tag": ["'Space Grotesk', sans-serif"],
+                "label-sm": ["Inter"],
+                "label-md": ["'Inter', sans-serif"]
+        },
+        "fontSize": {
+                "display-bold": [
+                        "36px",
+                        {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-sm": [
+                        "24px",
+                        {
+                                "lineHeight": "1.3",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "500"
+                        }
+                ],
+                "numerical-callout": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "label-caps": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "h2": ["clamp(28.8px, 3vw, 41.6px)", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                "h3": ["clamp(17.6px, 1.8vw, 24px)", {"lineHeight": "1.3", "letterSpacing": "-0.02em", "fontWeight": "500"}],
+                "body": ["clamp(13.6px, 1.1vw, 16.8px)", {"lineHeight": "1.6", "fontWeight": "400"}],
+                "metric-label": ["clamp(15.2px, 1.3vw, 17.6px)", {"lineHeight": "1.3", "fontWeight": "600"}],
+                "tag": ["12px", {"lineHeight": "1", "fontWeight": "500"}],
+                "label-sm": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                "label-md": ["13.6px", { "lineHeight": "1.6", "fontWeight": "400" }]
+        }
+},
+    },
+  }
+</script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body h-screen overflow-hidden flex flex-col antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopAppBar -->
+<div class="fixed top-0 left-0 w-full h-[28px] z-[60] bg-secondary dark:bg-secondary-container text-on-secondary dark:text-on-secondary-container flex items-center justify-center px-4 font-label-md text-label-md uppercase tracking-wider">
+        Synthetic demonstration data
+    </div>
+<div class="flex flex-1 mt-[28px] overflow-hidden">
+<!-- SideNavBar -->
+<nav class="docked left-0 h-full w-64 border-r border-outline-variant bg-surface-container-lowest text-primary flex flex-col flex-shrink-0">
+<div class="p-6 pb-8 border-b border-outline-variant">
+<div class="font-headline-sm text-headline-sm font-bold text-primary mb-1 tracking-tight">MPLADS Sentinel</div>
+<div class="font-label-sm text-label-sm text-secondary uppercase tracking-wider font-semibold">Monitoring Platform</div>
+</div>
+<div class="flex-1 py-4 flex flex-col gap-1 px-3">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-secondary hover:bg-surface-container-low transition-all duration-150 ease-in-out font-metric-label text-metric-label" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+<span>Overview</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-secondary-container text-on-secondary-container border-l-4 border-primary transition-all duration-150 ease-in-out font-metric-label text-metric-label" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="checklist">checklist</span>
+<span>Review Queue</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-secondary hover:bg-surface-container-low transition-all duration-150 ease-in-out font-metric-label text-metric-label" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="account_tree">account_tree</span>
+<span>Projects</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-secondary hover:bg-surface-container-low transition-all duration-150 ease-in-out font-metric-label text-metric-label" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="analytics">analytics</span>
+<span>Insights</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-secondary hover:bg-surface-container-low transition-all duration-150 ease-in-out font-metric-label text-metric-label mt-auto" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span>Administration</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- TopNavBar -->
+<header class="bg-surface text-primary border-b border-outline-variant flex justify-between items-center h-[72px] px-8 w-full z-50 flex-shrink-0">
+<div class="flex items-center gap-4">
+<h1 class="font-h2 text-h2 text-on-surface">Review Queue</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden md:block w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 font-body text-body text-on-surface focus:ring-1 focus:ring-primary outline-none transition-shadow" placeholder="Search..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-primary hover:bg-surface-container-low transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined text-[22px]" data-icon="notifications">notifications</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-primary hover:bg-surface-container-low transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined text-[22px]" data-icon="settings">settings</span>
+</button>
+<div class="flex items-center gap-2 pl-4 border-l border-outline-variant">
+<div class="w-8 h-8 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center font-bold text-sm">OF</div>
+<span class="font-metric-label text-metric-label text-on-surface hidden lg:block">Officer</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<div class="flex-1 overflow-y-auto p-8 lg:px-12 flex flex-col">
+<div class="mb-6 flex justify-between items-end pb-2">
+<div>
+<h3 class="font-h3 text-h3 text-on-surface mb-3 inline-block">Review Queue</h3>
+<div class="w-12 h-1 bg-primary rounded-full mb-4"></div>
+<p class="font-body text-body text-text-muted mt-1">Prioritized list of flagged projects requiring immediate administrative attention.</p>
+</div>
+<div class="flex space-x-3">
+<button class="px-5 py-2 border-[1.5px] border-outline-variant text-primary font-tag text-tag hover:bg-surface-container-low transition-colors flex items-center rounded-full">
+<span class="material-symbols-outlined mr-2 text-[18px]">filter_list</span>
+                        Filter
+                    </button>
+<button class="px-5 py-2 bg-primary text-background font-tag text-tag hover:opacity-90 transition-colors flex items-center rounded-full shadow-[0_8px_24px_rgba(30,43,250,0.25)]">
+<span class="material-symbols-outlined mr-2 text-[18px]">download</span>
+                        Export
+                    </button>
+</div>
+</div>
+<!-- Data Table Container -->
+<div class="bg-accent-subtle rounded-card-lg flex-1 overflow-hidden flex flex-col">
+<div class="overflow-x-auto flex-1 p-4">
+<table class="w-full text-left data-table border-collapse">
+<thead class="bg-transparent sticky top-0 z-10 border-b border-border-translucent">
+<tr>
+<th class="py-4 px-4 w-12 font-metric-label text-metric-label font-semibold text-text-muted">Priority</th>
+<th class="py-4 px-4 font-metric-label text-metric-label font-semibold text-text-muted">Project</th>
+<th class="py-4 px-4 font-metric-label text-metric-label font-semibold text-text-muted">ID</th>
+<th class="py-4 px-4 font-metric-label text-metric-label font-semibold text-text-muted">District/Sector</th>
+<th class="py-4 px-4 font-metric-label text-metric-label font-semibold text-text-muted">Wait Time</th>
+<th class="py-4 px-4 font-metric-label text-metric-label font-semibold text-text-muted w-64">Active Signals</th>
+<th class="py-4 px-4 font-metric-label text-metric-label font-semibold text-text-muted text-right">Recommended Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-translucent">
+<!-- High Priority Row -->
+<tr class="relative hover:bg-surface-container-low transition-colors group">
+<td class="py-4 px-4 relative">
+<div class="absolute left-0 top-0 bottom-0 w-[4px] bg-primary rounded-r"></div>
+<span class="font-body text-body text-text-muted">High</span>
+</td>
+<td class="py-4 px-4 font-body text-body text-on-surface">Community Hall Construction</td>
+<td class="py-4 px-4 font-data-tabular text-primary font-semibold">PRJ-9821-A</td>
+<td class="py-4 px-4 font-body text-body text-text-muted">North District / Infra</td>
+<td class="py-4 px-4 font-data-tabular text-primary font-semibold">14 days</td>
+<td class="py-4 px-4">
+<div class="flex flex-col space-y-1">
+<span class="font-body text-body text-negative flex items-center before:content-[''] before:w-1.5 before:h-1.5 before:bg-negative before:rounded-full before:mr-2">Sanction delay</span>
+<span class="font-body text-body text-text-muted flex items-center before:content-[''] before:w-1.5 before:h-1.5 before:bg-text-light before:rounded-full before:mr-2">Missing utilization cert</span>
+</div>
+</td>
+<td class="py-4 px-4 text-right">
+<button class="font-tag text-tag text-primary underline hover:text-text-muted transition-colors">Investigate</button>
+</td>
+</tr>
+<!-- Normal Priority Row -->
+<tr class="relative hover:bg-surface-container-low transition-colors group">
+<td class="py-4 px-4 relative">
+<span class="font-body text-body text-text-muted">Normal</span>
+</td>
+<td class="py-4 px-4 font-body text-body text-on-surface">Rural Road Expansion</td>
+<td class="py-4 px-4 font-data-tabular text-primary font-semibold">PRJ-7734-C</td>
+<td class="py-4 px-4 font-body text-body text-text-muted">East District / Transport</td>
+<td class="py-4 px-4 font-data-tabular text-primary font-semibold">5 days</td>
+<td class="py-4 px-4">
+<div class="flex flex-col space-y-1">
+<span class="font-body text-body text-text-muted flex items-center before:content-[''] before:w-1.5 before:h-1.5 before:bg-text-light before:rounded-full before:mr-2">Cost deviation (+18%)</span>
+</div>
+</td>
+<td class="py-4 px-4 text-right">
+<button class="font-tag text-tag text-primary underline hover:text-text-muted transition-colors">Review records</button>
+</td>
+</tr>
+<!-- Normal Priority Row -->
+<tr class="relative hover:bg-surface-container-low transition-colors group">
+<td class="py-4 px-4 relative">
+<span class="font-body text-body text-text-muted">Normal</span>
+</td>
+<td class="py-4 px-4 font-body text-body text-on-surface">Solar Lighting Installation</td>
+<td class="py-4 px-4 font-data-tabular text-primary font-semibold">PRJ-2219-B</td>
+<td class="py-4 px-4 font-body text-body text-text-muted">South District / Energy</td>
+<td class="py-4 px-4 font-data-tabular text-primary font-semibold">8 days</td>
+<td class="py-4 px-4">
+<div class="flex flex-col space-y-1">
+<span class="font-body text-body text-text-muted flex items-center before:content-[''] before:w-1.5 before:h-1.5 before:bg-text-light before:rounded-full before:mr-2">Awaiting vendor approval</span>
+</div>
+</td>
+<td class="py-4 px-4 text-right">
+<button class="font-tag text-tag text-primary underline hover:text-text-muted transition-colors">Review records</button>
+</td>
+</tr>
+<!-- High Priority Row -->
+<tr class="relative hover:bg-surface-container-low transition-colors group">
+<td class="py-4 px-4 relative">
+<div class="absolute left-0 top-0 bottom-0 w-[4px] bg-primary rounded-r"></div>
+<span class="font-body text-body text-text-muted">High</span>
+</td>
+<td class="py-4 px-4 font-body text-body text-on-surface">Water Treatment Facility</td>
+<td class="py-4 px-4 font-data-tabular text-primary font-semibold">PRJ-4551-X</td>
+<td class="py-4 px-4 font-body text-body text-text-muted">West District / Utility</td>
+<td class="py-4 px-4 font-data-tabular text-primary font-semibold">21 days</td>
+<td class="py-4 px-4">
+<div class="flex flex-col space-y-1">
+<span class="font-body text-body text-negative flex items-center before:content-[''] before:w-1.5 before:h-1.5 before:bg-negative before:rounded-full before:mr-2">Critical timeline breach</span>
+<span class="font-body text-body text-negative flex items-center before:content-[''] before:w-1.5 before:h-1.5 before:bg-negative before:rounded-full before:mr-2">Funding exhausted</span>
+</div>
+</td>
+<td class="py-4 px-4 text-right">
+<button class="font-tag text-tag text-primary underline hover:text-text-muted transition-colors">Investigate</button>
+</td>
+</tr>
+<!-- Normal Priority Row -->
+<tr class="relative hover:bg-surface-container-low transition-colors group">
+<td class="py-4 px-4 relative">
+<span class="font-body text-body text-text-muted">Normal</span>
+</td>
+<td class="py-4 px-4 font-body text-body text-on-surface">Primary School Renovation</td>
+<td class="py-4 px-4 font-data-tabular text-primary font-semibold">PRJ-1102-D</td>
+<td class="py-4 px-4 font-body text-body text-text-muted">Central District / Edu</td>
+<td class="py-4 px-4 font-data-tabular text-primary font-semibold">2 days</td>
+<td class="py-4 px-4">
+<div class="flex flex-col space-y-1">
+<span class="font-body text-body text-text-muted flex items-center before:content-[''] before:w-1.5 before:h-1.5 before:bg-text-light before:rounded-full before:mr-2">Routine inspection pending</span>
+</div>
+</td>
+<td class="py-4 px-4 text-right">
+<button class="font-tag text-tag text-primary underline hover:text-text-muted transition-colors">Review records</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination -->
+<div class="border-t border-border-translucent p-4 flex justify-between items-center bg-transparent rounded-b-card-lg">
+<span class="font-body text-body text-text-muted">Showing 1 to 5 of 42 entries</span>
+<div class="flex space-x-1">
+<button class="px-3 py-1.5 border border-outline-variant text-text-light disabled:opacity-50 font-tag text-tag hover:bg-surface-container-low rounded-sm" disabled="">Prev</button>
+<button class="px-3 py-1.5 bg-surface-variant text-primary font-tag text-tag border border-primary rounded-sm">1</button>
+<button class="px-3 py-1.5 border border-outline-variant text-text-muted font-tag text-tag hover:bg-surface-container-low rounded-sm">2</button>
+<button class="px-3 py-1.5 border border-outline-variant text-text-muted font-tag text-tag hover:bg-surface-container-low rounded-sm">3</button>
+<button class="px-3 py-1.5 border border-outline-variant text-text-muted font-tag text-tag hover:bg-surface-container-low rounded-sm">Next</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

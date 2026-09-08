@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en" style=""><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Public Transparency View - MPLADS Sentinel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "on-tertiary-fixed-variant": "#8e1400",
+                "primary-container": "#1e2bfa",
+                "secondary-container": "#dfe1f3",
+                "inverse-surface": "#2d3133",
+                "surface-container-lowest": "#ffffff",
+                "on-secondary": "#ffffff",
+                "on-primary": "#ffffff",
+                "surface-container-low": "#f2f4f7",
+                "surface-container-high": "#e6e8eb",
+                "surface-container": "#eceef1",
+                "surface-tint": "#303dff",
+                "outline": "#757589",
+                "on-secondary-fixed-variant": "#434654",
+                "secondary": "#5b5e6d",
+                "primary": "#000ccd",
+                "background": "#fbf8ff",
+                "on-surface-variant": "#454557",
+                "tertiary": "#7c1000",
+                "inverse-on-surface": "#eff1f4",
+                "on-primary-container": "#c1c5ff",
+                "on-tertiary-fixed": "#3e0400",
+                "error-container": "#ffdad6",
+                "tertiary-fixed-dim": "#ffb4a5",
+                "inverse-primary": "#bec2ff",
+                "on-primary-fixed": "#00036b",
+                "surface-bright": "#f7f9fc",
+                "surface-container-highest": "#e0e3e6",
+                "outline-variant": "#c5c5da",
+                "secondary-fixed": "#dfe1f3",
+                "on-surface": "#191c1e",
+                "on-error-container": "#93000a",
+                "primary-fixed": "#e0e0ff",
+                "primary-fixed-dim": "#bec2ff",
+                "on-secondary-fixed": "#181b28",
+                "on-background": "#191c1e",
+                "tertiary-container": "#a71900",
+                "surface-dim": "#d8dadd",
+                "on-secondary-container": "#616473",
+                "on-primary-fixed-variant": "#000fe9",
+                "surface-variant": "#e0e3e6",
+                "on-tertiary": "#ffffff",
+                "on-error": "#ffffff",
+                "secondary-fixed-dim": "#c3c6d7",
+                "tertiary-fixed": "#ffdad3",
+                "error": "#ba1a1a",
+                "surface": "#ffffff",
+                "on-tertiary-container": "#ffb8a9",
+                "accent-subtle": "rgba(30, 43, 250, 0.04)"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "topbar-height": "64px",
+                "gutter": "16px",
+                "container-margin": "24px",
+                "sidebar-width": "260px",
+                "card-padding": "20px",
+                "slide-x": "4vw",
+                "slide-y-bottom": "8.5vh",
+                "slide-y-top": "3.5vw",
+                "pad-card-lg": "1.5rem 1.6rem",
+                "accent-rule-w": "60px",
+                "accent-rule-h": "4px",
+                "gap-grid-lg": "3.5rem",
+                "gap-grid-md": "2rem 3rem",
+                "pad-mini": "0.9rem 1rem",
+        },
+        "fontFamily": {
+                "display-bold": [
+                        "Space Grotesk"
+                ],
+                "body-md": [
+                        "Inter"
+                ],
+                "headline-sm": [
+                        "Space Grotesk"
+                ],
+                "numerical-callout": [
+                        "Space Grotesk"
+                ],
+                "label-caps": [
+                        "Inter"
+                ],
+                "body": [
+                        "Inter"
+                ],
+                "headline-lg": [
+                        "Space Grotesk"
+                ],
+                "h3": [
+                        "Space Grotesk"
+                ],
+                "meta": [
+                        "Inter"
+                ],
+                "label-sm": [
+                        "Inter"
+                ],
+                "stat-num": [
+                        "Space Grotesk"
+                ],
+                "h4-eyebrow": [
+                        "Space Grotesk"
+                ]
+        },
+        "fontSize": {
+                "display-bold": [
+                        "36px",
+                        {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-sm": [
+                        "20px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "numerical-callout": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "label-caps": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-lg": [
+                        "64px",
+                        {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "h3": [
+                        "clamp(17.6px, 1.8vw, 24px)",
+                        {
+                                "lineHeight": "1.3",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "500"
+                        }
+                ],
+                "meta": [
+                        "12.8px",
+                        {
+                                "lineHeight": "1.4",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "1.4",
+                                "fontWeight": "400"
+                        }
+                ],
+                "stat-num": [
+                        "clamp(25.6px, 2.4vw, 33.6px)",
+                        {
+                                "lineHeight": "1",
+                                "fontWeight": "700"
+                        }
+                ],
+                "h4-eyebrow": [
+                        "clamp(13.6px, 1.2vw, 16px)",
+                        {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "0.08em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body": [
+                        "clamp(13.6px, 1.1vw, 16.8px)",
+                        {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-body bg-background selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Top Banner -->
+<div class="fixed top-0 left-0 w-full h-[28px] z-[60] bg-secondary-container text-on-secondary-container flex items-center justify-center px-4 font-label-caps uppercase tracking-wider">
+    Public Transparency View — Read Only — Synthetic Demonstration Data
+</div>
+<!-- TopNavBar -->
+<header class="bg-surface text-primary border-b border-outline-variant flex justify-between items-center h-[72px] px-8 w-full z-50 flex-shrink-0 mt-[28px] sticky top-[28px]">
+<div class="flex items-center gap-4">
+<span class="font-headline-sm text-headline-sm font-bold text-primary tracking-tight">MPLADS Sentinel</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex items-center pt-1 gap-6">
+<a class="font-body-md text-primary font-medium transition-opacity" href="#">Explore Projects</a>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Map</a>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Insights</a>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">About MPLADS</a>
+</div>
+<!-- Mobile Menu Button -->
+<button class="md:hidden p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[24px]">menu</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-[1440px] mx-auto px-slide-x py-slide-y-top pb-slide-y-bottom flex flex-col gap-grid-lg">
+<!-- Header Section -->
+<header class="flex flex-col gap-4 max-w-3xl">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Project Directory</h1>
+<div class="w-accent-rule-w h-accent-rule-h bg-primary rounded-full mb-4"></div>
+</header>
+<!-- Filters & Search Bar -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 w-full">
+<div class="relative w-full sm:w-[480px]">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary text-[20px]">search</span>
+<input class="w-full pl-12 pr-4 py-3 bg-surface text-on-surface border-none rounded-full shadow-sm font-body text-body focus:ring-1 focus:ring-primary focus:outline-none cursor-not-allowed opacity-70" disabled="" placeholder="Search projects by ID, Name, or Location..." type="text"/>
+</div>
+<div class="flex gap-3 w-full sm:w-auto">
+<button class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-surface rounded-full shadow-sm font-label-sm text-label-sm text-on-surface-variant cursor-not-allowed opacity-70 border-none" disabled="">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                    Filter
+                </button>
+<button class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-surface rounded-full shadow-sm font-label-sm text-label-sm text-on-surface-variant cursor-not-allowed opacity-70 border-none" disabled="">
+<span class="material-symbols-outlined text-[18px]">sort</span>
+                    Sort
+                </button>
+</div>
+</div>
+<!-- Project Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-grid-md gap-6">
+<!-- Project Card 1 -->
+<div class="bg-accent-subtle rounded-[14px] p-pad-card-lg flex flex-col gap-6">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-1">
+<span class="font-meta text-meta text-on-surface-variant">ID: PRJ-2024-8901</span>
+<h3 class="font-h3 text-h3 text-on-surface leading-tight font-semibold">Construction of Community Health Center</h3>
+</div>
+</div>
+<div class="flex flex-col gap-4 flex-grow">
+<div class="flex items-start gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5">location_on</span>
+<span class="font-body text-body">Ward 14, North District Sector</span>
+</div>
+<div class="flex items-start gap-2 text-primary font-stat-num font-bold">
+<span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5">payments</span>
+<span>₹ 45,00,000</span>
+</div>
+</div>
+<div class="pt-4 border-t-[1px] border-outline-variant/30 flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Status</span>
+<span class="inline-flex items-center gap-2 text-outline font-label-sm">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                        In Progress
+                    </span>
+</div>
+</div>
+<!-- Project Card 2 -->
+<div class="bg-accent-subtle rounded-[14px] p-pad-card-lg flex flex-col gap-6">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-1">
+<span class="font-meta text-meta text-on-surface-variant">ID: PRJ-2024-8902</span>
+<h3 class="font-h3 text-h3 text-on-surface leading-tight font-semibold">Solar Street Lighting Installation</h3>
+</div>
+</div>
+<div class="flex flex-col gap-4 flex-grow">
+<div class="flex items-start gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5">location_on</span>
+<span class="font-body text-body">Multiple Locations, East Zone</span>
+</div>
+<div class="flex items-start gap-2 text-primary font-stat-num font-bold">
+<span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5">payments</span>
+<span>₹ 12,50,000</span>
+</div>
+</div>
+<div class="pt-4 border-t-[1px] border-outline-variant/30 flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Status</span>
+<span class="inline-flex items-center gap-2 text-outline font-label-sm">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+                        Tender Phase
+                    </span>
+</div>
+</div>
+<!-- Project Card 3 -->
+<div class="bg-accent-subtle rounded-[14px] p-pad-card-lg flex flex-col gap-6">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-1">
+<span class="font-meta text-meta text-on-surface-variant">ID: PRJ-2023-7455</span>
+<h3 class="font-h3 text-h3 text-on-surface leading-tight font-semibold">Upgradation of Primary School Building</h3>
+</div>
+</div>
+<div class="flex flex-col gap-4 flex-grow">
+<div class="flex items-start gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5">location_on</span>
+<span class="font-body text-body">Village Block B, South District</span>
+</div>
+<div class="flex items-start gap-2 text-primary font-stat-num font-bold">
+<span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5">payments</span>
+<span>₹ 28,00,000</span>
+</div>
+</div>
+<div class="pt-4 border-t-[1px] border-outline-variant/30 flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Status</span>
+<span class="inline-flex items-center gap-2 text-outline font-label-sm">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+                        Completed
+                    </span>
+</div>
+</div>
+<!-- Project Card 4 -->
+<div class="bg-accent-subtle rounded-[14px] p-pad-card-lg flex flex-col gap-6">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-1">
+<span class="font-meta text-meta text-on-surface-variant">ID: PRJ-2024-9105</span>
+<h3 class="font-h3 text-h3 text-on-surface leading-tight font-semibold">Rainwater Harvesting Reservoir</h3>
+</div>
+</div>
+<div class="flex flex-col gap-4 flex-grow">
+<div class="flex items-start gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5">location_on</span>
+<span class="font-body text-body">Central Park, Municipal Area</span>
+</div>
+<div class="flex items-start gap-2 text-primary font-stat-num font-bold">
+<span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5">payments</span>
+<span>₹ 35,00,000</span>
+</div>
+</div>
+<div class="pt-4 border-t-[1px] border-outline-variant/30 flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Status</span>
+<span class="inline-flex items-center gap-2 text-outline font-label-sm">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                        In Progress
+                    </span>
+</div>
+</div>
+<!-- Project Card 5 -->
+<div class="bg-accent-subtle rounded-[14px] p-pad-card-lg flex flex-col gap-6">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-1">
+<span class="font-meta text-meta text-on-surface-variant">ID: PRJ-2024-9211</span>
+<h3 class="font-h3 text-h3 text-on-surface leading-tight font-semibold">Public Library Digital Infrastructure</h3>
+</div>
+</div>
+<div class="flex flex-col gap-4 flex-grow">
+<div class="flex items-start gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5">location_on</span>
+<span class="font-body text-body">Main City Library, Sector 4</span>
+</div>
+<div class="flex items-start gap-2 text-primary font-stat-num font-bold">
+<span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5">payments</span>
+<span>₹ 8,50,000</span>
+</div>
+</div>
+<div class="pt-4 border-t-[1px] border-outline-variant/30 flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Status</span>
+<span class="inline-flex items-center gap-2 text-outline font-label-sm">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+                        Planning
+                    </span>
+</div>
+</div>
+<!-- Project Card 6 -->
+<div class="bg-accent-subtle rounded-[14px] p-pad-card-lg flex flex-col gap-6 opacity-75">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-1">
+<span class="font-meta text-meta text-on-surface-variant">ID: PRJ-2023-6890</span>
+<h3 class="font-h3 text-h3 text-on-surface leading-tight font-semibold">Connecting Road Repair Phase II</h3>
+</div>
+</div>
+<div class="flex flex-col gap-4 flex-grow">
+<div class="flex items-start gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5">location_on</span>
+<span class="font-body text-body">Highway Link, West Corridor</span>
+</div>
+<div class="flex items-start gap-2 text-primary font-stat-num font-bold">
+<span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5">payments</span>
+<span>₹ 55,00,000</span>
+</div>
+</div>
+<div class="pt-4 border-t-[1px] border-outline-variant/30 flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Status</span>
+<span class="inline-flex items-center gap-2 text-outline font-label-sm">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+                        Delayed
+                    </span>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="flex justify-center mt-8">
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-outline bg-surface opacity-50 cursor-not-allowed border-none shadow-sm" disabled="">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<span class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-stat-num text-body font-medium">1</span>
+<span class="w-10 h-10 rounded-full text-on-surface flex items-center justify-center font-stat-num text-body font-medium bg-surface shadow-sm">2</span>
+<span class="w-10 h-10 rounded-full text-on-surface flex items-center justify-center font-stat-num text-body font-medium bg-surface shadow-sm">3</span>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-outline bg-surface opacity-50 cursor-not-allowed border-none shadow-sm" disabled="">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-background w-full border-t border-outline-variant/30 mt-auto">
+<div class="w-full py-12 px-slide-x flex flex-col md:flex-row justify-between items-center gap-grid-sm max-w-[1440px] mx-auto">
+<div class="flex flex-col items-center md:items-start gap-2">
+<span class="font-h4-eyebrow text-h4-eyebrow text-on-surface font-bold tracking-widest">
+                    MPLADS SENTINEL
+                </span>
+<span class="font-label-sm text-label-sm text-secondary opacity-80">
+                    © 2024 MPLADS Sentinel Transparency Portal. For demonstration purposes only.
+                </span>
+</div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="font-body text-body text-on-surface-variant hover:text-primary transition-all" href="#">
+                    Privacy Policy
+                </a>
+<a class="font-body text-body text-on-surface-variant hover:text-primary transition-all" href="#">
+                    Methodology
+                </a>
+<a class="font-body text-body text-on-surface-variant hover:text-primary transition-all" href="#">
+                    Data Dictionary
+                </a>
+<a class="font-body text-body text-on-surface-variant hover:text-primary transition-all" href="#">
+                    Contact Support
+                </a>
+</div>
+</div>
+</footer>
+</body></html>
