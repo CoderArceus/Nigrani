@@ -488,10 +488,11 @@ class InsightsDataStore:
         if self.anomaly_df.empty or 'top_flag_reasons' not in self.anomaly_df.columns:
             return []
 
+        flagged_df = self.anomaly_df[self.anomaly_df['flagged_by_model'] == True]
         reasons_list = []
-        for _, row in self.anomaly_df.iterrows():
+        for _, row in flagged_df.iterrows():
             raw = str(row.get('top_flag_reasons', ''))
-            if raw and raw != 'nan':
+            if raw and raw.lower() not in ('nan', 'none'):
                 parts = [r.strip() for r in raw.replace('\n', ',').split(',') if r.strip()]
                 reasons_list.extend(parts)
 

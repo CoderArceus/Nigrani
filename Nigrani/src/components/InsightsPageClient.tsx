@@ -396,7 +396,7 @@ export function InsightsPageClient({
                     <LabelList 
                       dataKey="utilization_pct" 
                       position="right" 
-                      formatter={(v: number) => `${v.toFixed(1)}%`}
+                      formatter={(v: any) => `${Number(v).toFixed(1)}%`}
                       style={{ fontSize: '10px', fill: '#475569', fontWeight: 500 }}
                     />
                   </Bar>

@@ -13,22 +13,27 @@ const getStatusStyles = (status: string) => {
   }
 };
 
-// Helper for category colors
 const getCategoryStyles = (category: string) => {
   const cat = category?.toLowerCase() || "";
   if (cat.includes("irrigation") || cat.includes("water")) {
     return { bg: "bg-[#CCFBF1]", text: "text-[#0D9488]", icon: "water_drop" };
   }
-  if (cat.includes("road") || cat.includes("bridge")) {
+  if (cat.includes("road") || cat.includes("bridge") || cat.includes("transport")) {
     return { bg: "bg-[#FFEDD5]", text: "text-[#C2410C]", icon: "add_road" };
   }
-  if (cat.includes("sanitation") || cat.includes("health")) {
-    return { bg: "bg-[#EDE9FE]", text: "text-[#7C3AED]", icon: "groups" };
+  if (cat.includes("sanitation") || cat.includes("health") || cat.includes("medical")) {
+    return { bg: "bg-[#EDE9FE]", text: "text-[#7C3AED]", icon: "health_and_safety" };
   }
-  if (cat.includes("urban") || cat.includes("infrastructure")) {
+  if (cat.includes("education") || cat.includes("school") || cat.includes("library")) {
+    return { bg: "bg-[#E0E7FF]", text: "text-[#4F46E5]", icon: "school" };
+  }
+  if (cat.includes("light") || cat.includes("power") || cat.includes("solar") || cat.includes("energy")) {
     return { bg: "bg-[#FEF3C7]", text: "text-[#B45309]", icon: "lightbulb" };
   }
-  return { bg: "bg-gray-100", text: "text-gray-700", icon: "folder" };
+  if (cat.includes("community") || cat.includes("hall") || cat.includes("public")) {
+    return { bg: "bg-[#F3E8FF]", text: "text-[#9333EA]", icon: "groups" };
+  }
+  return { bg: "bg-gray-100", text: "text-gray-700", icon: "account_tree" };
 };
 
 // Helper for anomaly gauge colors
@@ -79,7 +84,7 @@ export function ProjectCard({ project }: { project: any }) {
 
         {/* Body Content */}
         <div className="mb-4 flex-1">
-          <h3 className="font-display font-bold text-[20px] text-[#111827] leading-tight mb-2 line-clamp-2">
+          <h3 className="font-display font-bold text-[20px] text-[#111827] leading-tight mb-2 truncate">
             {title}
           </h3>
           <div className="flex items-center gap-1.5 text-[#6B7280] font-sans text-[14px] mb-3">
@@ -128,30 +133,7 @@ export function ProjectCard({ project }: { project: any }) {
             </div>
           </div>
 
-          <div className="h-[1px] w-full bg-[#E4E7F5] mb-3" />
-          
-          {/* Footer */}
-          <div className="flex items-center justify-between font-sans text-[13px] text-[#6B7280]">
-            <div className="flex items-center gap-1.5">
-              <span className="material-symbols-outlined text-[16px]">calendar_today</span>
-              {status}
-            </div>
-            
-            <div className="w-[1px] h-3 bg-[#E4E7F5]" />
-            
-            <div className="flex items-center gap-1.5">
-              <span className="material-symbols-outlined text-[16px]">image</span>
-              3 Photos
-            </div>
-            
-            <div className="w-[1px] h-3 bg-[#E4E7F5]" />
-            
-            <div className="flex items-center gap-1 text-[#2563EB] font-medium group-hover:underline">
-              <span className="material-symbols-outlined text-[16px]">description</span>
-              View Details
-              <span className="material-symbols-outlined text-[16px]">chevron_right</span>
-            </div>
-          </div>
+
         </div>
         
       </div>

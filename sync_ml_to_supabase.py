@@ -46,8 +46,8 @@ def sync_data():
             "work_id": row['work_id'],
             "ensemble_score": score,
             "network_risk_flag": bool(row['network_risk_flag']),
-            "top_flag_reasons": str(row['top_flag_reasons']),
-            "flagged_by_model": True,
+            "top_flag_reasons": str(row['top_flag_reasons']) if pd.notna(row['top_flag_reasons']) else None,
+            "flagged_by_model": bool(row['flagged_by_model']),
             "risk_level": risk_level,
             "risk_priority": risk_priority
         }

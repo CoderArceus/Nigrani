@@ -192,9 +192,9 @@ print(df.groupby("anomaly_type")["flagged_by_model"].mean())
 report_cols = [
     "work_id", "mp_name", "state", "district", "work_category",
     "sanctioned_amount", "released_amount", "status", "vendor",
-    "implementing_agency", "ensemble_score", "network_risk_flag", "top_flag_reasons",
+    "implementing_agency", "ensemble_score", "network_risk_flag", "top_flag_reasons", "flagged_by_model"
 ]
-risk_report = df[df["flagged_by_model"]].sort_values("ensemble_score", ascending=False)[report_cols]
+risk_report = df.sort_values("ensemble_score", ascending=False)[report_cols]
 out_path = os.path.join(_SCRIPT_DIR, "mplads_risk_report_v2.csv")
 risk_report.to_csv(out_path, index=False)
 print(f"\nSaved ranked risk report ({len(risk_report)} flagged works) -> {out_path}")
