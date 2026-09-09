@@ -72,7 +72,7 @@ export default async function PublicTransparencyPage(props: {
     resolvedParams.q;
 
   return (
-    <div className="flex flex-col gap-6 w-full pb-12">
+    <div className="flex flex-col gap-4 w-full pb-6">
       {/* Top Floating Control Bar */}
       <div className="flex flex-wrap items-center justify-between gap-3 w-full">
         <div className="flex flex-wrap items-center gap-3 flex-1">
@@ -96,26 +96,26 @@ export default async function PublicTransparencyPage(props: {
       </div>
 
       {/* Subheader: Clear Filters */}
-      <div className="flex items-center justify-end mt-2 h-6">
-        {hasActiveFilters && (
+      {hasActiveFilters && (
+        <div className="flex items-center justify-end">
           <Link 
             href="/"
             className="text-[14px] font-sans font-semibold text-blue-600 hover:text-blue-700 transition-colors"
           >
             Clear filters
           </Link>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Project Grid */}
-      <div className="flex-1 flex flex-col justify-start min-h-[400px]">
+      <div className="flex flex-col justify-start">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {pagedProjects.length > 0 ? (
             pagedProjects.map((project: any) => (
               <ProjectCard key={project.work_id} project={project} />
             ))
           ) : (
-            <div className="col-span-full py-20 text-center flex flex-col items-center justify-center">
+            <div className="col-span-full py-12 text-center flex flex-col items-center justify-center">
               <span className="material-symbols-outlined text-[48px] text-outline mb-4">search_off</span>
               <h3 className="font-display text-[20px] font-bold text-on-surface">No projects found</h3>
               <p className="font-sans text-[14px] text-on-surface-variant mt-2 max-w-md">
@@ -128,7 +128,7 @@ export default async function PublicTransparencyPage(props: {
 
       {/* Bottom Pagination Bar */}
       {data.count > 0 && (
-        <div className="flex flex-col md:flex-row items-center justify-between w-full mt-8 pt-6">
+        <div className="flex flex-col md:flex-row items-center justify-between w-full mt-4 pt-4 border-t border-[#E2E8F0]/50">
           <div className="w-full md:w-1/3 flex justify-start mb-4 md:mb-0">
             <span className="font-sans text-[14px] text-[#64748B] font-medium">
               Showing {startItem}–{endItem} of {data.count.toLocaleString()} projects
