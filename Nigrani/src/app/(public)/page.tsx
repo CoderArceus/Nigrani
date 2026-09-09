@@ -2,6 +2,7 @@ import Link from "next/link";
 import { AccentRule, Card } from "@/components/ui";
 import { SortControls } from "@/components/SortControls";
 import { PaginationControls } from "@/components/PaginationControls";
+import { ProjectCard } from "@/components/ProjectCard";
 import { Suspense } from "react";
 import { API_BASE_URL } from "@/lib/api";
 
@@ -77,82 +78,5 @@ export default async function PublicTransparencyPage(props: {
         <PaginationControls currentPage={safePage} totalPages={totalPages} />
       </div>
     </>
-  );
-}
-
-function ProjectCard({ project }: { project: any }) {
-  // Map API fields to UI fields
-  const id = project.work_id;
-  const currentStatus = project.status;
-  const name = `${project.work_category} in ${project.district}`;
-  const district = project.district;
-  const state = project.state;
-  const cost = project.sanctioned_amount || 0;
-  const mlAnomalyScore = project.ensemble_score;
-
-  return (
-    <Link href={`/project/${id}`} className="block">
-      <Card className="h-full min-h-[210px] hover:-translate-y-1 hover:shadow-md transition-all duration-300 cursor-pointer flex flex-col group border-outline-variant/30 p-6 bg-accent-subtle">
-
-        {/* TOP: Pinned Metadata Row */}
-        <div className="flex items-center gap-2 mb-2">
-          <span className="font-sans text-[12px] font-medium text-secondary">
-            {id}
-          </span>
-          <span className="text-secondary text-[12px]">&bull;</span>
-          <div className="flex items-center gap-1">
-            <span className={`w-1.5 h-1.5 rounded-full ${
-              currentStatus === "Completed" ? "bg-[#188038]" : // Green
-              currentStatus === "In Progress" ? "bg-[#1967d2]" : // Blue
-              currentStatus === "Sanctioned" ? "bg-[#9333ea]" : // Purple
-              "bg-[#f59e0b]" // Amber for Recommended
-            }`} />
-            <span className="font-sans text-[11px] font-medium uppercase tracking-[0.05em] text-on-surface-variant">
-              {currentStatus}
-            </span>
-          </div>
-        </div>
-
-        {/* TOP CONTENT — grows to fill available space */}
-        <div className="flex-1">
-          {/* Title */}
-          <h3 className="font-display text-[22px] md:text-[24px] font-bold text-on-surface leading-[1.25] mb-2 truncate group-hover:text-primary transition-colors">
-            {name}
-          </h3>
-
-          {/* Location */}
-          <div className="font-sans text-[14px] text-secondary flex items-center gap-1.5">
-            <span className="material-symbols-outlined text-[18px] text-[#6b6b6b]">location_on</span>
-            {district}, {state}
-          </div>
-        </div>
-
-        {/* BOTTOM-ANCHORED CONTENT (always at bottom via mt-auto) */}
-        <div className="pt-4 mt-auto">
-          <div className="w-full h-[1px] bg-[rgba(30,43,250,0.15)] mb-4" />
-
-          <div className="flex flex-row items-end justify-between">
-            {/* Cost */}
-            <div>
-              <div className="font-sans text-[10px] font-bold uppercase tracking-wider text-secondary mb-1">
-                Approved Cost
-              </div>
-              <div className="flex items-center font-display font-bold">
-                <span className="text-[26px] tracking-tight leading-none text-primary">
-                  ₹ {cost.toLocaleString("en-IN")}
-                </span>
-              </div>
-            </div>
-
-            {/* Footer: Anomaly Info */}
-            {mlAnomalyScore !== undefined && mlAnomalyScore !== null && (
-              <div className="font-sans text-[10px] text-outline pb-1.5 border-none outline-none ring-0 shadow-none relative after:hidden before:hidden">
-                Anomaly: {mlAnomalyScore.toFixed(2)}
-              </div>
-            )}
-          </div>
-        </div>
-      </Card>
-    </Link>
   );
 }
