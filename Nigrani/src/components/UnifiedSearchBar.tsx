@@ -82,88 +82,9 @@ export function UnifiedSearchBar({ placeholder = "Search by ID, name, or locatio
   }, [activeState]);
 
   return (
-    <div className="flex items-center gap-3 w-full">
-      {/* Filters Pill */}
-      <div className="hidden lg:flex items-center bg-[#F8FAFC] border border-[#E2E8F0] rounded-[12px] h-10 shadow-sm shrink-0">
-        {/* State */}
-        <div className="relative h-full flex items-center px-3 border-r border-[#E2E8F0] hover:bg-black/5 transition-colors rounded-l-[12px] group">
-          <select
-            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-            value={activeState || ""}
-            onChange={(e) => handleFilterChange("state", e.target.value)}
-            title="Filter by State"
-          >
-            <option value="">All States</option>
-            {statesList.map((s) => (
-              <option key={s} value={s}>{s}</option>
-            ))}
-          </select>
-          <span className="text-[13px] font-sans flex items-center gap-1 text-[#475569] font-medium transition-colors">
-            <span className="max-w-[70px] truncate">{activeState || "State"}</span>
-            <span className="material-symbols-outlined text-[16px] text-[#94A3B8]">expand_more</span>
-          </span>
-        </div>
-
-        {/* District */}
-        <div className="relative h-full flex items-center px-3 border-r border-[#E2E8F0] hover:bg-black/5 transition-colors group">
-          <select
-            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-            value={activeDistrict || ""}
-            onChange={(e) => handleFilterChange("district", e.target.value)}
-            title="Filter by District"
-          >
-            <option value="">All Districts</option>
-            {districtsList.map((d) => (
-              <option key={d} value={d}>{d}</option>
-            ))}
-          </select>
-          <span className="text-[13px] font-sans flex items-center gap-1 text-[#475569] font-medium transition-colors">
-            <span className="max-w-[70px] truncate">{activeDistrict || "District"}</span>
-            <span className="material-symbols-outlined text-[16px] text-[#94A3B8]">expand_more</span>
-          </span>
-        </div>
-
-        {/* Sector */}
-        <div className="relative h-full flex items-center px-3 border-r border-[#E2E8F0] hover:bg-black/5 transition-colors group">
-          <select
-            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-            value={activeSector || ""}
-            onChange={(e) => handleFilterChange("sector", e.target.value)}
-            title="Filter by Sector"
-          >
-            <option value="">All Sectors</option>
-            {sectorsList.map((s) => (
-              <option key={s} value={s}>{s}</option>
-            ))}
-          </select>
-          <span className="text-[13px] font-sans flex items-center gap-1 text-[#475569] font-medium transition-colors">
-            <span className="max-w-[70px] truncate">{activeSector || "Sector"}</span>
-            <span className="material-symbols-outlined text-[16px] text-[#94A3B8]">expand_more</span>
-          </span>
-        </div>
-
-        {/* Status */}
-        <div className="relative h-full flex items-center px-3 hover:bg-black/5 transition-colors rounded-r-[12px] group">
-          <select
-            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-            value={activeStatus || ""}
-            onChange={(e) => handleFilterChange("status", e.target.value)}
-            title="Filter by Status"
-          >
-            <option value="">All Statuses</option>
-            {STATUSES.map((s) => (
-              <option key={s} value={s}>{s}</option>
-            ))}
-          </select>
-          <span className="text-[13px] font-sans flex items-center gap-1 text-[#475569] font-medium transition-colors">
-            <span className="max-w-[70px] truncate">{activeStatus || "Status"}</span>
-            <span className="material-symbols-outlined text-[16px] text-[#94A3B8]">expand_more</span>
-          </span>
-        </div>
-      </div>
-
+    <div className="flex items-center gap-3 w-full overflow-x-auto scrollbar-hide pb-2 md:pb-0">
       {/* Search Bar Pill */}
-      <div className="flex-1 min-w-[200px] flex items-center bg-white border border-[#E2E8F0] rounded-[12px] h-10 px-3 shadow-sm focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 transition-all">
+      <div className="flex-1 min-w-[280px] flex items-center bg-white border border-[#E2E8F0] rounded-[12px] h-10 px-3 shadow-sm focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 transition-all shrink-0">
         <span className="material-symbols-outlined text-[18px] text-blue-600 mr-2 font-bold">search</span>
         <input
           type="text"
@@ -172,6 +93,82 @@ export function UnifiedSearchBar({ placeholder = "Search by ID, name, or locatio
           value={searchQuery}
           onChange={handleSearch}
         />
+      </div>
+
+      {/* State Pill */}
+      <div className="relative h-10 flex items-center px-4 bg-white border border-[#E2E8F0] rounded-[12px] shadow-sm hover:bg-black/5 transition-colors shrink-0 group">
+        <select
+          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+          value={activeState || ""}
+          onChange={(e) => handleFilterChange("state", e.target.value)}
+          title="Filter by State"
+        >
+          <option value="">All States</option>
+          {statesList.map((s) => (
+            <option key={s} value={s}>{s}</option>
+          ))}
+        </select>
+        <span className="text-[13px] font-sans flex items-center gap-1.5 text-[#475569] font-medium transition-colors">
+          <span className="max-w-[80px] truncate">{activeState || "State"}</span>
+          <span className="material-symbols-outlined text-[16px] text-[#94A3B8]">expand_more</span>
+        </span>
+      </div>
+
+      {/* District Pill */}
+      <div className="relative h-10 flex items-center px-4 bg-white border border-[#E2E8F0] rounded-[12px] shadow-sm hover:bg-black/5 transition-colors shrink-0 group">
+        <select
+          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+          value={activeDistrict || ""}
+          onChange={(e) => handleFilterChange("district", e.target.value)}
+          title="Filter by District"
+        >
+          <option value="">All Districts</option>
+          {districtsList.map((d) => (
+            <option key={d} value={d}>{d}</option>
+          ))}
+        </select>
+        <span className="text-[13px] font-sans flex items-center gap-1.5 text-[#475569] font-medium transition-colors">
+          <span className="max-w-[80px] truncate">{activeDistrict || "District"}</span>
+          <span className="material-symbols-outlined text-[16px] text-[#94A3B8]">expand_more</span>
+        </span>
+      </div>
+
+      {/* Sector Pill */}
+      <div className="relative h-10 flex items-center px-4 bg-white border border-[#E2E8F0] rounded-[12px] shadow-sm hover:bg-black/5 transition-colors shrink-0 group">
+        <select
+          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+          value={activeSector || ""}
+          onChange={(e) => handleFilterChange("sector", e.target.value)}
+          title="Filter by Sector"
+        >
+          <option value="">All Sectors</option>
+          {sectorsList.map((s) => (
+            <option key={s} value={s}>{s}</option>
+          ))}
+        </select>
+        <span className="text-[13px] font-sans flex items-center gap-1.5 text-[#475569] font-medium transition-colors">
+          <span className="max-w-[80px] truncate">{activeSector || "Sector"}</span>
+          <span className="material-symbols-outlined text-[16px] text-[#94A3B8]">expand_more</span>
+        </span>
+      </div>
+
+      {/* Status Pill */}
+      <div className="relative h-10 flex items-center px-4 bg-white border border-[#E2E8F0] rounded-[12px] shadow-sm hover:bg-black/5 transition-colors shrink-0 group">
+        <select
+          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+          value={activeStatus || ""}
+          onChange={(e) => handleFilterChange("status", e.target.value)}
+          title="Filter by Status"
+        >
+          <option value="">All Statuses</option>
+          {STATUSES.map((s) => (
+            <option key={s} value={s}>{s}</option>
+          ))}
+        </select>
+        <span className="text-[13px] font-sans flex items-center gap-1.5 text-[#475569] font-medium transition-colors">
+          <span className="max-w-[80px] truncate">{activeStatus || "Status"}</span>
+          <span className="material-symbols-outlined text-[16px] text-[#94A3B8]">expand_more</span>
+        </span>
       </div>
     </div>
   );

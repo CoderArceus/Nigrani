@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { AccentRule, Card } from "@/components/ui";
 import { SortControls } from "@/components/SortControls";
-import { PaginationControls } from "@/components/PaginationControls";
+import { PaginationControls, GoToPage } from "@/components/PaginationControls";
 import { UnifiedSearchBar } from "@/components/UnifiedSearchBar";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Suspense } from "react";
@@ -63,79 +63,28 @@ export default async function PublicTransparencyPage(props: {
   const startItem = data.count === 0 ? 0 : (safePage - 1) * itemsPerPage + 1;
   const endItem = Math.min(safePage * itemsPerPage, data.count || 0);
 
+  // Check if any filter is active
+  const hasActiveFilters = 
+    resolvedParams.state || 
+    resolvedParams.district || 
+    resolvedParams.sector || 
+    resolvedParams.status || 
+    resolvedParams.q;
+
   return (
-    <div className="flex flex-col gap-6 w-full pb-8">
-      {/* Stats Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mt-2">
-        {/* Total Projects */}
-        <div className="bg-[#F8FAFC] rounded-[16px] md:rounded-[20px] p-5 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white shadow-sm">
-            <span className="material-symbols-outlined text-[24px]">database</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="font-sans text-[13.5px] text-[#64748B] font-medium">Total Projects</span>
-            <span className="font-display text-[26px] font-bold text-[#0F172A] leading-none mt-1">{totalGlobal.toLocaleString()}</span>
-          </div>
-        </div>
-
-        {/* Completed */}
-        <div className="bg-[#F0FDF4] rounded-[16px] md:rounded-[20px] p-5 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center text-white shadow-sm">
-            <span className="material-symbols-outlined text-[24px]">check_circle</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="font-sans text-[13.5px] text-[#64748B] font-medium">Completed</span>
-            <div className="flex items-baseline gap-1.5 mt-1">
-              <span className="font-display text-[26px] font-bold text-[#0F172A] leading-none">{completed.toLocaleString()}</span>
-              <span className="font-sans text-[13px] text-[#64748B] font-medium">({completedPct}%)</span>
-            </div>
-          </div>
-        </div>
-
-        {/* In Progress */}
-        <div className="bg-[#FFFBEB] rounded-[16px] md:rounded-[20px] p-5 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center text-white shadow-sm">
-            <span className="material-symbols-outlined text-[24px]">schedule</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="font-sans text-[13.5px] text-[#64748B] font-medium">In Progress</span>
-            <div className="flex items-baseline gap-1.5 mt-1">
-              <span className="font-display text-[26px] font-bold text-[#0F172A] leading-none">{inProgress.toLocaleString()}</span>
-              <span className="font-sans text-[13px] text-[#64748B] font-medium">({inProgressPct}%)</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Not Started */}
-        <div className="bg-[#FAF5FF] rounded-[16px] md:rounded-[20px] p-5 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center text-white shadow-sm">
-            <span className="material-symbols-outlined text-[24px]">pause_circle</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="font-sans text-[13.5px] text-[#64748B] font-medium">Not Started</span>
-            <div className="flex items-baseline gap-1.5 mt-1">
-              <span className="font-display text-[26px] font-bold text-[#0F172A] leading-none">{notStarted.toLocaleString()}</span>
-              <span className="font-sans text-[13px] text-[#64748B] font-medium">({notStartedPct}%)</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Control Bar (Sort + Pagination) */}
-      <div className="bg-white rounded-[16px] shadow-sm border border-outline-variant/30 p-2 flex flex-col xl:flex-row items-center justify-between gap-4 mt-2 mb-2 w-full overflow-x-auto">
-        <div className="flex items-center gap-3 w-full xl:w-auto overflow-x-auto shrink-0 pb-1 xl:pb-0 scrollbar-hide">
-          <Suspense fallback={<div className="w-[400px] h-10 bg-gray-100 rounded-[12px] animate-pulse" />}>
+    <div className="flex flex-col gap-6 w-full pb-12">
+      {/* Top Floating Control Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 w-full">
+        <div className="flex flex-wrap items-center gap-3 flex-1">
+          <Suspense fallback={<div className="w-[300px] h-10 bg-gray-100 rounded-[12px] animate-pulse" />}>
             <UnifiedSearchBar />
           </Suspense>
+        </div>
+        
+        <div className="flex items-center gap-3 shrink-0">
+          <SortControls />
           
-          <div className="hidden md:block h-6 w-px bg-[#E2E8F0] mx-1 shrink-0" />
-          
-          <div className="flex items-center gap-3 shrink-0">
-            <span className="font-sans text-[13px] text-[#64748B] font-medium hidden sm:inline-block">Sort by</span>
-            <SortControls />
-          </div>
-          
-          <div className="flex bg-[#F1F5F9] rounded-[10px] p-1 border border-[#E2E8F0] shrink-0">
+          <div className="flex bg-[#F1F5F9] rounded-[10px] p-1 border border-[#E2E8F0]">
             <button className="w-8 h-8 rounded-[8px] bg-blue-600 text-white shadow-sm flex items-center justify-center">
               <span className="material-symbols-outlined text-[18px]">grid_view</span>
             </button>
@@ -144,17 +93,27 @@ export default async function PublicTransparencyPage(props: {
             </button>
           </div>
         </div>
-
-        <div className="flex items-center gap-4 w-full xl:w-auto xl:justify-end shrink-0 border-t border-[#E2E8F0] xl:border-t-0 pt-3 xl:pt-0">
-          <span className="font-sans text-[13px] text-[#64748B] font-medium hidden md:inline-block">
-            Showing {startItem}–{endItem} of {data.count.toLocaleString()} projects
-          </span>
-          <PaginationControls currentPage={safePage} totalPages={totalPages} />
-        </div>
       </div>
 
-      <div className="flex-1 flex flex-col justify-center gap-8">
-        {/* Project Grid */}
+      {/* Subheader: Project Count & Clear Filters */}
+      <div className="flex items-center justify-between mt-2">
+        <div className="text-[15px] text-[#0F172A]">
+          <span className="font-bold font-sans">{data.count.toLocaleString()}</span>{" "}
+          <span className="font-sans font-medium text-[#475569]">projects</span>
+        </div>
+        
+        {hasActiveFilters && (
+          <Link 
+            href="/"
+            className="text-[14px] font-sans font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+          >
+            Clear filters
+          </Link>
+        )}
+      </div>
+
+      {/* Project Grid */}
+      <div className="flex-1 flex flex-col justify-start min-h-[400px]">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {pagedProjects.length > 0 ? (
             pagedProjects.map((project: any) => (
@@ -171,6 +130,28 @@ export default async function PublicTransparencyPage(props: {
           )}
         </div>
       </div>
+
+      {/* Bottom Pagination Bar */}
+      {data.count > 0 && (
+        <div className="flex flex-col md:flex-row items-center justify-between w-full mt-8 pt-6">
+          <div className="w-full md:w-1/3 flex justify-start mb-4 md:mb-0">
+            <span className="font-sans text-[14px] text-[#64748B] font-medium">
+              Showing {startItem}–{endItem} of {data.count.toLocaleString()} projects
+            </span>
+          </div>
+          
+          <div className="w-full md:w-1/3 flex justify-center">
+            <PaginationControls currentPage={safePage} totalPages={totalPages} />
+          </div>
+          
+          <div className="w-full md:w-1/3 flex justify-end mt-4 md:mt-0">
+            <div className="flex items-center gap-2 font-sans text-[14px] text-[#64748B] font-medium">
+              Go to page
+              <GoToPage totalPages={totalPages} currentPage={safePage} />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -95,3 +95,38 @@ export function PaginationControls({ currentPage, totalPages }: PaginationContro
     </div>
   );
 }
+
+export function GoToPage({ totalPages, currentPage }: { totalPages: number, currentPage: number }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const handleGo = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const pageStr = formData.get("pageInput") as string;
+    const page = parseInt(pageStr, 10);
+    
+    if (!isNaN(page) && page >= 1 && page <= totalPages) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("page", page.toString());
+      router.push(`${pathname}?${params.toString()}`);
+    }
+  };
+
+  return (
+    <form onSubmit={handleGo} className="flex items-center gap-2">
+      <input 
+        type="number" 
+        min="1" 
+        max={totalPages}
+        name="pageInput"
+        defaultValue={currentPage}
+        className="w-14 h-10 border border-[#E2E8F0] rounded-[8px] text-center text-[#0F172A] outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+      />
+      <button type="submit" className="h-10 px-4 text-blue-600 font-semibold border border-[#E2E8F0] rounded-[8px] hover:bg-blue-50 transition-colors">
+        Go
+      </button>
+    </form>
+  );
+}
