@@ -95,13 +95,8 @@ export default async function PublicTransparencyPage(props: {
         </div>
       </div>
 
-      {/* Subheader: Project Count & Clear Filters */}
-      <div className="flex items-center justify-between mt-2">
-        <div className="text-[15px] text-[#0F172A]">
-          <span className="font-bold font-sans">{data.count.toLocaleString()}</span>{" "}
-          <span className="font-sans font-medium text-[#475569]">projects</span>
-        </div>
-        
+      {/* Subheader: Clear Filters */}
+      <div className="flex items-center justify-end mt-2 h-6">
         {hasActiveFilters && (
           <Link 
             href="/"
