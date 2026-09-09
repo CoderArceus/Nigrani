@@ -2,6 +2,7 @@ import Link from "next/link";
 import { AccentRule, Card } from "@/components/ui";
 import { SortControls } from "@/components/SortControls";
 import { PaginationControls } from "@/components/PaginationControls";
+import { UnifiedSearchBar } from "@/components/UnifiedSearchBar";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Suspense } from "react";
 import { API_BASE_URL } from "@/lib/api";
@@ -121,14 +122,20 @@ export default async function PublicTransparencyPage(props: {
       </div>
 
       {/* Control Bar (Sort + Pagination) */}
-      <div className="bg-white rounded-[16px] shadow-sm border border-outline-variant/30 p-3 md:p-2.5 flex flex-col md:flex-row items-center justify-between gap-4 mt-2 mb-2 w-full">
-        <div className="flex items-center gap-4 md:gap-6 w-full md:w-auto">
-          <div className="flex items-center gap-3">
-            <span className="font-sans text-[14px] text-[#64748B] font-medium hidden sm:inline-block pl-2">Sort by</span>
+      <div className="bg-white rounded-[16px] shadow-sm border border-outline-variant/30 p-2 flex flex-col xl:flex-row items-center justify-between gap-4 mt-2 mb-2 w-full overflow-x-auto">
+        <div className="flex items-center gap-3 w-full xl:w-auto overflow-x-auto shrink-0 pb-1 xl:pb-0 scrollbar-hide">
+          <Suspense fallback={<div className="w-[400px] h-10 bg-gray-100 rounded-[12px] animate-pulse" />}>
+            <UnifiedSearchBar />
+          </Suspense>
+          
+          <div className="hidden md:block h-6 w-px bg-[#E2E8F0] mx-1 shrink-0" />
+          
+          <div className="flex items-center gap-3 shrink-0">
+            <span className="font-sans text-[13px] text-[#64748B] font-medium hidden sm:inline-block">Sort by</span>
             <SortControls />
           </div>
           
-          <div className="flex bg-[#F1F5F9] rounded-[10px] p-1 border border-[#E2E8F0]">
+          <div className="flex bg-[#F1F5F9] rounded-[10px] p-1 border border-[#E2E8F0] shrink-0">
             <button className="w-8 h-8 rounded-[8px] bg-blue-600 text-white shadow-sm flex items-center justify-center">
               <span className="material-symbols-outlined text-[18px]">grid_view</span>
             </button>
@@ -138,8 +145,8 @@ export default async function PublicTransparencyPage(props: {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto md:justify-end">
-          <span className="font-sans text-[14px] text-[#64748B] font-medium md:mr-2">
+        <div className="flex items-center gap-4 w-full xl:w-auto xl:justify-end shrink-0 border-t border-[#E2E8F0] xl:border-t-0 pt-3 xl:pt-0">
+          <span className="font-sans text-[13px] text-[#64748B] font-medium hidden md:inline-block">
             Showing {startItem}–{endItem} of {data.count.toLocaleString()} projects
           </span>
           <PaginationControls currentPage={safePage} totalPages={totalPages} />

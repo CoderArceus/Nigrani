@@ -1,5 +1,5 @@
 import { PublicSidebar } from "@/components/PublicSidebar";
-import { PublicHeader } from "@/components/PublicHeader";
+
 
 export default function PublicLayout({
   children,
@@ -10,8 +10,6 @@ export default function PublicLayout({
     <div className="flex h-screen overflow-hidden bg-background">
       <PublicSidebar />
       <div className="flex-1 flex flex-col h-screen overflow-hidden relative">
-        <PublicHeader />
-
         {/* Scrollable Main Area */}
         <div className="flex-1 overflow-y-auto flex flex-col">
           <main className="w-full max-w-[1440px] mx-auto px-8 py-6 flex flex-col gap-8 flex-grow">

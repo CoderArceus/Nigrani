@@ -75,6 +75,18 @@ export function PublicSidebar() {
           );
         })}
       </nav>
+      <div className="mt-auto p-4 border-t border-outline-variant/30">
+        <Link
+          href="/login"
+          title={isCollapsed ? "Officer Login" : undefined}
+          className={`flex items-center gap-3 px-4 py-3 rounded-lg border border-primary/30 text-primary hover:bg-primary/5 hover:border-primary transition-all duration-150 ease-in-out font-sans text-[15.2px] font-semibold ${
+            isCollapsed ? "justify-center px-0" : ""
+          }`}
+        >
+          <span className="material-symbols-outlined text-[20px]">lock</span>
+          {!isCollapsed && <span>Officer Login</span>}
+        </Link>
+      </div>
     </aside>
   );
 }
