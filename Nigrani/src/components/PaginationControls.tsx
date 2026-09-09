@@ -40,9 +40,8 @@ export function PaginationControls({ currentPage, totalPages }: PaginationContro
   const pages = getPageNumbers();
 
   return (
-    <div className="flex justify-center mt-8 mb-4">
-      <div className="bg-white rounded-[16px] shadow-sm border border-outline-variant/30 p-2.5 flex items-center gap-2 w-fit">
-        {/* Previous Button */}
+    <div className="flex items-center gap-1.5 md:gap-2">
+      {/* Previous Button */}
         <button
           onClick={() => navigateToPage(currentPage - 1)}
           disabled={currentPage === 1}
@@ -93,7 +92,6 @@ export function PaginationControls({ currentPage, totalPages }: PaginationContro
         >
           <span className="material-symbols-outlined text-[20px]">chevron_right</span>
         </button>
-      </div>
     </div>
   );
 }
