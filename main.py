@@ -1437,6 +1437,65 @@ def get_statistical_outliers():
     return insights_store.get_statistical_outliers()
 
 
+# ── New Insights Endpoints (Revamped Dashboard) ────────────────────
+
+@app.get("/dashboard/insights/utilization-by-mp")
+def get_utilization_by_mp():
+    return insights_store.get_utilization_by_mp()
+
+@app.get("/dashboard/insights/time-to-release")
+def get_time_to_release():
+    return insights_store.get_time_to_release_histogram()
+
+@app.get("/dashboard/insights/sanction-completion-bubble")
+def get_sanction_completion_bubble():
+    return insights_store.get_sanction_completion_bubble()
+
+@app.get("/dashboard/insights/sanctioned-by-state")
+def get_sanctioned_by_state():
+    return insights_store.get_sanctioned_by_state()
+
+@app.get("/dashboard/insights/sc-st-comparison")
+def get_sc_st_comparison():
+    return insights_store.get_sc_st_comparison()
+
+@app.get("/dashboard/insights/category-mix-by-state")
+def get_category_mix_by_state():
+    return insights_store.get_category_mix_by_state()
+
+@app.get("/dashboard/insights/mp-leaderboard")
+def get_mp_leaderboard():
+    return insights_store.get_mp_leaderboard()
+
+@app.get("/dashboard/insights/house-comparison")
+def get_house_comparison():
+    return insights_store.get_house_comparison()
+
+@app.get("/dashboard/insights/amount-vs-photos")
+def get_amount_vs_photos():
+    return insights_store.get_amount_vs_photos()
+
+@app.get("/dashboard/insights/repeated-descriptions")
+def get_repeated_descriptions():
+    return insights_store.get_repeated_descriptions()
+
+@app.get("/dashboard/insights/project-pipeline")
+def get_project_pipeline():
+    return insights_store.get_project_pipeline()
+
+@app.get("/dashboard/insights/stalled-projects")
+def get_stalled_projects():
+    return insights_store.get_stalled_projects()
+
+@app.get("/dashboard/insights/flag-reasons")
+def get_flag_reasons():
+    return insights_store.get_flag_reasons_frequency()
+
+@app.get("/dashboard/insights/flag-rate-cross-tab")
+def get_flag_rate_cross_tab():
+    return insights_store.get_flag_rate_cross_tab()
+
+
 if __name__ == "__main__":
     import uvicorn
     port = int(os.getenv("PORT", 8000))

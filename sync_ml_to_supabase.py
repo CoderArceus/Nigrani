@@ -57,7 +57,11 @@ def sync_data():
     
     # Supabase allows bulk inserts
     try:
-        # We use upsert so that if the work_id already exists, it updates it.
+        # First, clear out all old anomaly results because upsert doesn't delete stale flagged rows
+        # We can do this by deleting where flagged_by_model is not null (which is all of them)
+        supabase.table("anomaly_results").delete().neq("work_id", "0").execute()
+        
+        # Now insert the new ones
         result = supabase.table("anomaly_results").upsert(records_to_insert, on_conflict="work_id").execute()
         print(f"Successfully synced {len(result.data)} records to Supabase!")
     except Exception as e:

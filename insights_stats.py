@@ -226,3 +226,307 @@ class InsightsDataStore:
                         })
                         
         return results[:30]
+
+    # ═══════════════════════════════════════════════════════════════════
+    #  NEW ENDPOINTS for revamped Insights page (6 sections)
+    # ═══════════════════════════════════════════════════════════════════
+
+    def _load_anomaly_results(self):
+        """Load anomaly_results table for ensemble_score / flag reason data."""
+        try:
+            all_data = []
+            start = 0
+            batch_size = 1000
+            while True:
+                resp = (
+                    self.supabase.table("anomaly_results")
+                    .select("work_id, ensemble_score, top_flag_reasons, risk_level, flagged_by_model")
+                    .range(start, start + batch_size - 1)
+                    .execute()
+                )
+                data = resp.data
+                if not data:
+                    break
+                all_data.extend(data)
+                if len(data) < batch_size:
+                    break
+                start += batch_size
+            self.anomaly_df = pd.DataFrame(all_data)
+        except Exception:
+            self.anomaly_df = pd.DataFrame()
+
+    def _ensure_anomaly_data(self):
+        if not hasattr(self, 'anomaly_df') or self.anomaly_df.empty:
+            self._load_anomaly_results()
+
+    # ── Section 1: Fund Utilization & Pace ──────────────────────────
+
+    def get_utilization_by_mp(self):
+        """Utilization rate ranked by MP, worst-first."""
+        grouped = self.df.groupby('mp_name').agg(
+            constituency=('constituency', 'first'),
+            total_sanctioned=('sanctioned_amount', 'sum'),
+            total_released=('released_amount', 'sum')
+        ).reset_index()
+        grouped['utilization_pct'] = np.where(
+            grouped['total_sanctioned'] > 0,
+            (grouped['total_released'] / grouped['total_sanctioned'] * 100),
+            0
+        )
+        grouped = grouped.sort_values('utilization_pct', ascending=True).head(10)
+        grouped = grouped.fillna(0)
+        return grouped[['mp_name', 'constituency', 'utilization_pct']].to_dict(orient='records')
+
+    def get_time_to_release_histogram(self):
+        """Median recommendation-to-sanction days by state (worst first)."""
+        df_tmp = self.df.dropna(subset=['recommendation_date', 'sanction_date']).copy()
+        df_tmp['time_to_release'] = (df_tmp['sanction_date'] - df_tmp['recommendation_date']).dt.days
+        df_tmp = df_tmp[df_tmp['time_to_release'] >= 0]
+        
+        # Calculate median by state
+        grouped = df_tmp.groupby('state').agg(
+            median_days=('time_to_release', 'median'),
+            count=('time_to_release', 'count')
+        ).reset_index()
+        
+        # Filter out states with very few projects to avoid noise
+        grouped = grouped[grouped['count'] > 10]
+        
+        # Sort by worst (longest median delay) first, take top 10
+        grouped = grouped.sort_values('median_days', ascending=False).head(10)
+        
+        return grouped[['state', 'median_days']].to_dict(orient='records')
+
+    def get_sanction_completion_bubble(self):
+        """Bubble chart: sanction-to-completion lag vs sanctioned_amount, by status."""
+        df_tmp = self.df.dropna(subset=['sanction_date', 'completion_date']).copy()
+        df_tmp = df_tmp[df_tmp['status'] == 'Completed']
+        df_tmp['days_lag'] = (df_tmp['completion_date'] - df_tmp['sanction_date']).dt.days
+        df_tmp = df_tmp[df_tmp['days_lag'] >= 0]
+        # Sample for performance (max 200 points)
+        if len(df_tmp) > 200:
+            df_tmp = df_tmp.sample(200, random_state=42)
+        result = df_tmp[['days_lag', 'sanctioned_amount', 'work_category']].copy()
+        result = result.fillna({'work_category': 'Unknown'})
+        return result.to_dict(orient='records')
+
+    # ── Section 2: Geographic Equity ────────────────────────────────
+
+    def get_sanctioned_by_state(self):
+        """Total sanctioned amount by state for choropleth."""
+        grouped = self.df.groupby('state').agg(
+            total_sanctioned=('sanctioned_amount', 'sum')
+        ).reset_index()
+        grouped = grouped.fillna(0)
+        return grouped.to_dict(orient='records')
+
+    def get_sc_st_comparison(self):
+        """SC/ST vs Non-SC/ST: project_count, avg_sanctioned, completion_rate."""
+        grouped = self.df.groupby('is_sc_st_area').agg(
+            project_count=('work_id', 'count'),
+            avg_sanctioned=('sanctioned_amount', 'mean'),
+            completed_count=('status', lambda x: (x == 'Completed').sum())
+        ).reset_index()
+        grouped['completion_rate'] = (grouped['completed_count'] / grouped['project_count'] * 100).fillna(0)
+        grouped['avg_sanctioned_lakh'] = (grouped['avg_sanctioned'] / 100000).round(1)
+        grouped['label'] = grouped['is_sc_st_area'].map({True: 'SC/ST', False: 'Non-SC/ST'})
+        grouped = grouped.fillna(0)
+        return grouped[['label', 'project_count', 'avg_sanctioned_lakh', 'completion_rate']].to_dict(orient='records')
+
+    def get_category_mix_by_state(self):
+        """Heatmap: state x work_category counts for top states and categories."""
+        # Top 8 states and top 6 categories
+        top_states = self.df['state'].value_counts().head(8).index.tolist()
+        top_cats = self.df['work_category'].value_counts().head(6).index.tolist()
+        df_tmp = self.df[self.df['state'].isin(top_states) & self.df['work_category'].isin(top_cats)]
+        grouped = df_tmp.groupby(['state', 'work_category']).size().reset_index(name='count')
+        # Create a complete grid
+        result = []
+        for state in top_states:
+            row = {'state': state}
+            for cat in top_cats:
+                val = grouped[(grouped['state'] == state) & (grouped['work_category'] == cat)]
+                row[cat] = int(val['count'].values[0]) if len(val) > 0 else 0
+            result.append(row)
+        return {'categories': top_cats, 'data': result}
+
+    # ── Section 3: MP-Level Accountability ──────────────────────────
+
+    def get_mp_leaderboard(self):
+        """Per-MP: utilization, completion, high ensemble_score count, house, constituency."""
+        self._ensure_anomaly_data()
+
+        grouped = self.df.groupby('mp_name').agg(
+            constituency=('constituency', 'first'),
+            house=('house', 'first'),
+            total_sanctioned=('sanctioned_amount', 'sum'),
+            total_released=('released_amount', 'sum'),
+            project_count=('work_id', 'count'),
+            completed_count=('status', lambda x: (x == 'Completed').sum())
+        ).reset_index()
+
+        grouped['utilization_pct'] = np.where(
+            grouped['total_sanctioned'] > 0,
+            (grouped['total_released'] / grouped['total_sanctioned'] * 100).round(1),
+            0
+        )
+        grouped['completion_rate'] = (grouped['completed_count'] / grouped['project_count'] * 100).round(1).fillna(0)
+
+        # Count high ensemble_score projects per MP
+        if not self.anomaly_df.empty:
+            high_score = self.anomaly_df[self.anomaly_df['ensemble_score'] > 0.7]
+            # Join with projects to get mp_name
+            merged = high_score.merge(self.df[['work_id', 'mp_name']], on='work_id', how='left')
+            high_counts = merged.groupby('mp_name').size().reset_index(name='high_score_projects')
+            grouped = grouped.merge(high_counts, on='mp_name', how='left')
+        else:
+            grouped['high_score_projects'] = 0
+
+        grouped = grouped.fillna(0)
+        grouped['high_score_projects'] = grouped['high_score_projects'].astype(int)
+        grouped = grouped.sort_values('utilization_pct', ascending=True).head(20)
+        return grouped[['mp_name', 'constituency', 'house', 'utilization_pct', 'completion_rate', 'high_score_projects']].to_dict(orient='records')
+
+    def get_house_comparison(self):
+        """Lok Sabha vs Rajya Sabha comparison."""
+        grouped = self.df.groupby('house').agg(
+            mp_count=('mp_name', 'nunique'),
+            total_sanctioned=('sanctioned_amount', 'sum'),
+            total_released=('released_amount', 'sum'),
+            project_count=('work_id', 'count'),
+            completed_count=('status', lambda x: (x == 'Completed').sum())
+        ).reset_index()
+
+        grouped['avg_utilization'] = np.where(
+            grouped['total_sanctioned'] > 0,
+            (grouped['total_released'] / grouped['total_sanctioned'] * 100).round(1),
+            0
+        )
+        grouped['completion_rate'] = (grouped['completed_count'] / grouped['project_count'] * 100).round(1).fillna(0)
+        grouped['avg_project_count'] = (grouped['project_count'] / grouped['mp_count']).round(0).astype(int)
+        grouped = grouped.fillna(0)
+        return grouped[['house', 'avg_utilization', 'completion_rate', 'avg_project_count']].to_dict(orient='records')
+
+    # ── Section 4: Amount vs Documentation ──────────────────────────
+
+    def get_amount_vs_photos(self):
+        """Scatter: sanctioned_amount vs photo_count, colored by status."""
+        df_tmp = self.df[['sanctioned_amount', 'photo_count', 'status']].copy()
+        # Sample for performance
+        if len(df_tmp) > 300:
+            df_tmp = df_tmp.sample(300, random_state=42)
+        df_tmp = df_tmp.fillna(0)
+        return df_tmp.to_dict(orient='records')
+
+    def get_repeated_descriptions(self):
+        """Find near-duplicate/boilerplate work descriptions using simple text grouping."""
+        df_tmp = self.df[['work_description']].dropna().copy()
+        # Simple approach: normalize and count exact/near matches
+        df_tmp['normalized'] = df_tmp['work_description'].str.strip().str.lower()
+        # Group by first 60 chars (catches templated descriptions)
+        df_tmp['template'] = df_tmp['normalized'].str[:60]
+        counts = df_tmp.groupby('template').size().reset_index(name='count')
+        counts = counts[counts['count'] >= 3].sort_values('count', ascending=False).head(10)
+        # Get a readable version of each description
+        result = []
+        for _, row in counts.iterrows():
+            sample = df_tmp[df_tmp['template'] == row['template']].iloc[0]['work_description']
+            # Truncate for display
+            display = sample[:60].strip()
+            if len(sample) > 60:
+                display += '...'
+            result.append({
+                'description': display,
+                'count': int(row['count'])
+            })
+        return result
+
+    # ── Section 5: Status Pipeline ──────────────────────────────────
+
+    def get_project_pipeline(self):
+        """Funnel: counts by status stage."""
+        status_order = ['Recommended', 'Sanctioned', 'In Progress', 'Completed']
+        # For a funnel: each stage includes all projects that reached that stage
+        total = len(self.df)
+        recommended = total  # All projects were recommended
+        sanctioned = len(self.df[self.df['sanction_date'].notna()])
+        released = len(self.df[self.df['released_amount'] > 0])
+        in_progress = len(self.df[self.df['status'].isin(['In Progress', 'Completed'])])
+        completed = len(self.df[self.df['status'] == 'Completed'])
+
+        return [
+            {'stage': 'Recommended', 'count': int(recommended)},
+            {'stage': 'Sanctioned', 'count': int(sanctioned)},
+            {'stage': 'Released', 'count': int(released)},
+            {'stage': 'In Progress', 'count': int(in_progress)},
+            {'stage': 'Completed', 'count': int(completed)}
+        ]
+
+    def get_stalled_projects(self):
+        """In Progress sorted by days-since-sanction, flags projects gone quiet."""
+        today = pd.Timestamp.now()
+        df_tmp = self.df[
+            (self.df['status'] == 'In Progress') & 
+            (self.df['sanction_date'].notna())
+        ].copy()
+        df_tmp['days_since_sanction'] = (today - df_tmp['sanction_date']).dt.days
+        df_tmp = df_tmp.sort_values('days_since_sanction', ascending=False).head(20)
+        result = df_tmp[['work_id', 'state', 'days_since_sanction', 'sanctioned_amount']].copy()
+        result = result.fillna(0)
+        result['days_since_sanction'] = result['days_since_sanction'].astype(int)
+        # Format sanctioned amount for display
+        result['sanctioned_display'] = result['sanctioned_amount'].apply(
+            lambda x: f"₹ {x:,.0f}" if x else "₹ 0"
+        )
+        return result.to_dict(orient='records')
+
+    # ── Section 6: Understanding Ensemble Score ─────────────────────
+
+    def get_flag_reasons_frequency(self):
+        """Top flag reasons from anomaly_results."""
+        self._ensure_anomaly_data()
+        if self.anomaly_df.empty or 'top_flag_reasons' not in self.anomaly_df.columns:
+            return []
+
+        reasons_list = []
+        for _, row in self.anomaly_df.iterrows():
+            raw = str(row.get('top_flag_reasons', ''))
+            if raw and raw != 'nan':
+                parts = [r.strip() for r in raw.replace('\n', ',').split(',') if r.strip()]
+                reasons_list.extend(parts)
+
+        reason_counts = pd.Series(reasons_list).value_counts().head(8)
+        return [{'reason': r, 'count': int(c)} for r, c in reason_counts.items()]
+
+    def get_flag_rate_cross_tab(self):
+        """Cross-tab flag rate by work_category and by state."""
+        self._ensure_anomaly_data()
+        if self.anomaly_df.empty:
+            return {'by_category': [], 'by_state': []}
+
+        merged = self.df.merge(
+            self.anomaly_df[['work_id', 'flagged_by_model']],
+            on='work_id', how='left'
+        )
+        merged['flagged'] = merged['flagged_by_model'].fillna(False).astype(bool)
+
+        # By category
+        cat_group = merged.groupby('work_category').agg(
+            total=('work_id', 'count'),
+            flagged_count=('flagged', 'sum')
+        ).reset_index()
+        cat_group['flag_rate'] = (cat_group['flagged_count'] / cat_group['total'] * 100).round(1)
+        cat_group = cat_group.sort_values('flag_rate', ascending=False).head(6)
+
+        # By state (top 6)
+        state_group = merged.groupby('state').agg(
+            total=('work_id', 'count'),
+            flagged_count=('flagged', 'sum')
+        ).reset_index()
+        state_group['flag_rate'] = (state_group['flagged_count'] / state_group['total'] * 100).round(1)
+        state_group = state_group.sort_values('total', ascending=False).head(6)
+
+        return {
+            'by_category': cat_group[['work_category', 'flag_rate']].to_dict(orient='records'),
+            'by_state': state_group[['state', 'flag_rate']].to_dict(orient='records')
+        }

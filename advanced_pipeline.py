@@ -138,9 +138,7 @@ print("Saved network visualization -> mplads_network.png")
 numeric_features = [
     "days_rec_to_sanction", "days_sanction_to_completion", "release_ratio",
     "over_release_flag", "is_round_amount", "amount_zscore_in_category",
-    "no_photo_flag", "vendor_work_count", "vendor_total_amount",
-    "agency_work_count", "desc_generic_flag",
-    "vendor_degree_centrality", "agency_betweenness", "network_risk_flag",
+    "no_photo_flag", "desc_generic_flag",
 ]
 X = df[numeric_features].fillna(0)
 X_scaled = StandardScaler().fit_transform(X)
