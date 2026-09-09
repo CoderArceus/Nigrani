@@ -21,48 +21,75 @@ export function PaginationControls({ currentPage, totalPages }: PaginationContro
     router.push(`${pathname}?${params.toString()}`);
   };
 
-  const pages = [];
-  // simple logic to show up to 5 pages
-  let start = Math.max(1, currentPage - 2);
-  let end = Math.min(totalPages, start + 4);
-  
-  if (end - start < 4) {
-    start = Math.max(1, end - 4);
-  }
+  const getPageNumbers = () => {
+    if (totalPages <= 7) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+    
+    if (currentPage <= 4) {
+      return [1, 2, 3, 4, 5, '...', totalPages];
+    }
+    
+    if (currentPage >= totalPages - 3) {
+      return [1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+    }
+    
+    return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+  };
 
-  for (let i = start; i <= end; i++) {
-    pages.push(i);
-  }
+  const pages = getPageNumbers();
 
   return (
-    <div className="flex justify-center mt-8">
-      <div className="flex items-center gap-2">
+    <div className="flex justify-center mt-8 mb-4">
+      <div className="bg-white rounded-[16px] shadow-sm border border-outline-variant/30 p-2.5 flex items-center gap-2 w-fit">
+        {/* Previous Button */}
         <button
           onClick={() => navigateToPage(currentPage - 1)}
           disabled={currentPage === 1}
-          className="w-10 h-10 rounded-full flex items-center justify-center text-outline bg-surface-container-lowest border border-outline-variant/50 shadow-sm hover:bg-surface-container transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-colors ${
+            currentPage === 1 
+              ? "bg-[#F1F5F9] text-[#94A3B8] cursor-not-allowed" 
+              : "bg-white border border-[#E2E8F0] text-[#64748B] hover:bg-[#F8FAFC]"
+          }`}
         >
           <span className="material-symbols-outlined text-[20px]">chevron_left</span>
         </button>
         
-        {pages.map(page => (
-          <button
-            key={page}
-            onClick={() => navigateToPage(page)}
-            className={`w-10 h-10 rounded-full flex items-center justify-center font-display text-[clamp(13.6px,1.1vw,16.8px)] font-medium shadow-sm transition-colors border ${
-              page === currentPage
-                ? "bg-primary text-on-primary border-primary"
-                : "bg-surface-container-lowest text-on-surface border-outline-variant/50 hover:bg-surface-container"
-            }`}
-          >
-            {page}
-          </button>
-        ))}
+        {/* Page Numbers */}
+        {pages.map((page, index) => {
+          if (page === '...') {
+            return (
+              <div key={`ellipsis-${index}`} className="w-6 md:w-8 h-9 md:h-10 flex items-center justify-center text-[#64748B] font-medium tracking-[0.2em]">
+                ...
+              </div>
+            );
+          }
+          
+          const isCurrent = page === currentPage;
+          return (
+            <button
+              key={page}
+              onClick={() => navigateToPage(page as number)}
+              className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center font-sans text-[14px] md:text-[15px] font-semibold transition-colors ${
+                isCurrent
+                  ? "bg-[#2563EB] text-white shadow-sm"
+                  : "bg-white border border-[#E2E8F0] text-[#334155] hover:bg-[#F8FAFC]"
+              }`}
+            >
+              {page}
+            </button>
+          );
+        })}
 
+        {/* Next Button */}
         <button
           onClick={() => navigateToPage(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="w-10 h-10 rounded-full flex items-center justify-center text-outline bg-surface-container-lowest border border-outline-variant/50 shadow-sm hover:bg-surface-container transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-colors ${
+            currentPage === totalPages 
+              ? "bg-[#F1F5F9] text-[#94A3B8] cursor-not-allowed" 
+              : "bg-white border border-[#E2E8F0] text-[#64748B] hover:bg-[#F8FAFC]"
+          }`}
         >
           <span className="material-symbols-outlined text-[20px]">chevron_right</span>
         </button>
