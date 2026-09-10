@@ -8,7 +8,7 @@ const navItems = [
   { href: "/", label: "Explore Projects", icon: "travel_explore" },
   { href: "/map", label: "Map", icon: "map" },
   { href: "/insights", label: "Insights", icon: "analytics" },
-  { href: "#", label: "About Nigrani", icon: "info" },
+  { href: "/about", label: "About Nigrani", icon: "info" },
 ];
 
 export function PublicSidebar() {

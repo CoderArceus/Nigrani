@@ -3044,3 +3044,7 @@ INFO:     127.0.0.1:59244 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
 INFO:     127.0.0.1:59242 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
 INFO:     127.0.0.1:59242 - "GET /dashboard/review-queue HTTP/1.1" 200 OK
 INFO:     127.0.0.1:59242 - "GET /dashboard/review-queue HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59304 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59305 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59304 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59305 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
