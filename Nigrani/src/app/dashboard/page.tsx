@@ -115,15 +115,15 @@ export default function OverviewPage() {
           <h3 className="font-bold text-[16px] text-[#1E293B] mb-6">Project Status Distribution</h3>
           <div className="flex items-center justify-between gap-4 mt-auto">
             <div className="relative w-[140px] h-[140px]">
-              <svg viewBox="0 0 36 36" className="w-full h-full transform -rotate-90">
+              <svg viewBox="0 0 42 42" className="w-full h-full transform -rotate-90">
                 {/* Completed */}
-                <circle cx="18" cy="18" r="15.915" fill="transparent" stroke="#16A34A" strokeWidth="6" strokeDasharray={`${completedPct} ${100 - completedPct}`} strokeDashoffset="0" />
+                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#16A34A" strokeWidth="6" strokeDasharray={`${completedPct} ${100 - completedPct}`} strokeDashoffset="0" />
                 {/* In Progress */}
-                <circle cx="18" cy="18" r="15.915" fill="transparent" stroke="#2563EB" strokeWidth="6" strokeDasharray={`${inProgressPct} ${100 - inProgressPct}`} strokeDashoffset={`-${completedPct}`} />
+                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#2563EB" strokeWidth="6" strokeDasharray={`${inProgressPct} ${100 - inProgressPct}`} strokeDashoffset={`-${completedPct}`} />
                 {/* Not Started */}
-                <circle cx="18" cy="18" r="15.915" fill="transparent" stroke="#F59E0B" strokeWidth="6" strokeDasharray={`${notStartedPct} ${100 - notStartedPct}`} strokeDashoffset={`-${completedPct + inProgressPct}`} />
+                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F59E0B" strokeWidth="6" strokeDasharray={`${notStartedPct} ${100 - notStartedPct}`} strokeDashoffset={`-${completedPct + inProgressPct}`} />
                 {/* Require Attention */}
-                <circle cx="18" cy="18" r="15.915" fill="transparent" stroke="#DC2626" strokeWidth="6" strokeDasharray={`${delaysPct} ${100 - delaysPct}`} strokeDashoffset={`-${completedPct + inProgressPct + notStartedPct}`} />
+                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#DC2626" strokeWidth="6" strokeDasharray={`${delaysPct} ${100 - delaysPct}`} strokeDashoffset={`-${completedPct + inProgressPct + notStartedPct}`} />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <span className="font-display font-bold text-[22px] text-[#1E293B] leading-none">{totalProjects.toLocaleString()}</span>
