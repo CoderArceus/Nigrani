@@ -13,13 +13,15 @@ export default function OverviewPage() {
   const [statesData, setStatesData] = useState<any[]>([]);
 
   useEffect(() => {
-    const loadData = async () => {
+    let isMounted = true;
+    
+    const loadOverviewAndProjects = async () => {
       try {
         const overviewData = await getDashboardOverview().catch(e => {
           console.error("Overview fetch failed", e);
           return { total_projects: 0, completed: 0, in_progress: 0, sanction_delays: 0, total_sanctioned_amount: 0, total_released_amount: 0 };
         });
-        setData(overviewData);
+        if (isMounted) setData(overviewData);
 
         const projectsData = await fetch(`${API_BASE_URL}/projects/search?limit=3`).then(res => {
           if (!res.ok) throw new Error("Projects API failed");
@@ -28,10 +30,19 @@ export default function OverviewPage() {
           console.error(e);
           return { projects: [] };
         });
-        if (projectsData && projectsData.projects) {
+        if (isMounted && projectsData && projectsData.projects) {
           setRecentProjects(projectsData.projects);
         }
+      } catch (err) {
+        console.error(err);
+        if (isMounted) setError("Unable to load overview data");
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
 
+    const loadCharts = async () => {
+      try {
         const categoryData = await fetch(`${API_BASE_URL}/dashboard/category-summary`).then(res => {
           if (!res.ok) throw new Error("Category API failed");
           return res.json();
@@ -39,7 +50,7 @@ export default function OverviewPage() {
           console.error(e);
           return { categories: [] };
         });
-        if (categoryData && categoryData.categories) {
+        if (isMounted && categoryData && categoryData.categories) {
           setCategories(categoryData.categories);
         }
 
@@ -50,18 +61,17 @@ export default function OverviewPage() {
           console.error(e);
           return { states: [] };
         });
-        if (stateSummaryData && stateSummaryData.states) {
+        if (isMounted && stateSummaryData && stateSummaryData.states) {
           setStatesData(stateSummaryData.states);
         }
       } catch (err) {
-        console.error(err);
-        setError("Unable to load dashboard data");
-      } finally {
-        setLoading(false);
+        console.error("Failed to load chart data", err);
       }
     };
     
-    loadData();
+    loadOverviewAndProjects().then(loadCharts);
+
+    return () => { isMounted = false; };
   }, []);
 
   if (loading) {
