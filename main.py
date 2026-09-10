@@ -478,14 +478,24 @@ def get_anomalies():
 @app.get("/dashboard/overview")
 def get_dashboard_overview():
 
-    # Fetch all projects to compute global stats
-    projects_resp = (
-        supabase
-        .table("projects")
-        .select("status, sanctioned_amount, released_amount")
-        .execute()
-    )
-    projects = projects_resp.data
+    # Fetch all projects using pagination to compute global stats
+    projects = []
+    start = 0
+    batch_size = 1000
+
+    while True:
+        response = (
+            supabase
+            .table("projects")
+            .select("status, sanctioned_amount, released_amount")
+            .range(start, start + batch_size - 1)
+            .execute()
+        )
+        batch = response.data
+        projects.extend(batch)
+        if len(batch) < batch_size:
+            break
+        start += batch_size
 
     in_progress = 0
     completed = 0
@@ -573,13 +583,44 @@ def state_summary():
     """Aggregates all project data by state, returning real financial numbers, completion rates, and delay status."""
     from datetime import datetime, timezone
     
-    # 1. Fetch all projects
-    projects_resp = supabase.table("projects").select("*").execute()
-    projects = projects_resp.data
+    # 1. Fetch all projects using pagination
+    projects = []
+    start = 0
+    batch_size = 1000
 
-    # 2. Fetch all anomalies
-    anomalies_resp = supabase.table("anomaly_results").select("work_id, risk_level, flagged_by_model, ensemble_score").execute()
-    anomalies = {item["work_id"]: item for item in anomalies_resp.data}
+    while True:
+        response = (
+            supabase
+            .table("projects")
+            .select("*")
+            .range(start, start + batch_size - 1)
+            .execute()
+        )
+        batch = response.data
+        projects.extend(batch)
+        if len(batch) < batch_size:
+            break
+        start += batch_size
+
+    # 2. Fetch all anomalies using pagination
+    anomalies_list = []
+    start = 0
+
+    while True:
+        response = (
+            supabase
+            .table("anomaly_results")
+            .select("work_id, risk_level, flagged_by_model, ensemble_score")
+            .range(start, start + batch_size - 1)
+            .execute()
+        )
+        batch = response.data
+        anomalies_list.extend(batch)
+        if len(batch) < batch_size:
+            break
+        start += batch_size
+        
+    anomalies = {item["work_id"]: item for item in anomalies_list}
 
     state_data = {}
     current_date = datetime.now(timezone.utc)
