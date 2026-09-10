@@ -30,6 +30,28 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+import time
+from functools import wraps
+
+CACHE = {}
+CACHE_TTL = 300 # 5 minutes
+
+def simple_cache(key):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            now = time.time()
+            if key in CACHE:
+                if now - CACHE[key]['timestamp'] < CACHE_TTL:
+                    return CACHE[key]['data']
+            data = func(*args, **kwargs)
+            CACHE[key] = {
+                'timestamp': now,
+                'data': data
+            }
+            return data
+        return wrapper
+    return decorator
 
 
 @app.get("/")
@@ -476,6 +498,7 @@ def get_anomalies():
         "anomalies": response.data
     }
 @app.get("/dashboard/overview")
+@simple_cache("dashboard_overview")
 def get_dashboard_overview():
 
     # Fetch all projects using pagination to compute global stats
@@ -579,6 +602,7 @@ def year_summary():
     return insights_store.get_year_summary()
 
 @app.get("/dashboard/state-summary")
+@simple_cache("state_summary")
 def state_summary():
     """Aggregates all project data by state, returning real financial numbers, completion rates, and delay status."""
     from datetime import datetime, timezone
@@ -791,6 +815,7 @@ def district_summary(state: str):
         "districts": list(district_data.values())
     }
 @app.get("/dashboard/category-summary")
+@simple_cache("category_summary")
 def category_summary():
 
     # Get all projects using pagination
