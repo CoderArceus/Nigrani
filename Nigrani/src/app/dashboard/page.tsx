@@ -108,7 +108,7 @@ export default function OverviewPage() {
       </div>
 
       {/* Visualizations Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* Status Donut */}
         <div className="bg-white rounded-[16px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col justify-between">
@@ -154,23 +154,6 @@ export default function OverviewPage() {
             <SectorBar icon="groups" label="Community Assets" value={98} max={250} />
             <SectorBar icon="more_horiz" label="Other" value={195} max={250} />
           </div>
-        </div>
-
-        {/* Map */}
-        <div className="bg-white rounded-[16px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col">
-          <h3 className="font-bold text-[16px] text-[#1E293B] mb-2">Projects Across India</h3>
-          <div className="flex-1 relative flex items-center justify-center min-h-[160px] bg-slate-50/50 rounded-xl my-2 overflow-hidden">
-            <div className="w-full h-full absolute inset-0 opacity-20 bg-[url('https://upload.wikimedia.org/wikipedia/commons/e/ef/India_map_en.svg')] bg-contain bg-center bg-no-repeat" />
-            <div className="z-10 bg-white/80 backdrop-blur-sm p-3 rounded-lg border border-slate-200 text-center shadow-sm">
-              <span className="material-symbols-outlined text-[#2563EB] text-[24px]">map</span>
-              <p className="text-[12px] font-semibold text-slate-700 mt-1">Interactive Map Data</p>
-            </div>
-          </div>
-          <button className="mt-auto w-full py-2 bg-[#EEF2FF] text-[#4F46E5] font-semibold text-[13px] rounded-[8px] flex items-center justify-center gap-2 hover:bg-[#E0E7FF] transition-colors">
-            <span className="material-symbols-outlined text-[16px]">map</span>
-            View Interactive Map
-            <span className="material-symbols-outlined text-[16px]">chevron_right</span>
-          </button>
         </div>
       </div>
 
