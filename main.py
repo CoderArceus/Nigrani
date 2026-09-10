@@ -616,7 +616,7 @@ def state_summary():
         response = (
             supabase
             .table("projects")
-            .select("*")
+            .select("work_id, state, status, sanction_date, sanctioned_amount, released_amount, mp_name")
             .range(start, start + batch_size - 1)
             .execute()
         )
@@ -731,7 +731,7 @@ def district_summary(state: str):
     from datetime import datetime, timezone
     
     # 1. Fetch all projects for this state
-    projects_resp = supabase.table("projects").select("*").ilike("state", state).execute()
+    projects_resp = supabase.table("projects").select("work_id, district, status, sanction_date, sanctioned_amount, released_amount, mp_name").ilike("state", state).execute()
     projects = projects_resp.data
 
     # 2. Fetch all anomalies
