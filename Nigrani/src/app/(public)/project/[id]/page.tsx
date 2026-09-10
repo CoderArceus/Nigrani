@@ -6,7 +6,7 @@ import { API_BASE_URL } from "@/lib/api";
 export const dynamic = "force-dynamic";
 
 async function fetchProject(id: string) {
-  const res = await fetch(`${API_BASE_URL}/projects/${id}`, { cache: "no-store" });
+  const res = await fetch(`${API_BASE_URL}/projects/${id}`, { next: { revalidate: 300 } });
   if (!res.ok) return null;
   return res.json();
 }

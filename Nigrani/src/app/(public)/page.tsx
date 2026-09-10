@@ -25,7 +25,7 @@ async function fetchProjects(searchParams: any, page: number, limit: number) {
   let retries = 3;
   while (retries > 0) {
     try {
-      const res = await fetch(url.toString(), { cache: "no-store" });
+      const res = await fetch(url.toString(), { next: { revalidate: 300 } });
       if (res.ok) {
         return await res.json();
       }
@@ -47,7 +47,7 @@ async function fetchStats() {
   let retries = 3;
   while (retries > 0) {
     try {
-      const res = await fetch(`${API_BASE_URL}/dashboard/overview`, { cache: "no-store" });
+      const res = await fetch(`${API_BASE_URL}/dashboard/overview`, { next: { revalidate: 300 } });
       if (res.ok) {
         return await res.json();
       }

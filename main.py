@@ -1391,9 +1391,13 @@ def agency_risk():
     }
 
 
+import asyncio
+
 @app.on_event("startup")
-def startup_event():
-    insights_store.load_data()
+async def startup_event():
+    # Load data in the background so the API boots up instantly
+    loop = asyncio.get_event_loop()
+    loop.run_in_executor(None, insights_store.load_data)
 
 
 @app.get("/dashboard/insights/national-trend")

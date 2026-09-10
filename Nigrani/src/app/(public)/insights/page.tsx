@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 async function fetchData(endpoint: string) {
   try {
     const res = await fetch(`${API_BASE_URL}/dashboard/insights/${endpoint}`, {
-      cache: "no-store",
+      next: { revalidate: 300 },
     });
     if (!res.ok) return endpoint.includes("cross-tab") ? { by_category: [], by_state: [] } : [];
     return res.json();

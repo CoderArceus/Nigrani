@@ -43,6 +43,8 @@ class InsightsDataStore:
         self.peer_groups = self.df.groupby(['work_category', 'state'])
         
     def get_national_trend(self):
+        if self.df.empty:
+            return []
         df_trend = self.df.copy()
         df_trend['year_quarter'] = df_trend['sanction_date'].dt.to_period('Q').astype(str)
         grouped = df_trend.groupby('year_quarter').agg(
@@ -60,6 +62,8 @@ class InsightsDataStore:
         return grouped.to_dict(orient='records')
         
     def get_projects_requiring_attention(self):
+        if self.df.empty:
+            return []
         # High utilization, incomplete, no completion date
         mask = (self.df['utilization_pct'] >= 90) & (self.df['status'] != 'Completed') & (self.df['completion_date'].isna())
         # Documentation gap (high released amount, 0 photos)
@@ -109,6 +113,8 @@ class InsightsDataStore:
         return results[:30]
         
     def get_work_categories(self):
+        if self.df.empty:
+            return []
         grouped = self.df.groupby('work_category').agg(
             count=('work_id', 'count'),
             avg_funding=('sanctioned_amount', 'mean'),
@@ -126,6 +132,8 @@ class InsightsDataStore:
         return grouped.to_dict(orient='records')
         
     def get_demographics(self):
+        if self.df.empty:
+            return []
         grouped = self.df.groupby('is_sc_st_area').agg(
             project_count=('work_id', 'count'),
             total_funding=('sanctioned_amount', 'sum'),
@@ -145,6 +153,8 @@ class InsightsDataStore:
         return grouped.to_dict(orient='records')
         
     def get_delay_intelligence(self):
+        if self.df.empty:
+            return []
         results = []
         for name, group in self.peer_groups:
             if len(group) >= 10:
@@ -263,6 +273,8 @@ class InsightsDataStore:
 
     def get_utilization_by_mp(self):
         """Utilization rate ranked by MP, worst-first."""
+        if self.df.empty:
+            return []
         grouped = self.df.groupby('mp_name').agg(
             constituency=('constituency', 'first'),
             total_sanctioned=('sanctioned_amount', 'sum'),
@@ -279,6 +291,8 @@ class InsightsDataStore:
 
     def get_time_to_release_histogram(self):
         """Median recommendation-to-sanction days by state (worst first)."""
+        if self.df.empty:
+            return []
         df_tmp = self.df.dropna(subset=['recommendation_date', 'sanction_date']).copy()
         df_tmp['time_to_release'] = (df_tmp['sanction_date'] - df_tmp['recommendation_date']).dt.days
         df_tmp = df_tmp[df_tmp['time_to_release'] >= 0]
@@ -299,6 +313,8 @@ class InsightsDataStore:
 
     def get_sanction_completion_bubble(self):
         """Bubble chart: sanction-to-completion lag vs sanctioned_amount, by status."""
+        if self.df.empty:
+            return []
         df_tmp = self.df.dropna(subset=['sanction_date', 'completion_date']).copy()
         df_tmp = df_tmp[df_tmp['status'] == 'Completed']
         df_tmp['days_lag'] = (df_tmp['completion_date'] - df_tmp['sanction_date']).dt.days
@@ -314,6 +330,8 @@ class InsightsDataStore:
 
     def get_sanctioned_by_state(self):
         """Total sanctioned amount by state for choropleth."""
+        if self.df.empty:
+            return []
         grouped = self.df.groupby('state').agg(
             total_sanctioned=('sanctioned_amount', 'sum')
         ).reset_index()
@@ -322,6 +340,8 @@ class InsightsDataStore:
 
     def get_sc_st_comparison(self):
         """SC/ST vs Non-SC/ST: project_count, avg_sanctioned, completion_rate."""
+        if self.df.empty:
+            return []
         grouped = self.df.groupby('is_sc_st_area').agg(
             project_count=('work_id', 'count'),
             avg_sanctioned=('sanctioned_amount', 'mean'),
@@ -335,6 +355,8 @@ class InsightsDataStore:
 
     def get_category_mix_by_state(self):
         """Heatmap: state x work_category counts for top states and categories."""
+        if self.df.empty:
+            return {'categories': [], 'data': []}
         # Top 8 states and top 6 categories
         top_states = self.df['state'].value_counts().head(8).index.tolist()
         top_cats = self.df['work_category'].value_counts().head(6).index.tolist()
@@ -354,6 +376,8 @@ class InsightsDataStore:
 
     def get_mp_leaderboard(self):
         """Per-MP: utilization, completion, high ensemble_score count, house, constituency."""
+        if self.df.empty:
+            return []
         self._ensure_anomaly_data()
 
         grouped = self.df.groupby('mp_name').agg(
@@ -389,6 +413,8 @@ class InsightsDataStore:
 
     def get_house_comparison(self):
         """Lok Sabha vs Rajya Sabha comparison."""
+        if self.df.empty:
+            return []
         grouped = self.df.groupby('house').agg(
             mp_count=('mp_name', 'nunique'),
             total_sanctioned=('sanctioned_amount', 'sum'),
@@ -411,6 +437,8 @@ class InsightsDataStore:
 
     def get_amount_vs_photos(self):
         """Scatter: sanctioned_amount vs photo_count, colored by status."""
+        if self.df.empty:
+            return []
         df_tmp = self.df[['sanctioned_amount', 'photo_count', 'status']].copy()
         # Sample for performance
         if len(df_tmp) > 300:
@@ -420,6 +448,8 @@ class InsightsDataStore:
 
     def get_repeated_descriptions(self):
         """Find near-duplicate/boilerplate work descriptions using simple text grouping."""
+        if self.df.empty:
+            return []
         df_tmp = self.df[['work_description']].dropna().copy()
         # Simple approach: normalize and count exact/near matches
         df_tmp['normalized'] = df_tmp['work_description'].str.strip().str.lower()
