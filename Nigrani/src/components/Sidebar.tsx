@@ -106,6 +106,23 @@ export function Sidebar() {
             </Link>
           );
         })}
+        
+        {/* Profile */}
+        <div className={`flex items-center gap-3 cursor-pointer group ${isCollapsed ? 'justify-center p-2' : 'px-4 py-3'} mt-2 border-t border-outline-variant`}>
+          <div className="w-10 h-10 rounded-full bg-[#334155] text-white flex shrink-0 items-center justify-center font-display font-medium text-[14px]">
+            O
+          </div>
+          {!isCollapsed && (
+            <div className="flex flex-col">
+              <span className="font-sans font-bold text-[14px] text-[#1E293B] leading-tight">
+                Officer
+              </span>
+              <span className="font-sans text-[11px] text-[#64748B] leading-tight flex items-center gap-1">
+                MPLADS Monitoring
+              </span>
+            </div>
+          )}
+        </div>
       </div>
     </nav>
   );

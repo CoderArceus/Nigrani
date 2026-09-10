@@ -257,3 +257,7 @@ INFO:     127.0.0.1:57052 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
 INFO:     127.0.0.1:57168 - "GET /dashboard/overview HTTP/1.1" 200 OK
 INFO:     127.0.0.1:57168 - "GET /dashboard/overview HTTP/1.1" 200 OK
 INFO:     127.0.0.1:57221 - "GET /dashboard/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57307 - "GET /projects/search?limit=3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57308 - "GET /dashboard/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57307 - "GET /projects/search?limit=3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57307 - "GET /dashboard/overview HTTP/1.1" 200 OK
