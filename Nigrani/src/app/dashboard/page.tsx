@@ -117,13 +117,13 @@ export default function OverviewPage() {
             <div className="relative w-[180px] h-[180px] shrink-0">
               <svg viewBox="0 0 42 42" className="w-full h-full transform -rotate-90">
                 {/* Completed */}
-                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#16A34A" strokeWidth="9" strokeDasharray={`${Math.max(0, completedPct - 1.5)} ${100 - Math.max(0, completedPct - 1.5)}`} strokeDashoffset="0" strokeLinecap="round" />
+                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#16A34A" strokeWidth="9" strokeDasharray={`${completedPct} ${100 - completedPct}`} strokeDashoffset="0" />
                 {/* In Progress */}
-                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#2563EB" strokeWidth="9" strokeDasharray={`${Math.max(0, inProgressPct - 1.5)} ${100 - Math.max(0, inProgressPct - 1.5)}`} strokeDashoffset={`-${completedPct}`} strokeLinecap="round" />
+                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#2563EB" strokeWidth="9" strokeDasharray={`${inProgressPct} ${100 - inProgressPct}`} strokeDashoffset={`-${completedPct}`} />
                 {/* Not Started */}
-                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F59E0B" strokeWidth="9" strokeDasharray={`${Math.max(0, notStartedPct - 1.5)} ${100 - Math.max(0, notStartedPct - 1.5)}`} strokeDashoffset={`-${completedPct + inProgressPct}`} strokeLinecap="round" />
+                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F59E0B" strokeWidth="9" strokeDasharray={`${notStartedPct} ${100 - notStartedPct}`} strokeDashoffset={`-${completedPct + inProgressPct}`} />
                 {/* Require Attention */}
-                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#DC2626" strokeWidth="9" strokeDasharray={`${Math.max(0, delaysPct - 1.5)} ${100 - Math.max(0, delaysPct - 1.5)}`} strokeDashoffset={`-${completedPct + inProgressPct + notStartedPct}`} strokeLinecap="round" />
+                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#DC2626" strokeWidth="9" strokeDasharray={`${delaysPct} ${100 - delaysPct}`} strokeDashoffset={`-${completedPct + inProgressPct + notStartedPct}`} />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <span className="font-display font-bold text-[28px] text-[#1E293B] leading-none">{totalProjects.toLocaleString()}</span>
