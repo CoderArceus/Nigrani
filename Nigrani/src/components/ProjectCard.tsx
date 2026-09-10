@@ -43,7 +43,7 @@ const getGaugeColor = (score: number) => {
   return "bg-[#16A34A]"; // Safe/Normal
 };
 
-export function ProjectCard({ project }: { project: any }) {
+export function ProjectCard({ project, dashboardMode = false }: { project: any, dashboardMode?: boolean }) {
   const id = project.work_id || "ID-UNKNOWN";
   const status = project.status || "Unknown";
   const title = project.work_name || `${project.work_category} in ${project.district}`;
@@ -61,8 +61,10 @@ export function ProjectCard({ project }: { project: any }) {
   // Progress bar width
   const scorePercent = Math.min(Math.max((score || 0) * 100, 0), 100);
 
+  const linkHref = dashboardMode ? `/dashboard/project/${id}` : `/project/${id}`;
+
   return (
-    <Link href={`/project/${id}`} className="block h-full">
+    <Link href={linkHref} className="block h-full">
       <div className="h-full bg-white rounded-[20px] border border-[#E4E7F5] p-6 flex flex-col hover:shadow-[0_8px_20px_rgba(79,91,213,0.08)] transition-all duration-300 group cursor-pointer">
         
         {/* Top Header */}
