@@ -13,16 +13,18 @@ export default function LoginPage() {
   };
 
   return (
-    <div 
-      className="min-h-screen flex items-center justify-center p-4 relative"
-      style={{
-        backgroundImage: "url('/login-bg.jpg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat"
-      }}
-    >
-      {/* Removed the light overlay to ensure the background remains exactly as provided, in full clarity */}
+    <div className="min-h-screen flex items-center justify-center p-4 relative bg-[#F8FAFC]">
+      
+      {/* Background Image Container with Saturation Filter */}
+      <div 
+        className="absolute inset-0 z-0 saturate-50 opacity-90"
+        style={{
+          backgroundImage: "url('/login-bg.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat"
+        }}
+      />
       
       {/* Scaled up slightly based on user feedback */}
       <div className="relative z-10 w-full max-w-[480px] flex flex-col items-center scale-[0.85] origin-center">
