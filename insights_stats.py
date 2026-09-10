@@ -152,6 +152,18 @@ class InsightsDataStore:
         grouped = grouped.fillna(0)
         return grouped.to_dict(orient='records')
         
+    def get_mp_summary(self):
+        if self.df.empty:
+            return {'mps': []}
+        mps = sorted([mp for mp in self.df['mp_name'].unique() if pd.notna(mp)])
+        return {'mps': mps}
+        
+    def get_year_summary(self):
+        if self.df.empty:
+            return {'years': []}
+        years = sorted([int(y) for y in self.df['sanction_date'].dt.year.unique() if pd.notna(y)], reverse=True)
+        return {'years': years}
+        
     def get_delay_intelligence(self):
         if self.df.empty:
             return []

@@ -1,13 +1,7 @@
 INFO:     Will watch for changes in these directories: ['/Users/aryan/Downloads/mplads']
 INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [9077] using WatchFiles
-INFO:     Started server process [9080]
+INFO:     Started reloader process [9448] using WatchFiles
+INFO:     Started server process [9451]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     127.0.0.1:56009 - "GET /projects/search?limit=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56066 - "GET /projects/search?page=1&limit=6 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56067 - "GET /dashboard/overview HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56069 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56069 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56070 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56069 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56178 - "GET /dashboard/year-summary HTTP/1.1" 200 OK

@@ -63,7 +63,9 @@ def search_projects(
     page: int = 1,
     limit: int = 20,
     sort: str = None,
-    order: str = "desc"
+    order: str = "desc",
+    mp_name: str = None,
+    year: str = None
 ):
     # ---------------------------------
     # Validate pagination
@@ -97,6 +99,10 @@ def search_projects(
             query = query.eq("projects.status", status)
         if work_category:
             query = query.eq("projects.work_category", work_category)
+        if mp_name:
+            query = query.eq("projects.mp_name", mp_name)
+        if year:
+            query = query.gte("projects.sanction_date", f"{year}-01-01").lte("projects.sanction_date", f"{year}-12-31")
             
         query = query.order("ensemble_score", desc=is_desc)
         
@@ -152,6 +158,10 @@ def search_projects(
         query = query.eq("status", status)
     if work_category:
         query = query.eq("work_category", work_category)
+    if mp_name:
+        query = query.eq("mp_name", mp_name)
+    if year:
+        query = query.gte("sanction_date", f"{year}-01-01").lte("sanction_date", f"{year}-12-31")
 
     if sort == "cost":
         query = query.order("sanctioned_amount", desc=is_desc)
@@ -550,6 +560,14 @@ def get_dashboard_overview():
         "total_sanctioned_amount": total_sanctioned,
         "total_released_amount": total_released
     }
+@app.get("/dashboard/mp-summary")
+def mp_summary():
+    return insights_store.get_mp_summary()
+
+@app.get("/dashboard/year-summary")
+def year_summary():
+    return insights_store.get_year_summary()
+
 @app.get("/dashboard/state-summary")
 def state_summary():
     """Aggregates all project data by state, returning real financial numbers, completion rates, and delay status."""
