@@ -104,11 +104,7 @@ export default async function ProjectsDirectoryPage(props: {
 
   return (
     <div className="flex flex-col gap-4 w-full pb-6 max-w-[1400px] mx-auto">
-      {/* Header Section */}
-      <LargePageHeader
-        title="Project Database"
-        description="The complete catalog of all projects, filterable by district, sector, and status."
-      />
+
 
       {/* Top Floating Control Bar */}
       <div className="flex flex-wrap items-center justify-between gap-3 w-full mt-4">
