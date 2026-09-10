@@ -2,18 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 
 const navItems = [
-  { href: "/", label: "Explore Projects", icon: "travel_explore" },
+  { href: "/", label: "Explore Projects", icon: "search" },
   { href: "/map", label: "Map", icon: "map" },
-  { href: "/insights", label: "Insights", icon: "analytics" },
+  { href: "/insights", label: "Insights", icon: "bar_chart" },
   { href: "/about", label: "About Nigrani", icon: "info" },
 ];
 
 export function PublicSidebar() {
   const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/" || pathname.startsWith("/project/");
@@ -22,69 +20,56 @@ export function PublicSidebar() {
 
   return (
     <aside
-      className={`bg-surface-container-lowest border-r border-outline-variant/30 flex flex-col h-screen sticky top-0 shrink-0 transition-all duration-300 ${
-        isCollapsed ? "w-[80px]" : "w-[260px]"
-      }`}
+      className="bg-transparent border-r border-outline-variant/20 flex flex-col h-screen sticky top-0 shrink-0 w-[260px]"
     >
-      <div className="px-6 py-6 border-b border-outline-variant/30 flex flex-col gap-1 items-center md:items-start relative">
-        <button
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          className={`absolute ${
-            isCollapsed ? "left-1/2 -translate-x-1/2" : "right-4"
-          } top-6 text-on-surface-variant hover:text-primary transition-colors`}
-        >
-          <span className="material-symbols-outlined text-[20px]">
-            {isCollapsed ? "menu_open" : "menu_open"}
-          </span>
-        </button>
-
-        {!isCollapsed && (
-          <div className="mt-2">
-            <span className="font-display text-[20px] font-bold text-primary tracking-tight block">
-              Nigrani
-            </span>
-            <span className="font-sans text-[12px] font-semibold tracking-[0.05em] text-outline uppercase block mt-1">
-              Public Portal
-            </span>
-          </div>
-        )}
+      {/* Header / Branding */}
+      <div className="px-6 pt-7 pb-5 flex flex-col gap-0.5">
+        <span className="font-display text-[22px] font-bold text-primary tracking-tight block">
+          Nigrani
+        </span>
+        <span className="font-sans text-[11px] font-semibold tracking-[0.08em] text-[#94A3B8] uppercase block">
+          Public Portal
+        </span>
       </div>
 
-      <nav className="flex-grow py-4 flex flex-col gap-1 px-3">
+      {/* Navigation */}
+      <nav className="flex-grow py-3 flex flex-col gap-1.5 px-4">
         {navItems.map((item) => {
           const active = isActive(item.href);
           return (
             <Link
               key={item.label}
               href={item.href}
-              title={isCollapsed ? item.label : undefined}
-              className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-150 ease-in-out font-sans text-[15.2px] font-semibold ${
+              className={`flex items-center gap-3.5 px-4 py-3 rounded-xl transition-all duration-150 ease-in-out font-sans text-[15px] font-semibold relative ${
                 active
-                  ? "bg-accent-subtle text-primary border-l-4 border-primary"
-                  : "text-on-surface-variant hover:text-primary hover:bg-surface-container-low"
-              } ${isCollapsed ? "justify-center border-l-0 px-0" : ""}`}
+                  ? "bg-[#EFF6FF] text-[#2563EB]"
+                  : "text-[#475569] hover:text-[#2563EB] hover:bg-[#F8FAFC]"
+              }`}
             >
+              {/* Active indicator bar */}
+              {active && (
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-[60%] bg-[#2563EB] rounded-r-full" />
+              )}
               <span
-                className="material-symbols-outlined text-[20px]"
-                data-weight={active ? "fill" : undefined}
+                className={`material-symbols-outlined text-[22px] ${active ? "text-[#2563EB]" : "text-[#64748B]"}`}
               >
                 {item.icon}
               </span>
-              {!isCollapsed && <span>{item.label}</span>}
+              <span>{item.label}</span>
             </Link>
           );
         })}
       </nav>
-      <div className="mt-auto p-4 border-t border-outline-variant/30">
+
+      {/* Officer Login Button */}
+      <div className="mt-auto p-4">
         <Link
           href="/login"
-          title={isCollapsed ? "Officer Login" : undefined}
-          className={`flex items-center gap-3 px-4 py-3 rounded-lg border border-primary/30 text-primary hover:bg-primary/5 hover:border-primary transition-all duration-150 ease-in-out font-sans text-[15.2px] font-semibold ${
-            isCollapsed ? "justify-center px-0" : ""
-          }`}
+          className="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-white/60 backdrop-blur-sm border border-[#E2E8F0] text-[#1E293B] hover:bg-white hover:border-[#CBD5E1] hover:shadow-sm transition-all duration-150 ease-in-out font-sans text-[15px] font-semibold"
         >
-          <span className="material-symbols-outlined text-[20px]">lock</span>
-          {!isCollapsed && <span>Officer Login</span>}
+          <span className="material-symbols-outlined text-[22px] text-[#2563EB]">verified_user</span>
+          <span className="flex-1">Officer Login</span>
+          <span className="material-symbols-outlined text-[18px] text-[#94A3B8]">chevron_right</span>
         </Link>
       </div>
     </aside>

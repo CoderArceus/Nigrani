@@ -3126,3 +3126,11 @@ INFO:     Application startup complete.
 INFO:     127.0.0.1:59485 - "GET /dashboard/overview HTTP/1.1" 200 OK
 INFO:     127.0.0.1:59488 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
 INFO:     127.0.0.1:59493 - "GET /dashboard/overview HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'test_limit.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [14737]
+INFO:     Started server process [15175]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
