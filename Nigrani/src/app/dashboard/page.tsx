@@ -108,7 +108,7 @@ export default function OverviewPage() {
       </div>
 
       {/* Visualizations Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Status Donut */}
         <div className="bg-white rounded-[16px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col">
@@ -155,6 +155,34 @@ export default function OverviewPage() {
             <SectorBar icon="more_horiz" label="Other" value={195} max={250} />
           </div>
         </div>
+
+        {/* Attention by State */}
+        <div className="bg-white rounded-[16px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="font-bold text-[16px] text-[#1E293B]">Attention by State</h3>
+          </div>
+          <div className="flex flex-col gap-4 flex-1">
+            <StateAttentionBar label="Uttar Pradesh" value={42} pct={26} max={50} />
+            <StateAttentionBar label="Bihar" value={28} pct={18} max={50} />
+            <StateAttentionBar label="Madhya Pradesh" value={18} pct={11} max={50} />
+            <StateAttentionBar label="Rajasthan" value={16} pct={10} max={50} />
+            <StateAttentionBar label="Maharashtra" value={14} pct={9} max={50} />
+            <StateAttentionBar label="Assam" value={12} pct={8} max={50} />
+          </div>
+          <div className="mt-4 bg-[#FEF2F2] rounded-[10px] p-4 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <span className="material-symbols-outlined text-[#EF4444] text-[20px]">warning</span>
+              <div>
+                <span className="font-bold text-[#DC2626] text-[16px]">159</span>
+                <span className="text-[#991B1B] text-[12px] ml-2 font-medium">projects require attention<br/>across 18 states</span>
+              </div>
+            </div>
+            <div className="text-right">
+              <span className="font-bold text-[#DC2626] text-[16px]">16%</span>
+              <div className="text-[#991B1B] text-[10px] font-medium uppercase tracking-wider mt-0.5">of total projects</div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Row 3: KPIs and Alerts */}
@@ -162,59 +190,73 @@ export default function OverviewPage() {
         
         {/* KPIs (spans 2 cols) */}
         <div className="lg:col-span-2 bg-white rounded-[16px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col">
-          <h3 className="font-bold text-[16px] text-[#1E293B] mb-6">Key Performance Indicators</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <h3 className="font-bold text-[16px] text-[#1E293B] mb-6">Portfolio Performance</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             
             {/* Completion Rate */}
-            <div className="flex flex-col justify-center bg-[#F8FAFC] border border-[#E2E8F0] p-6 rounded-[16px]">
-              <div className="flex justify-between items-end mb-4">
-                <span className="font-bold text-[15px] text-[#1E293B]">Completion Rate</span>
-                <span className="font-display font-bold text-[28px] text-[#2563EB] leading-none">{completedPct}%</span>
+            <div className="flex items-start gap-5">
+              <div className="w-[52px] h-[52px] rounded-full bg-[#EEF2FF] text-[#4F46E5] flex items-center justify-center shrink-0 mt-1">
+                <span className="material-symbols-outlined text-[24px]">track_changes</span>
               </div>
-              <div className="w-full h-3 bg-[#E2E8F0] rounded-full overflow-hidden mb-4">
-                <div className="h-full bg-[#2563EB] rounded-full" style={{ width: `${completedPct}%` }} />
-              </div>
-              <div className="flex justify-between items-center text-[13px]">
-                <span className="text-[#64748B] font-medium">{completed.toLocaleString()} of {totalProjects.toLocaleString()} projects completed</span>
-                <span className="text-[#16A34A] font-bold flex items-center gap-1">
-                  <span className="material-symbols-outlined text-[14px]">arrow_upward</span>
-                  +8% <span className="text-[#94A3B8] font-normal">vs last month</span>
-                </span>
+              <div className="flex flex-col flex-1">
+                <div className="flex flex-col mb-4">
+                  <span className="font-bold text-[15px] text-[#1E293B] mb-1">Completion Rate</span>
+                  <span className="font-display font-bold text-[36px] text-[#2563EB] leading-none">43%</span>
+                </div>
+                <div className="w-full h-3 bg-[#E2E8F0] rounded-full overflow-hidden mb-4">
+                  <div className="h-full bg-[#2563EB] rounded-full" style={{ width: `${completedPct}%` }} />
+                </div>
+                <div className="flex flex-col gap-2 text-[13px]">
+                  <span className="text-[#64748B] font-medium">{completed.toLocaleString()} of {totalProjects.toLocaleString()} projects completed</span>
+                  <span className="text-[#16A34A] font-bold flex items-center gap-1">
+                    <span className="material-symbols-outlined text-[16px]">arrow_upward</span>
+                    +8% <span className="text-[#94A3B8] font-normal">vs last month</span>
+                  </span>
+                </div>
               </div>
             </div>
 
             {/* Expenditure */}
-            <div className="flex flex-col justify-center bg-[#F8FAFC] border border-[#E2E8F0] p-6 rounded-[16px]">
-              <div className="flex justify-between items-end mb-4">
-                <span className="font-bold text-[15px] text-[#1E293B]">Expenditure Utilization</span>
-                <span className="font-display font-bold text-[28px] text-[#2563EB] leading-none">{spendPct}%</span>
+            <div className="flex items-start gap-5">
+              <div className="w-[52px] h-[52px] rounded-full bg-[#F3E8FF] text-[#9333EA] flex items-center justify-center shrink-0 mt-1">
+                <span className="material-symbols-outlined text-[24px]">currency_rupee</span>
               </div>
-              <div className="w-full h-3 bg-[#E2E8F0] rounded-full overflow-hidden mb-4">
-                <div className="h-full bg-[#2563EB] rounded-full" style={{ width: `${spendPct}%` }} />
-              </div>
-              <div className="flex justify-between items-center text-[13px]">
-                <span className="text-[#64748B] font-medium">{formatLakhs(totalReleasedLakhs)} spent of {formatLakhs(totalCostLakhs)} allocated</span>
-                <span className="text-[#16A34A] font-bold flex items-center gap-1">
-                  <span className="material-symbols-outlined text-[14px]">arrow_upward</span>
-                  +6% <span className="text-[#94A3B8] font-normal">vs last month</span>
-                </span>
+              <div className="flex flex-col flex-1">
+                <div className="flex flex-col mb-4">
+                  <span className="font-bold text-[15px] text-[#1E293B] mb-1">Expenditure Utilization</span>
+                  <span className="font-display font-bold text-[36px] text-[#2563EB] leading-none">60%</span>
+                </div>
+                <div className="w-full h-3 bg-[#E2E8F0] rounded-full overflow-hidden mb-4">
+                  <div className="h-full bg-[#2563EB] rounded-full" style={{ width: `${spendPct}%` }} />
+                </div>
+                <div className="flex flex-col gap-2 text-[13px]">
+                  <span className="text-[#64748B] font-medium">{formatLakhs(totalReleasedLakhs)} spent of {formatLakhs(totalCostLakhs)} allocated</span>
+                  <span className="text-[#16A34A] font-bold flex items-center gap-1">
+                    <span className="material-symbols-outlined text-[16px]">arrow_upward</span>
+                    +6% <span className="text-[#94A3B8] font-normal">vs last month</span>
+                  </span>
+                </div>
               </div>
             </div>
 
           </div>
         </div>
 
-        {/* Alerts (1 col) */}
-        <div className="bg-white rounded-[16px] border border-[#E2E8F0] p-6 shadow-sm">
+        {/* Review Queue (1 col) */}
+        <div className="bg-white rounded-[16px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="font-bold text-[16px] text-[#1E293B]">Recent Alerts</h3>
-            <Link href="/dashboard/queue" className="text-[#2563EB] text-[13px] font-semibold hover:underline">View all</Link>
+            <h3 className="font-bold text-[16px] text-[#1E293B]">Review Queue</h3>
           </div>
-          <div className="flex flex-col gap-5">
-            <AlertItem color="bg-[#EF4444]" title="Unusual cost increase detected" sub="MPLADS-102157 • Tawang, Arunachal Pradesh" time="2 hours ago" />
-            <AlertItem color="bg-[#F59E0B]" title="Work delay beyond threshold" sub="MPLADS-100932 • Vijayawada, Andhra Pradesh" time="5 hours ago" />
-            <AlertItem color="bg-[#F59E0B]" title="Multiple document errors" sub="MPLADS-105098 • Shimla, Himachal Pradesh" time="1 day ago" />
-            <AlertItem color="bg-[#EF4444]" title="Unusual pattern in photo uploads" sub="MPLADS-103529 • Agartala, Tripura" time="1 day ago" />
+          <div className="flex flex-col flex-1 justify-between gap-1">
+            <QueueItem icon="warning" color="text-[#EF4444]" label="Projects with delay > 75 days" count={48} />
+            <div className="h-[1px] bg-[#F1F5F9] w-full"></div>
+            <QueueItem icon="schedule" color="text-[#F59E0B]" label="Unusual cost increase" count={32} />
+            <div className="h-[1px] bg-[#F1F5F9] w-full"></div>
+            <QueueItem icon="description" color="text-[#64748B]" label="Missing documentation" count={28} />
+            <div className="h-[1px] bg-[#F1F5F9] w-full"></div>
+            <QueueItem icon="image" color="text-[#64748B]" label="Unusual pattern in photo uploads" count={18} />
+            <div className="h-[1px] bg-[#F1F5F9] w-full"></div>
+            <QueueItem icon="monitoring" color="text-[#9333EA]" label="ML flagged anomalies" count={33} />
           </div>
         </div>
       </div>
@@ -232,8 +274,10 @@ export default function OverviewPage() {
                 <th className="py-3 px-6 font-semibold text-[#64748B] text-[12px] uppercase tracking-wider">ID</th>
                 <th className="py-3 px-6 font-semibold text-[#64748B] text-[12px] uppercase tracking-wider">Project Name</th>
                 <th className="py-3 px-6 font-semibold text-[#64748B] text-[12px] uppercase tracking-wider">Location</th>
+                <th className="py-3 px-6 font-semibold text-[#64748B] text-[12px] uppercase tracking-wider">Sector</th>
                 <th className="py-3 px-6 font-semibold text-[#64748B] text-[12px] uppercase tracking-wider">Status</th>
                 <th className="py-3 px-6 font-semibold text-[#64748B] text-[12px] uppercase tracking-wider">Last Updated</th>
+                <th className="py-3 px-6 font-semibold text-[#64748B] text-[12px] uppercase tracking-wider">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -242,10 +286,16 @@ export default function OverviewPage() {
                   <td className="py-4 px-6 text-[#1E293B] font-medium text-[13px]">{p.work_id}</td>
                   <td className="py-4 px-6 text-[#1E293B] font-semibold text-[13px]">{p.work_name}</td>
                   <td className="py-4 px-6 text-[#64748B] text-[13px]">{p.district}, {p.state}</td>
+                  <td className="py-4 px-6 text-[#64748B] text-[13px]">Irrigation Facility</td>
                   <td className="py-4 px-6">
                     <StatusBadge status={p.status} />
                   </td>
                   <td className="py-4 px-6 text-[#64748B] text-[13px] whitespace-nowrap">2 hours ago</td>
+                  <td className="py-4 px-6 text-[#2563EB] text-[13px] font-semibold">
+                    <Link href={`/dashboard/project/${p.work_id}`} className="flex items-center gap-1 hover:underline">
+                      View <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+                    </Link>
+                  </td>
                 </tr>
               ))}
               {recentProjects.length === 0 && (
@@ -314,13 +364,14 @@ function SectorBar({ icon, label, value, max }: any) {
       <div className="w-8 h-8 rounded-lg bg-[#EEF2FF] text-[#4F46E5] flex items-center justify-center shrink-0">
         <span className="material-symbols-outlined text-[18px]">{icon}</span>
       </div>
-      <div className="flex-1">
-        <div className="flex items-center justify-between mb-1.5">
-          <span className="text-[13.5px] font-medium text-[#1E293B]">{label}</span>
-          <span className="text-[13.5px] font-bold text-[#1E293B]">{value}</span>
-        </div>
-        <div className="w-full h-2.5 bg-[#E2E8F0] rounded-full overflow-hidden">
+      <div className="flex-1 flex items-center gap-4">
+        <div className="w-[130px] shrink-0 text-[13px] font-medium text-[#1E293B]">{label}</div>
+        <div className="flex-1 h-2 bg-[#E2E8F0] rounded-full overflow-hidden">
           <div className="h-full bg-[#4F46E5] rounded-full" style={{ width: `${pct}%` }} />
+        </div>
+        <div className="w-[60px] shrink-0 flex justify-between items-center text-[12px] gap-1.5">
+          <span className="font-bold text-[#1E293B]">{value}</span>
+          <span className="text-[#94A3B8]">({Math.round(pct)}%)</span>
         </div>
       </div>
     </div>
@@ -369,6 +420,39 @@ function StatusBadge({ status }: { status: string }) {
     <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#FEF3C7] text-[#D97706]">
       <div className="w-1.5 h-1.5 rounded-full bg-current" />
       <span className="text-[12px] font-semibold">{status}</span>
+    </div>
+  );
+}
+
+function StateAttentionBar({ label, value, pct, max }: any) {
+  const widthPct = Math.min((value / max) * 100, 100);
+  return (
+    <div className="flex items-center gap-4">
+      <div className="w-[100px] shrink-0 text-[13px] text-[#1E293B] font-medium">{label}</div>
+      <div className="flex-1 flex items-center gap-3">
+        <div className="flex-1 h-2 bg-[#FEE2E2] rounded-full overflow-hidden">
+          <div className="h-full bg-[#EF4444] rounded-full" style={{ width: `${widthPct}%` }} />
+        </div>
+        <div className="w-16 shrink-0 flex justify-end items-center text-[13px] gap-1.5">
+          <span className="font-bold text-[#1E293B]">{value}</span>
+          <span className="text-[#94A3B8]">({pct}%)</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function QueueItem({ icon, color, label, count }: any) {
+  return (
+    <div className="flex items-center justify-between cursor-pointer group hover:bg-[#F8FAFC] p-2.5 -mx-2.5 rounded-[8px] transition-colors">
+      <div className="flex items-center gap-3">
+        <span className={`material-symbols-outlined ${color} text-[20px]`}>{icon}</span>
+        <span className="text-[13.5px] text-[#1E293B] font-medium">{label}</span>
+      </div>
+      <div className="flex items-center gap-3 text-[#1E293B] font-bold text-[14px]">
+        {count}
+        <span className="material-symbols-outlined text-[#94A3B8] text-[18px] group-hover:text-[#64748B]">chevron_right</span>
+      </div>
     </div>
   );
 }
