@@ -13,31 +13,55 @@ export default function OverviewPage() {
   const [statesData, setStatesData] = useState<any[]>([]);
 
   useEffect(() => {
-    Promise.all([
-      getDashboardOverview(),
-      fetch(`${API_BASE_URL}/projects/search?limit=3`).then(res => res.json()),
-      fetch(`${API_BASE_URL}/dashboard/category-summary`).then(res => res.json()),
-      fetch(`${API_BASE_URL}/dashboard/state-summary`).then(res => res.json())
-    ])
-      .then(([overviewData, projectsData, categoryData, stateSummaryData]) => {
+    const loadData = async () => {
+      try {
+        const overviewData = await getDashboardOverview().catch(e => {
+          console.error("Overview fetch failed", e);
+          return { total_projects: 0, completed: 0, in_progress: 0, sanction_delays: 0, total_sanctioned_amount: 0, total_released_amount: 0 };
+        });
         setData(overviewData);
+
+        const projectsData = await fetch(`${API_BASE_URL}/projects/search?limit=3`).then(res => {
+          if (!res.ok) throw new Error("Projects API failed");
+          return res.json();
+        }).catch(e => {
+          console.error(e);
+          return { projects: [] };
+        });
         if (projectsData && projectsData.projects) {
           setRecentProjects(projectsData.projects);
         }
+
+        const categoryData = await fetch(`${API_BASE_URL}/dashboard/category-summary`).then(res => {
+          if (!res.ok) throw new Error("Category API failed");
+          return res.json();
+        }).catch(e => {
+          console.error(e);
+          return { categories: [] };
+        });
         if (categoryData && categoryData.categories) {
           setCategories(categoryData.categories);
         }
+
+        const stateSummaryData = await fetch(`${API_BASE_URL}/dashboard/state-summary`).then(res => {
+          if (!res.ok) throw new Error("State API failed");
+          return res.json();
+        }).catch(e => {
+          console.error(e);
+          return { states: [] };
+        });
         if (stateSummaryData && stateSummaryData.states) {
           setStatesData(stateSummaryData.states);
         }
-      })
-      .catch((err) => {
+      } catch (err) {
         console.error(err);
         setError("Unable to load dashboard data");
-      })
-      .finally(() => {
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+    
+    loadData();
   }, []);
 
   if (loading) {
