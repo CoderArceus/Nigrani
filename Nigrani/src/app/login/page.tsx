@@ -24,10 +24,10 @@ export default function LoginPage() {
         backgroundRepeat: "no-repeat"
       }}
     >
-      {/* Light overlay to ensure form readability if needed, though the provided background is already light */}
-      <div className="absolute inset-0 bg-white/30 backdrop-blur-[2px]"></div>
+      {/* Light overlay to ensure form readability if needed, without blurring the beautiful background */}
+      <div className="absolute inset-0 bg-white/40"></div>
       
-      <div className="relative bg-white/80 backdrop-blur-md border-[1.5px] border-white/50 rounded-[14px] p-10 w-full max-w-[420px] flex flex-col items-center shadow-xl">
+      <div className="relative bg-white/90 backdrop-blur-md border-[1.5px] border-white/60 rounded-[14px] p-10 w-full max-w-[420px] flex flex-col items-center shadow-[0_8px_32px_rgba(0,0,0,0.04)]">
         {/* Wordmark */}
         <div className="mb-10 text-center flex flex-col items-center">
           <h1 className="font-display text-[36px] font-bold text-primary tracking-tight leading-[1.2]">
