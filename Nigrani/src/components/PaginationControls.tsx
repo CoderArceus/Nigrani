@@ -122,7 +122,7 @@ export function GoToPage({ totalPages, currentPage }: { totalPages: number, curr
         max={totalPages}
         name="pageInput"
         defaultValue={currentPage}
-        className="w-14 h-10 bg-white border border-[#CBD5E1] rounded-[8px] text-center text-[#0F172A] shadow-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+        className="w-14 h-10 bg-white border border-[#CBD5E1] rounded-[8px] text-center text-[#0F172A] shadow-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield]"
       />
       <button type="submit" className="h-10 px-4 bg-white text-blue-600 font-semibold border border-[#CBD5E1] rounded-[8px] shadow-sm hover:bg-blue-50 transition-colors">
         Go
