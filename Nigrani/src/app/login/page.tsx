@@ -18,7 +18,7 @@ export default function LoginPage() {
       
       {/* Background Image Container with Saturation Filter */}
       <div 
-        className="absolute inset-0 z-0 saturate-50 opacity-90"
+        className="absolute inset-0 z-0 saturate-50 opacity-40 mix-blend-multiply"
         style={{
           backgroundImage: "url('/login-bg.jpg')",
           backgroundSize: "cover",
@@ -29,7 +29,7 @@ export default function LoginPage() {
       
       {/* Scaled horizontal card */}
       <div className="relative z-10 w-full max-w-[800px] flex flex-col items-center scale-[0.95] origin-center">
-        <div className="bg-white/95 backdrop-blur-xl border border-white/60 rounded-[20px] w-full flex flex-col md:flex-row shadow-[0_20px_60px_rgba(0,0,0,0.08)] overflow-hidden relative">
+        <div className="bg-white/95 backdrop-blur-xl border-t border-l border-white/80 border-b border-r border-[#E2E8F0]/50 rounded-[24px] w-full flex flex-col md:flex-row shadow-[0_40px_100px_-20px_rgba(0,20,209,0.15),_0_20px_40px_-10px_rgba(0,0,0,0.05)] overflow-hidden relative">
           
           {/* Decorative Leaves (Left Corner) */}
           <div className="absolute bottom-0 left-0 w-32 h-32 pointer-events-none opacity-20">
