@@ -155,79 +155,57 @@ export default function OverviewPage() {
         </div>
       </div>
 
-      {/* Row 3: KPIs and Alerts */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        {/* KPIs (spans 2 cols) */}
-        <div className="lg:col-span-2 bg-white rounded-[16px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col h-fit">
-          <h3 className="font-bold text-[16px] text-[#1E293B] mb-6">Portfolio Performance</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            
-            {/* Completion Rate */}
-            <div className="flex items-start gap-5">
-              <div className="w-[52px] h-[52px] rounded-full bg-[#EEF2FF] text-[#4F46E5] flex items-center justify-center shrink-0 mt-1">
-                <span className="material-symbols-outlined text-[24px]">track_changes</span>
+      {/* Row 3: Portfolio Performance */}
+      <div className="bg-white rounded-[16px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col">
+        <h3 className="font-bold text-[16px] text-[#1E293B] mb-6">Portfolio Performance</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          
+          {/* Completion Rate */}
+          <div className="flex items-start gap-5">
+            <div className="w-[52px] h-[52px] rounded-full bg-[#EEF2FF] text-[#4F46E5] flex items-center justify-center shrink-0 mt-1">
+              <span className="material-symbols-outlined text-[24px]">track_changes</span>
+            </div>
+            <div className="flex flex-col flex-1">
+              <div className="flex flex-col mb-4">
+                <span className="font-bold text-[15px] text-[#1E293B] mb-1">Completion Rate</span>
+                <span className="font-display font-bold text-[36px] text-[#2563EB] leading-none">43%</span>
               </div>
-              <div className="flex flex-col flex-1">
-                <div className="flex flex-col mb-4">
-                  <span className="font-bold text-[15px] text-[#1E293B] mb-1">Completion Rate</span>
-                  <span className="font-display font-bold text-[36px] text-[#2563EB] leading-none">43%</span>
-                </div>
-                <div className="w-full h-3 bg-[#E2E8F0] rounded-full overflow-hidden mb-4">
-                  <div className="h-full bg-[#2563EB] rounded-full" style={{ width: `${completedPct}%` }} />
-                </div>
-                <div className="flex flex-col gap-2 text-[13px]">
-                  <span className="text-[#64748B] font-medium">{completed.toLocaleString()} of {totalProjects.toLocaleString()} projects completed</span>
-                  <span className="text-[#16A34A] font-bold flex items-center gap-1">
-                    <span className="material-symbols-outlined text-[16px]">arrow_upward</span>
-                    +8% <span className="text-[#94A3B8] font-normal">vs last month</span>
-                  </span>
-                </div>
+              <div className="w-full h-3 bg-[#E2E8F0] rounded-full overflow-hidden mb-4">
+                <div className="h-full bg-[#2563EB] rounded-full" style={{ width: `${completedPct}%` }} />
+              </div>
+              <div className="flex flex-col gap-2 text-[13px]">
+                <span className="text-[#64748B] font-medium">{completed.toLocaleString()} of {totalProjects.toLocaleString()} projects completed</span>
+                <span className="text-[#16A34A] font-bold flex items-center gap-1">
+                  <span className="material-symbols-outlined text-[16px]">arrow_upward</span>
+                  +8% <span className="text-[#94A3B8] font-normal">vs last month</span>
+                </span>
               </div>
             </div>
+          </div>
 
-            {/* Expenditure */}
-            <div className="flex items-start gap-5">
-              <div className="w-[52px] h-[52px] rounded-full bg-[#F3E8FF] text-[#9333EA] flex items-center justify-center shrink-0 mt-1">
-                <span className="material-symbols-outlined text-[24px]">currency_rupee</span>
+          {/* Expenditure */}
+          <div className="flex items-start gap-5">
+            <div className="w-[52px] h-[52px] rounded-full bg-[#F3E8FF] text-[#9333EA] flex items-center justify-center shrink-0 mt-1">
+              <span className="material-symbols-outlined text-[24px]">currency_rupee</span>
+            </div>
+            <div className="flex flex-col flex-1">
+              <div className="flex flex-col mb-4">
+                <span className="font-bold text-[15px] text-[#1E293B] mb-1">Expenditure Utilization</span>
+                <span className="font-display font-bold text-[36px] text-[#2563EB] leading-none">60%</span>
               </div>
-              <div className="flex flex-col flex-1">
-                <div className="flex flex-col mb-4">
-                  <span className="font-bold text-[15px] text-[#1E293B] mb-1">Expenditure Utilization</span>
-                  <span className="font-display font-bold text-[36px] text-[#2563EB] leading-none">60%</span>
-                </div>
-                <div className="w-full h-3 bg-[#E2E8F0] rounded-full overflow-hidden mb-4">
-                  <div className="h-full bg-[#2563EB] rounded-full" style={{ width: `${spendPct}%` }} />
-                </div>
-                <div className="flex flex-col gap-2 text-[13px]">
-                  <span className="text-[#64748B] font-medium">{formatLakhs(totalReleasedLakhs)} spent of {formatLakhs(totalCostLakhs)} allocated</span>
-                  <span className="text-[#16A34A] font-bold flex items-center gap-1">
-                    <span className="material-symbols-outlined text-[16px]">arrow_upward</span>
-                    +6% <span className="text-[#94A3B8] font-normal">vs last month</span>
-                  </span>
-                </div>
+              <div className="w-full h-3 bg-[#E2E8F0] rounded-full overflow-hidden mb-4">
+                <div className="h-full bg-[#2563EB] rounded-full" style={{ width: `${spendPct}%` }} />
+              </div>
+              <div className="flex flex-col gap-2 text-[13px]">
+                <span className="text-[#64748B] font-medium">{formatLakhs(totalReleasedLakhs)} spent of {formatLakhs(totalCostLakhs)} allocated</span>
+                <span className="text-[#16A34A] font-bold flex items-center gap-1">
+                  <span className="material-symbols-outlined text-[16px]">arrow_upward</span>
+                  +6% <span className="text-[#94A3B8] font-normal">vs last month</span>
+                </span>
               </div>
             </div>
+          </div>
 
-          </div>
-        </div>
-
-        {/* Review Queue (1 col) */}
-        <div className="bg-white rounded-[16px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="font-bold text-[16px] text-[#1E293B]">Review Queue</h3>
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <QueueItem icon="warning" color="text-[#EF4444]" label="Projects with delay > 75 days" count={48} />
-            <div className="h-[1px] bg-[#F1F5F9] w-full"></div>
-            <QueueItem icon="schedule" color="text-[#F59E0B]" label="Unusual cost increase" count={32} />
-            <div className="h-[1px] bg-[#F1F5F9] w-full"></div>
-            <QueueItem icon="description" color="text-[#64748B]" label="Missing documentation" count={28} />
-            <div className="h-[1px] bg-[#F1F5F9] w-full"></div>
-            <QueueItem icon="image" color="text-[#64748B]" label="Unusual pattern in photo uploads" count={18} />
-            <div className="h-[1px] bg-[#F1F5F9] w-full"></div>
-            <QueueItem icon="monitoring" color="text-[#9333EA]" label="ML flagged anomalies" count={33} />
-          </div>
         </div>
       </div>
 
@@ -419,17 +397,4 @@ function StateAttentionBar({ label, value, pct, max }: any) {
   );
 }
 
-function QueueItem({ icon, color, label, count }: any) {
-  return (
-    <div className="flex items-center justify-between cursor-pointer group hover:bg-[#F8FAFC] p-2.5 -mx-2.5 rounded-[8px] transition-colors">
-      <div className="flex items-center gap-3">
-        <span className={`material-symbols-outlined ${color} text-[20px]`}>{icon}</span>
-        <span className="text-[13.5px] text-[#1E293B] font-medium">{label}</span>
-      </div>
-      <div className="flex items-center gap-3 text-[#1E293B] font-bold text-[14px]">
-        {count}
-        <span className="material-symbols-outlined text-[#94A3B8] text-[18px] group-hover:text-[#64748B]">chevron_right</span>
-      </div>
-    </div>
-  );
-}
+
