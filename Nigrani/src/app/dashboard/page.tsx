@@ -113,8 +113,8 @@ export default function OverviewPage() {
         {/* Status Donut */}
         <div className="bg-white rounded-[16px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col">
           <h3 className="font-bold text-[16px] text-[#1E293B] mb-6">Project Status Distribution</h3>
-          <div className="flex items-center justify-between gap-4">
-            <div className="relative w-[180px] h-[180px]">
+          <div className="flex items-center justify-center gap-8 mt-4">
+            <div className="relative w-[180px] h-[180px] shrink-0">
               <svg viewBox="0 0 42 42" className="w-full h-full transform -rotate-90">
                 {/* Completed */}
                 <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#16A34A" strokeWidth="7.5" strokeDasharray={`${Math.max(0, completedPct - 1.5)} ${100 - Math.max(0, completedPct - 1.5)}`} strokeDashoffset="0" strokeLinecap="round" />
@@ -131,7 +131,7 @@ export default function OverviewPage() {
               </div>
             </div>
             
-            <div className="flex flex-col gap-3 flex-1 ml-4">
+            <div className="flex flex-col gap-4 w-[160px]">
               <LegendItem color="bg-[#16A34A]" label="Completed" value={completed} pct={completedPct} />
               <LegendItem color="bg-[#2563EB]" label="In Progress" value={inProgress} pct={inProgressPct} />
               <LegendItem color="bg-[#F59E0B]" label="Not Started" value={notStarted} pct={notStartedPct} />
@@ -161,7 +161,7 @@ export default function OverviewPage() {
           <div className="flex items-center justify-between mb-6">
             <h3 className="font-bold text-[16px] text-[#1E293B]">Attention by State</h3>
           </div>
-          <div className="flex flex-col gap-4 flex-1">
+          <div className="flex flex-col gap-5">
             <StateAttentionBar label="Uttar Pradesh" value={42} pct={26} max={50} />
             <StateAttentionBar label="Bihar" value={28} pct={18} max={50} />
             <StateAttentionBar label="Madhya Pradesh" value={18} pct={11} max={50} />
@@ -169,7 +169,7 @@ export default function OverviewPage() {
             <StateAttentionBar label="Maharashtra" value={14} pct={9} max={50} />
             <StateAttentionBar label="Assam" value={12} pct={8} max={50} />
           </div>
-          <div className="mt-4 bg-[#FEF2F2] rounded-[10px] p-4 flex items-center justify-between">
+          <div className="mt-6 bg-[#FEF2F2] rounded-[10px] p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <span className="material-symbols-outlined text-[#EF4444] text-[20px]">warning</span>
               <div>
@@ -247,7 +247,7 @@ export default function OverviewPage() {
           <div className="flex items-center justify-between mb-6">
             <h3 className="font-bold text-[16px] text-[#1E293B]">Review Queue</h3>
           </div>
-          <div className="flex flex-col flex-1 justify-between gap-1">
+          <div className="flex flex-col gap-1.5">
             <QueueItem icon="warning" color="text-[#EF4444]" label="Projects with delay > 75 days" count={48} />
             <div className="h-[1px] bg-[#F1F5F9] w-full"></div>
             <QueueItem icon="schedule" color="text-[#F59E0B]" label="Unusual cost increase" count={32} />
