@@ -111,9 +111,9 @@ export default function OverviewPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* Status Donut */}
-        <div className="bg-white rounded-[16px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col justify-between">
+        <div className="bg-white rounded-[16px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col">
           <h3 className="font-bold text-[16px] text-[#1E293B] mb-6">Project Status Distribution</h3>
-          <div className="flex items-center justify-between gap-4 mt-auto">
+          <div className="flex items-center justify-between gap-4">
             <div className="relative w-[180px] h-[180px]">
               <svg viewBox="0 0 42 42" className="w-full h-full transform -rotate-90">
                 {/* Completed */}
@@ -161,9 +161,9 @@ export default function OverviewPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* KPIs (spans 2 cols) */}
-        <div className="lg:col-span-2 bg-white rounded-[16px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col justify-center">
+        <div className="lg:col-span-2 bg-white rounded-[16px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col">
           <h3 className="font-bold text-[16px] text-[#1E293B] mb-6">Key Performance Indicators</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 flex-1 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             
             {/* Completion Rate */}
             <div className="flex flex-col justify-center bg-[#F8FAFC] border border-[#E2E8F0] p-6 rounded-[16px]">
