@@ -20,9 +20,13 @@ async function fetchProjects(searchParams: any, page: number, limit: number) {
   if (searchParams.status) url.searchParams.append("status", searchParams.status);
   if (searchParams.sort) url.searchParams.append("sort", searchParams.sort);
   if (searchParams.order) url.searchParams.append("order", searchParams.order);
+  if (searchParams.q) url.searchParams.append("q", searchParams.q);
   
   const res = await fetch(url.toString(), { cache: "no-store" });
-  if (!res.ok) return { projects: [], count: 0, total_pages: 0 };
+  if (!res.ok) {
+    console.error(`API Error in fetchProjects: ${res.status} ${res.statusText}`);
+    return { projects: [], count: 0, total_pages: 0, error: true };
+  }
   return res.json();
 }
 
@@ -110,7 +114,15 @@ export default async function PublicTransparencyPage(props: {
       {/* Project Grid */}
       <div className="flex flex-col justify-start">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {pagedProjects.length > 0 ? (
+          {data.error ? (
+            <div className="col-span-full py-12 text-center flex flex-col items-center justify-center">
+              <span className="material-symbols-outlined text-[48px] text-red-500 mb-4">error</span>
+              <h3 className="font-display text-[20px] font-bold text-on-surface">API Connection Error</h3>
+              <p className="font-sans text-[14px] text-on-surface-variant mt-2 max-w-md">
+                The backend service is currently waking up or experiencing issues. Please wait a few seconds and try refreshing the page.
+              </p>
+            </div>
+          ) : pagedProjects.length > 0 ? (
             pagedProjects.map((project: any) => (
               <ProjectCard key={project.work_id} project={project} />
             ))
