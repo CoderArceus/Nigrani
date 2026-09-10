@@ -122,9 +122,9 @@ export function GoToPage({ totalPages, currentPage }: { totalPages: number, curr
         max={totalPages}
         name="pageInput"
         defaultValue={currentPage}
-        className="w-14 h-10 border border-[#E2E8F0] rounded-[8px] text-center text-[#0F172A] outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+        className="w-14 h-10 bg-white border border-[#CBD5E1] rounded-[8px] text-center text-[#0F172A] shadow-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
       />
-      <button type="submit" className="h-10 px-4 text-blue-600 font-semibold border border-[#E2E8F0] rounded-[8px] hover:bg-blue-50 transition-colors">
+      <button type="submit" className="h-10 px-4 bg-white text-blue-600 font-semibold border border-[#CBD5E1] rounded-[8px] shadow-sm hover:bg-blue-50 transition-colors">
         Go
       </button>
     </form>

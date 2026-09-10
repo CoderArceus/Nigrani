@@ -128,11 +128,6 @@ export default function OverviewPage() {
           <h1 className="font-display text-[32px] font-bold text-[#0F172A] leading-tight">Good evening, Officer</h1>
           <p className="text-[#64748B] text-[14px]">Here's the current status of MPLADS projects across India.</p>
         </div>
-        <div className="flex items-center gap-2 px-4 py-2 bg-white border border-[#E2E8F0] rounded-[10px] shadow-sm cursor-pointer hover:bg-gray-50 transition-colors">
-          <span className="material-symbols-outlined text-[#64748B] text-[18px]">calendar_today</span>
-          <span className="text-[14px] font-medium text-[#1E293B]">Last 30 days</span>
-          <span className="material-symbols-outlined text-[#64748B] text-[18px]">expand_more</span>
-        </div>
       </div>
 
       {/* KPI Cards Row */}
