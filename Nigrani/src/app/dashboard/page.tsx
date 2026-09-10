@@ -114,20 +114,20 @@ export default function OverviewPage() {
         <div className="bg-white rounded-[16px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col justify-between">
           <h3 className="font-bold text-[16px] text-[#1E293B] mb-6">Project Status Distribution</h3>
           <div className="flex items-center justify-between gap-4 mt-auto">
-            <div className="relative w-[140px] h-[140px]">
+            <div className="relative w-[180px] h-[180px]">
               <svg viewBox="0 0 42 42" className="w-full h-full transform -rotate-90">
                 {/* Completed */}
-                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#16A34A" strokeWidth="6" strokeDasharray={`${completedPct} ${100 - completedPct}`} strokeDashoffset="0" />
+                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#16A34A" strokeWidth="7.5" strokeDasharray={`${Math.max(0, completedPct - 1.5)} ${100 - Math.max(0, completedPct - 1.5)}`} strokeDashoffset="0" strokeLinecap="round" />
                 {/* In Progress */}
-                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#2563EB" strokeWidth="6" strokeDasharray={`${inProgressPct} ${100 - inProgressPct}`} strokeDashoffset={`-${completedPct}`} />
+                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#2563EB" strokeWidth="7.5" strokeDasharray={`${Math.max(0, inProgressPct - 1.5)} ${100 - Math.max(0, inProgressPct - 1.5)}`} strokeDashoffset={`-${completedPct}`} strokeLinecap="round" />
                 {/* Not Started */}
-                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F59E0B" strokeWidth="6" strokeDasharray={`${notStartedPct} ${100 - notStartedPct}`} strokeDashoffset={`-${completedPct + inProgressPct}`} />
+                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F59E0B" strokeWidth="7.5" strokeDasharray={`${Math.max(0, notStartedPct - 1.5)} ${100 - Math.max(0, notStartedPct - 1.5)}`} strokeDashoffset={`-${completedPct + inProgressPct}`} strokeLinecap="round" />
                 {/* Require Attention */}
-                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#DC2626" strokeWidth="6" strokeDasharray={`${delaysPct} ${100 - delaysPct}`} strokeDashoffset={`-${completedPct + inProgressPct + notStartedPct}`} />
+                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#DC2626" strokeWidth="7.5" strokeDasharray={`${Math.max(0, delaysPct - 1.5)} ${100 - Math.max(0, delaysPct - 1.5)}`} strokeDashoffset={`-${completedPct + inProgressPct + notStartedPct}`} strokeLinecap="round" />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="font-display font-bold text-[22px] text-[#1E293B] leading-none">{totalProjects.toLocaleString()}</span>
-                <span className="text-[10px] text-[#64748B] mt-1">Total Projects</span>
+                <span className="font-display font-bold text-[28px] text-[#1E293B] leading-none">{totalProjects.toLocaleString()}</span>
+                <span className="text-[12px] text-[#64748B] mt-1.5 font-medium">Total Projects</span>
               </div>
             </div>
             
@@ -146,7 +146,7 @@ export default function OverviewPage() {
             <h3 className="font-bold text-[16px] text-[#1E293B]">Projects by Sector</h3>
             <Link href="/dashboard/projects" className="text-[#2563EB] text-[13px] font-semibold hover:underline">View all</Link>
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-5 mt-2">
             <SectorBar icon="water_drop" label="Irrigation Facility" value={243} max={250} />
             <SectorBar icon="add_road" label="Road Construction" value={187} max={250} />
             <SectorBar icon="health_and_safety" label="Sanitation/Toilets" value={156} max={250} />
@@ -166,37 +166,37 @@ export default function OverviewPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 flex-1 items-center">
             
             {/* Completion Rate */}
-            <div className="flex flex-col justify-center">
-              <div className="flex justify-between items-end mb-2">
-                <span className="font-bold text-[14px] text-[#1E293B]">Completion Rate</span>
-                <span className="font-display font-bold text-[24px] text-[#2563EB]">{completedPct}%</span>
+            <div className="flex flex-col justify-center bg-[#F8FAFC] border border-[#E2E8F0] p-6 rounded-[16px]">
+              <div className="flex justify-between items-end mb-4">
+                <span className="font-bold text-[15px] text-[#1E293B]">Completion Rate</span>
+                <span className="font-display font-bold text-[28px] text-[#2563EB] leading-none">{completedPct}%</span>
               </div>
-              <div className="w-full h-2 bg-[#E2E8F0] rounded-full overflow-hidden mb-2">
+              <div className="w-full h-3 bg-[#E2E8F0] rounded-full overflow-hidden mb-4">
                 <div className="h-full bg-[#2563EB] rounded-full" style={{ width: `${completedPct}%` }} />
               </div>
-              <div className="flex justify-between items-center text-[12px]">
-                <span className="text-[#64748B]">{completed.toLocaleString()} of {totalProjects.toLocaleString()} projects completed</span>
-                <span className="text-[#16A34A] font-semibold flex items-center gap-0.5">
-                  <span className="material-symbols-outlined text-[12px]">arrow_upward</span>
-                  8% vs last month
+              <div className="flex justify-between items-center text-[13px]">
+                <span className="text-[#64748B] font-medium">{completed.toLocaleString()} of {totalProjects.toLocaleString()} projects completed</span>
+                <span className="text-[#16A34A] font-bold flex items-center gap-1">
+                  <span className="material-symbols-outlined text-[14px]">arrow_upward</span>
+                  +8% <span className="text-[#94A3B8] font-normal">vs last month</span>
                 </span>
               </div>
             </div>
 
             {/* Expenditure */}
-            <div className="flex flex-col justify-center">
-              <div className="flex justify-between items-end mb-2">
-                <span className="font-bold text-[14px] text-[#1E293B]">Expenditure Utilization</span>
-                <span className="font-display font-bold text-[24px] text-[#2563EB]">{spendPct}%</span>
+            <div className="flex flex-col justify-center bg-[#F8FAFC] border border-[#E2E8F0] p-6 rounded-[16px]">
+              <div className="flex justify-between items-end mb-4">
+                <span className="font-bold text-[15px] text-[#1E293B]">Expenditure Utilization</span>
+                <span className="font-display font-bold text-[28px] text-[#2563EB] leading-none">{spendPct}%</span>
               </div>
-              <div className="w-full h-2 bg-[#E2E8F0] rounded-full overflow-hidden mb-2">
+              <div className="w-full h-3 bg-[#E2E8F0] rounded-full overflow-hidden mb-4">
                 <div className="h-full bg-[#2563EB] rounded-full" style={{ width: `${spendPct}%` }} />
               </div>
-              <div className="flex justify-between items-center text-[12px]">
-                <span className="text-[#64748B]">{formatLakhs(totalReleasedLakhs)} spent of {formatLakhs(totalCostLakhs)} allocated</span>
-                <span className="text-[#16A34A] font-semibold flex items-center gap-0.5">
-                  <span className="material-symbols-outlined text-[12px]">arrow_upward</span>
-                  6% vs last month
+              <div className="flex justify-between items-center text-[13px]">
+                <span className="text-[#64748B] font-medium">{formatLakhs(totalReleasedLakhs)} spent of {formatLakhs(totalCostLakhs)} allocated</span>
+                <span className="text-[#16A34A] font-bold flex items-center gap-1">
+                  <span className="material-symbols-outlined text-[14px]">arrow_upward</span>
+                  +6% <span className="text-[#94A3B8] font-normal">vs last month</span>
                 </span>
               </div>
             </div>
@@ -310,17 +310,17 @@ function LegendItem({ color, label, value, pct }: any) {
 function SectorBar({ icon, label, value, max }: any) {
   const pct = Math.min((value / max) * 100, 100);
   return (
-    <div className="flex items-center gap-3">
-      <div className="w-7 h-7 rounded-lg bg-[#F1F5F9] text-[#64748B] flex items-center justify-center shrink-0">
-        <span className="material-symbols-outlined text-[16px]">{icon}</span>
+    <div className="flex items-center gap-4">
+      <div className="w-8 h-8 rounded-lg bg-[#EEF2FF] text-[#4F46E5] flex items-center justify-center shrink-0">
+        <span className="material-symbols-outlined text-[18px]">{icon}</span>
       </div>
       <div className="flex-1">
-        <div className="flex items-center justify-between mb-1">
-          <span className="text-[13px] font-medium text-[#1E293B]">{label}</span>
-          <span className="text-[13px] font-bold text-[#1E293B]">{value}</span>
+        <div className="flex items-center justify-between mb-1.5">
+          <span className="text-[13.5px] font-medium text-[#1E293B]">{label}</span>
+          <span className="text-[13.5px] font-bold text-[#1E293B]">{value}</span>
         </div>
-        <div className="w-full h-1.5 bg-[#E2E8F0] rounded-full overflow-hidden">
-          <div className="h-full bg-[#3B82F6] rounded-full" style={{ width: `${pct}%` }} />
+        <div className="w-full h-2.5 bg-[#E2E8F0] rounded-full overflow-hidden">
+          <div className="h-full bg-[#4F46E5] rounded-full" style={{ width: `${pct}%` }} />
         </div>
       </div>
     </div>
