@@ -9,16 +9,26 @@ export default function OverviewPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [recentProjects, setRecentProjects] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [statesData, setStatesData] = useState<any[]>([]);
 
   useEffect(() => {
     Promise.all([
       getDashboardOverview(),
-      fetch(`${API_BASE_URL}/projects/search?limit=3`).then(res => res.json())
+      fetch(`${API_BASE_URL}/projects/search?limit=3`).then(res => res.json()),
+      fetch(`${API_BASE_URL}/dashboard/category-summary`).then(res => res.json()),
+      fetch(`${API_BASE_URL}/dashboard/state-summary`).then(res => res.json())
     ])
-      .then(([overviewData, projectsData]) => {
+      .then(([overviewData, projectsData, categoryData, stateSummaryData]) => {
         setData(overviewData);
         if (projectsData && projectsData.projects) {
           setRecentProjects(projectsData.projects);
+        }
+        if (categoryData && categoryData.categories) {
+          setCategories(categoryData.categories);
+        }
+        if (stateSummaryData && stateSummaryData.states) {
+          setStatesData(stateSummaryData.states);
         }
       })
       .catch((err) => {
@@ -62,6 +72,29 @@ export default function OverviewPage() {
   const notStartedPct = Math.round((notStarted / totalProjects) * 100);
 
   const formatLakhs = (val: number) => `₹${val.toLocaleString("en-IN", { maximumFractionDigits: 1 })}L`;
+
+  const getCategoryIcon = (cat: string) => {
+    if (cat.includes("Irrigation") || cat.includes("Water")) return "water_drop";
+    if (cat.includes("Road")) return "add_road";
+    if (cat.includes("Sanitation") || cat.includes("Toilet")) return "health_and_safety";
+    if (cat.includes("Light")) return "lightbulb";
+    if (cat.includes("Community") || cat.includes("Building") || cat.includes("Hall")) return "groups";
+    if (cat.includes("Solar") || cat.includes("Power")) return "solar_power";
+    if (cat.includes("School") || cat.includes("Education")) return "school";
+    return "more_horiz";
+  };
+
+  // Process Categories
+  const sortedCategories = [...categories].sort((a, b) => b.total_projects - a.total_projects);
+  const topCategories = sortedCategories.slice(0, 5);
+  const otherCategoriesCount = sortedCategories.slice(5).reduce((sum, c) => sum + c.total_projects, 0);
+  const categoryMax = topCategories.length > 0 ? topCategories[0].total_projects : 250;
+
+  // Process States
+  const sortedStates = [...statesData].sort((a, b) => b.delayed_projects - a.delayed_projects);
+  const topStates = sortedStates.slice(0, 6);
+  const stateMax = topStates.length > 0 ? topStates[0].delayed_projects : 50;
+  const totalStatesWithDelays = sortedStates.filter(s => s.delayed_projects > 0).length;
 
   return (
     <div className="max-w-[1400px] mx-auto flex flex-col gap-6 pb-12 font-sans">
@@ -117,39 +150,42 @@ export default function OverviewPage() {
             <Link href="/dashboard/projects" className="text-[#2563EB] text-[13px] font-semibold hover:underline">View all</Link>
           </div>
           <div className="flex flex-col gap-5 mt-2">
-            <SectorBar icon="water_drop" label="Irrigation Facility" value={243} max={250} />
-            <SectorBar icon="add_road" label="Road Construction" value={187} max={250} />
-            <SectorBar icon="health_and_safety" label="Sanitation/Toilets" value={156} max={250} />
-            <SectorBar icon="lightbulb" label="Street Lighting" value={121} max={250} />
-            <SectorBar icon="groups" label="Community Assets" value={98} max={250} />
-            <SectorBar icon="more_horiz" label="Other" value={195} max={250} />
+            {topCategories.map((cat, idx) => (
+              <SectorBar key={idx} icon={getCategoryIcon(cat.work_category)} label={cat.work_category} value={cat.total_projects} max={categoryMax} />
+            ))}
+            {otherCategoriesCount > 0 && (
+              <SectorBar icon="more_horiz" label="Other" value={otherCategoriesCount} max={categoryMax} />
+            )}
           </div>
         </div>
 
         {/* Attention by State */}
-        <div className="bg-white rounded-[16px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col">
-          <div className="flex items-center justify-between mb-6">
+        <div className="bg-white rounded-[16px] border border-[#E2E8F0] p-0 shadow-sm flex flex-col overflow-hidden">
+          <div className="p-6 pb-4 flex items-center justify-between border-b border-[#E2E8F0]">
             <h3 className="font-bold text-[16px] text-[#1E293B]">Attention by State</h3>
           </div>
-          <div className="flex flex-col gap-5">
-            <StateAttentionBar label="Uttar Pradesh" value={42} pct={26} max={50} />
-            <StateAttentionBar label="Bihar" value={28} pct={18} max={50} />
-            <StateAttentionBar label="Madhya Pradesh" value={18} pct={11} max={50} />
-            <StateAttentionBar label="Rajasthan" value={16} pct={10} max={50} />
-            <StateAttentionBar label="Maharashtra" value={14} pct={9} max={50} />
-            <StateAttentionBar label="Assam" value={12} pct={8} max={50} />
+          <div className="flex flex-col p-6 pt-4 gap-4 flex-1 overflow-y-auto max-h-[300px]">
+            {topStates.map((st, idx) => (
+              <StateAttentionBar 
+                key={idx} 
+                label={st.state} 
+                value={st.delayed_projects} 
+                pct={Math.round((st.delayed_projects / totalProjects) * 100)} 
+                max={stateMax} 
+              />
+            ))}
           </div>
-          <div className="mt-6 bg-[#FEF2F2] rounded-[10px] p-4 flex items-center justify-between">
+          <div className="mt-6 bg-[#FEF2F2] rounded-[10px] p-4 flex items-center justify-between m-6 mt-0">
             <div className="flex items-center gap-3">
               <span className="material-symbols-outlined text-[#EF4444] text-[20px]">warning</span>
               <div>
-                <span className="font-bold text-[#DC2626] text-[16px]">159</span>
-                <span className="text-[#991B1B] text-[12px] ml-2 font-medium">projects require attention<br/>across 18 states</span>
+                <span className="font-bold text-[#DC2626] text-[16px]">{sanctionDelays}</span>
+                <span className="text-[#991B1B] text-[12px] ml-2 font-medium">projects require attention<br/>across {totalStatesWithDelays} states</span>
               </div>
             </div>
             <div className="text-right">
-              <span className="font-bold text-[#DC2626] text-[16px]">16%</span>
-              <div className="text-[#991B1B] text-[10px] font-medium uppercase tracking-wider mt-0.5">of total projects</div>
+              <span className="font-bold text-[#DC2626] text-[16px]">{delaysPct}%</span>
+              <span className="block text-[#991B1B] text-[12px] font-medium">of total projects</span>
             </div>
           </div>
         </div>
