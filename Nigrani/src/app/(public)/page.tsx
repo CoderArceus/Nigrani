@@ -114,15 +114,6 @@ export default async function PublicTransparencyPage(props: {
         
         <div className="flex items-center gap-3 shrink-0">
           <SortControls />
-          
-          <div className="flex bg-[#F1F5F9] rounded-[10px] p-1 border border-[#E2E8F0]">
-            <button className="w-8 h-8 rounded-[8px] bg-blue-600 text-white shadow-sm flex items-center justify-center">
-              <span className="material-symbols-outlined text-[18px]">grid_view</span>
-            </button>
-            <button className="w-8 h-8 rounded-[8px] text-[#64748B] hover:text-[#334155] hover:bg-[#E2E8F0]/50 flex items-center justify-center transition-colors">
-              <span className="material-symbols-outlined text-[18px]">format_list_bulleted</span>
-            </button>
-          </div>
         </div>
       </div>
 

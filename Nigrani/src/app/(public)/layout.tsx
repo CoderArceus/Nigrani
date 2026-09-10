@@ -24,7 +24,7 @@ export default function PublicLayout({
                   Nigrani
                 </span>
                 <span className="font-sans text-[12px] text-secondary opacity-80">
-                  © 2024 Nigrani Transparency Portal. For demonstration purposes
+                  © 2026 Nigrani Transparency Portal. For demonstration purposes
                   only.
                 </span>
               </div>

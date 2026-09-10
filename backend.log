@@ -5,3 +5,9 @@ INFO:     Started server process [9080]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 INFO:     127.0.0.1:56009 - "GET /projects/search?limit=1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56066 - "GET /projects/search?page=1&limit=6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56067 - "GET /dashboard/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56069 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56069 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56070 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56069 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
