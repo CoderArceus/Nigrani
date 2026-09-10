@@ -15,11 +15,12 @@ async function fetchProjects(searchParams: any, page: number, limit: number) {
   url.searchParams.append("limit", limit.toString());
   
   if (searchParams.state) url.searchParams.append("state", searchParams.state);
+  if (searchParams.district) url.searchParams.append("district", searchParams.district);
   if (searchParams.sector) url.searchParams.append("work_category", searchParams.sector);
-  if (searchParams.year) url.searchParams.append("year", searchParams.year);
-  if (searchParams.mp) url.searchParams.append("mp_name", searchParams.mp);
+  if (searchParams.status) url.searchParams.append("status", searchParams.status);
   if (searchParams.sort) url.searchParams.append("sort", searchParams.sort);
   if (searchParams.order) url.searchParams.append("order", searchParams.order);
+  if (searchParams.q) url.searchParams.append("q", searchParams.q);
   
   let retries = 3;
   while (retries > 0) {
