@@ -27,17 +27,17 @@ export function Sidebar() {
 
   return (
     <nav
-      className={`hidden md:flex flex-col h-full border-r border-outline-variant bg-surface-container-lowest flex-shrink-0 z-40 transition-all duration-300 ${
+      className={`hidden md:flex flex-col h-screen sticky top-0 border-r border-outline-variant/30 bg-surface-container-lowest flex-shrink-0 z-40 transition-all duration-300 ${
         isCollapsed ? "w-[80px]" : "w-[260px]"
       }`}
     >
       {/* Brand */}
-      <div className="p-6 pb-8 border-b border-outline-variant relative flex flex-col">
+      <div className="px-6 py-6 border-b border-outline-variant/30 flex flex-col gap-1 items-center md:items-start relative">
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
           className={`absolute ${
             isCollapsed ? "left-1/2 -translate-x-1/2" : "right-4"
-          } top-6 text-secondary hover:text-primary transition-colors`}
+          } top-6 text-on-surface-variant hover:text-primary transition-colors`}
         >
           <span className="material-symbols-outlined text-[20px]">
             {isCollapsed ? "menu_open" : "menu_open"}
@@ -46,12 +46,12 @@ export function Sidebar() {
 
         {!isCollapsed && (
           <div className="mt-2">
-            <div className="font-display text-[24px] font-bold text-primary mb-1 tracking-tight leading-tight">
+            <span className="font-display text-[20px] font-bold text-primary tracking-tight block">
               Nigrani
-            </div>
-            <div className="font-sans text-[12px] text-secondary uppercase tracking-wider font-semibold">
+            </span>
+            <span className="font-sans text-[12px] font-semibold tracking-[0.05em] text-outline uppercase block mt-1">
               Monitoring Platform
-            </div>
+            </span>
           </div>
         )}
       </div>
@@ -108,7 +108,7 @@ export function Sidebar() {
         })}
         
         {/* Profile */}
-        <div className={`flex items-center gap-3 cursor-pointer group ${isCollapsed ? 'justify-center p-2' : 'px-4 py-3'} mt-2 border-t border-outline-variant`}>
+        <div className={`flex items-center gap-3 cursor-pointer group ${isCollapsed ? 'justify-center p-2' : 'px-4 py-3'} mt-2 border-t border-outline-variant/30`}>
           <div className="w-10 h-10 rounded-full bg-[#334155] text-white flex shrink-0 items-center justify-center font-display font-medium text-[14px]">
             O
           </div>
