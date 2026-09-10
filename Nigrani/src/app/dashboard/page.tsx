@@ -159,7 +159,7 @@ export default function OverviewPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* KPIs (spans 2 cols) */}
-        <div className="lg:col-span-2 bg-white rounded-[16px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col">
+        <div className="lg:col-span-2 bg-white rounded-[16px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col h-fit">
           <h3 className="font-bold text-[16px] text-[#1E293B] mb-6">Portfolio Performance</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             
