@@ -81,27 +81,27 @@ export default function OverviewPage() {
       {/* KPI Cards Row */}
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
         <StatCard 
-          icon="layers" iconBg="bg-[#E0E7FF]" iconColor="text-[#4F46E5]"
+          icon="layers" colorTheme="blue"
           title="Total Projects" value={totalProjects.toLocaleString()} 
           change="+12%" changeType="positive"
         />
         <StatCard 
-          icon="check_circle" iconBg="bg-[#DCFCE7]" iconColor="text-[#16A34A]"
+          icon="check_circle" colorTheme="green"
           title="Completed" value={completed.toLocaleString()} percent={completedPct}
           change="+8%" changeType="positive"
         />
         <StatCard 
-          icon="schedule" iconBg="bg-[#FEF3C7]" iconColor="text-[#D97706]"
+          icon="schedule" colorTheme="orange"
           title="In Progress" value={inProgress.toLocaleString()} percent={inProgressPct}
           change="+4%" changeType="positive"
         />
         <StatCard 
-          icon="warning" iconBg="bg-[#FEE2E2]" iconColor="text-[#DC2626]"
+          icon="warning" colorTheme="red"
           title="Require Attention" value={sanctionDelays.toLocaleString()} percent={delaysPct}
-          change="+27%" changeType="negative" // Red change since attention is bad
+          change="+27%" changeType="negative"
         />
         <StatCard 
-          icon="monitoring" iconBg="bg-[#F3E8FF]" iconColor="text-[#9333EA]"
+          icon="bar_chart" colorTheme="purple"
           title="ML Anomalies" value={mlAnomalies.toLocaleString()} percent={mlPct}
           change="+18%" changeType="negative" 
         />
@@ -117,13 +117,13 @@ export default function OverviewPage() {
             <div className="relative w-[180px] h-[180px] shrink-0">
               <svg viewBox="0 0 42 42" className="w-full h-full transform -rotate-90">
                 {/* Completed */}
-                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#16A34A" strokeWidth="7.5" strokeDasharray={`${Math.max(0, completedPct - 1.5)} ${100 - Math.max(0, completedPct - 1.5)}`} strokeDashoffset="0" strokeLinecap="round" />
+                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#16A34A" strokeWidth="9" strokeDasharray={`${Math.max(0, completedPct - 1.5)} ${100 - Math.max(0, completedPct - 1.5)}`} strokeDashoffset="0" strokeLinecap="round" />
                 {/* In Progress */}
-                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#2563EB" strokeWidth="7.5" strokeDasharray={`${Math.max(0, inProgressPct - 1.5)} ${100 - Math.max(0, inProgressPct - 1.5)}`} strokeDashoffset={`-${completedPct}`} strokeLinecap="round" />
+                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#2563EB" strokeWidth="9" strokeDasharray={`${Math.max(0, inProgressPct - 1.5)} ${100 - Math.max(0, inProgressPct - 1.5)}`} strokeDashoffset={`-${completedPct}`} strokeLinecap="round" />
                 {/* Not Started */}
-                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F59E0B" strokeWidth="7.5" strokeDasharray={`${Math.max(0, notStartedPct - 1.5)} ${100 - Math.max(0, notStartedPct - 1.5)}`} strokeDashoffset={`-${completedPct + inProgressPct}`} strokeLinecap="round" />
+                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F59E0B" strokeWidth="9" strokeDasharray={`${Math.max(0, notStartedPct - 1.5)} ${100 - Math.max(0, notStartedPct - 1.5)}`} strokeDashoffset={`-${completedPct + inProgressPct}`} strokeLinecap="round" />
                 {/* Require Attention */}
-                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#DC2626" strokeWidth="7.5" strokeDasharray={`${Math.max(0, delaysPct - 1.5)} ${100 - Math.max(0, delaysPct - 1.5)}`} strokeDashoffset={`-${completedPct + inProgressPct + notStartedPct}`} strokeLinecap="round" />
+                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#DC2626" strokeWidth="9" strokeDasharray={`${Math.max(0, delaysPct - 1.5)} ${100 - Math.max(0, delaysPct - 1.5)}`} strokeDashoffset={`-${completedPct + inProgressPct + notStartedPct}`} strokeLinecap="round" />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <span className="font-display font-bold text-[28px] text-[#1E293B] leading-none">{totalProjects.toLocaleString()}</span>
@@ -313,30 +313,37 @@ export default function OverviewPage() {
 
 // Subcomponents
 
-function StatCard({ icon, iconBg, iconColor, title, value, percent, change, changeType }: any) {
+function StatCard({ icon, colorTheme, title, value, percent, change, changeType }: any) {
   const isPos = changeType === "positive";
+  
+  const themes: any = {
+    blue: { bg: "bg-[#F0F9FF]", border: "border-[#BAE6FD]", iconColor: "text-[#3B82F6]" },
+    green: { bg: "bg-[#F0FDF4]", border: "border-[#BBF7D0]", iconColor: "text-[#22C55E]" },
+    orange: { bg: "bg-[#FFFBEB]", border: "border-[#FDE68A]", iconColor: "text-[#F59E0B]" },
+    red: { bg: "bg-[#FEF2F2]", border: "border-[#FECACA]", iconColor: "text-[#EF4444]" },
+    purple: { bg: "bg-[#FAF5FF]", border: "border-[#E9D5FF]", iconColor: "text-[#A855F7]" },
+  };
+
+  const theme = themes[colorTheme] || themes.blue;
+
   return (
-    <div className="bg-white rounded-[16px] border border-[#E2E8F0] p-5 shadow-sm flex flex-col">
-      <div className="flex items-center gap-3 mb-4">
-        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${iconBg} ${iconColor}`}>
-          <span className="material-symbols-outlined text-[20px]">{icon}</span>
-        </div>
-        <div className="flex flex-col">
-          <span className="text-[#64748B] text-[13px] font-medium leading-tight">{title}</span>
-        </div>
+    <div className={`${theme.bg} rounded-[16px] border ${theme.border} p-5 shadow-sm flex items-center justify-center gap-4`}>
+      <div className={`w-[48px] h-[48px] rounded-full bg-white flex items-center justify-center shadow-sm shrink-0 ${theme.iconColor}`}>
+        <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: "'FILL' 1" }}>{icon}</span>
       </div>
-      <div className="flex items-baseline gap-2 mb-3">
-        <span className="font-display font-bold text-[28px] text-[#1E293B] leading-none">{value}</span>
-        {percent && <span className="font-semibold text-[16px] text-[#64748B]">{percent}%</span>}
-      </div>
-      <div className="flex items-center gap-1.5 mt-auto text-[12px]">
-        <span className={`font-bold flex items-center gap-0.5 ${isPos ? 'text-[#16A34A]' : 'text-[#DC2626]'}`}>
-          <span className="material-symbols-outlined text-[14px]">
-            {isPos ? 'arrow_upward' : 'arrow_upward'}
+      <div className="flex flex-col items-start">
+        <span className="text-[#64748B] text-[13px] font-medium leading-tight mb-1">{title}</span>
+        <div className="flex items-baseline gap-2 mb-1.5">
+          <span className="font-display font-bold text-[28px] text-[#1E293B] leading-none">{value}</span>
+          {percent && <span className="font-semibold text-[16px] text-[#64748B]">{percent}%</span>}
+        </div>
+        <div className="flex items-center gap-1.5 text-[12px]">
+          <span className={`font-bold flex items-center gap-0.5 ${isPos ? 'text-[#16A34A]' : 'text-[#DC2626]'}`}>
+            <span className="material-symbols-outlined text-[14px]">arrow_upward</span>
+            {change}
           </span>
-          {change}
-        </span>
-        <span className="text-[#94A3B8]">vs last month</span>
+          <span className="text-[#94A3B8]">vs last month</span>
+        </div>
       </div>
     </div>
   );
