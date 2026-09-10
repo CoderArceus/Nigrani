@@ -1462,60 +1462,74 @@ def get_statistical_outliers():
 # ── New Insights Endpoints (Revamped Dashboard) ────────────────────
 
 @app.get("/dashboard/insights/utilization-by-mp")
-def get_utilization_by_mp():
-    return insights_store.get_utilization_by_mp()
+def get_utilization_by_mp(year: str = None, state: str = None, mp_name: str = None, work_category: str = None):
+    filters = {"year": year, "state": state, "mp_name": mp_name, "work_category": work_category}
+    return insights_store.get_utilization_by_mp(filters=filters)
 
 @app.get("/dashboard/insights/time-to-release")
-def get_time_to_release():
-    return insights_store.get_time_to_release_histogram()
+def get_time_to_release(year: str = None, state: str = None, mp_name: str = None, work_category: str = None):
+    filters = {"year": year, "state": state, "mp_name": mp_name, "work_category": work_category}
+    return insights_store.get_time_to_release_histogram(filters=filters)
 
 @app.get("/dashboard/insights/sanction-completion-bubble")
-def get_sanction_completion_bubble():
-    return insights_store.get_sanction_completion_bubble()
+def get_sanction_completion_bubble(year: str = None, state: str = None, mp_name: str = None, work_category: str = None):
+    filters = {"year": year, "state": state, "mp_name": mp_name, "work_category": work_category}
+    return insights_store.get_sanction_completion_bubble(filters=filters)
 
 @app.get("/dashboard/insights/sanctioned-by-state")
-def get_sanctioned_by_state():
-    return insights_store.get_sanctioned_by_state()
+def get_sanctioned_by_state(year: str = None, state: str = None, mp_name: str = None, work_category: str = None):
+    filters = {"year": year, "state": state, "mp_name": mp_name, "work_category": work_category}
+    return insights_store.get_sanctioned_by_state(filters=filters)
 
 @app.get("/dashboard/insights/sc-st-comparison")
-def get_sc_st_comparison():
-    return insights_store.get_sc_st_comparison()
+def get_sc_st_comparison(year: str = None, state: str = None, mp_name: str = None, work_category: str = None):
+    filters = {"year": year, "state": state, "mp_name": mp_name, "work_category": work_category}
+    return insights_store.get_sc_st_comparison(filters=filters)
 
 @app.get("/dashboard/insights/category-mix-by-state")
-def get_category_mix_by_state():
-    return insights_store.get_category_mix_by_state()
+def get_category_mix_by_state(year: str = None, state: str = None, mp_name: str = None, work_category: str = None):
+    filters = {"year": year, "state": state, "mp_name": mp_name, "work_category": work_category}
+    return insights_store.get_category_mix_by_state(filters=filters)
 
 @app.get("/dashboard/insights/mp-leaderboard")
-def get_mp_leaderboard():
-    return insights_store.get_mp_leaderboard()
+def get_mp_leaderboard(year: str = None, state: str = None, mp_name: str = None, work_category: str = None):
+    filters = {"year": year, "state": state, "mp_name": mp_name, "work_category": work_category}
+    return insights_store.get_mp_leaderboard(filters=filters)
 
 @app.get("/dashboard/insights/house-comparison")
-def get_house_comparison():
-    return insights_store.get_house_comparison()
+def get_house_comparison(year: str = None, state: str = None, mp_name: str = None, work_category: str = None):
+    filters = {"year": year, "state": state, "mp_name": mp_name, "work_category": work_category}
+    return insights_store.get_house_comparison(filters=filters)
 
 @app.get("/dashboard/insights/amount-vs-photos")
-def get_amount_vs_photos():
-    return insights_store.get_amount_vs_photos()
+def get_amount_vs_photos(year: str = None, state: str = None, mp_name: str = None, work_category: str = None):
+    filters = {"year": year, "state": state, "mp_name": mp_name, "work_category": work_category}
+    return insights_store.get_amount_vs_photos(filters=filters)
 
 @app.get("/dashboard/insights/repeated-descriptions")
-def get_repeated_descriptions():
-    return insights_store.get_repeated_descriptions()
+def get_repeated_descriptions(year: str = None, state: str = None, mp_name: str = None, work_category: str = None):
+    filters = {"year": year, "state": state, "mp_name": mp_name, "work_category": work_category}
+    return insights_store.get_repeated_descriptions(filters=filters)
 
 @app.get("/dashboard/insights/project-pipeline")
-def get_project_pipeline():
-    return insights_store.get_project_pipeline()
+def get_project_pipeline(year: str = None, state: str = None, mp_name: str = None, work_category: str = None):
+    filters = {"year": year, "state": state, "mp_name": mp_name, "work_category": work_category}
+    return insights_store.get_project_pipeline(filters=filters)
 
 @app.get("/dashboard/insights/stalled-projects")
-def get_stalled_projects():
-    return insights_store.get_stalled_projects()
+def get_stalled_projects(year: str = None, state: str = None, mp_name: str = None, work_category: str = None):
+    filters = {"year": year, "state": state, "mp_name": mp_name, "work_category": work_category}
+    return insights_store.get_stalled_projects(filters=filters)
 
 @app.get("/dashboard/insights/flag-reasons")
-def get_flag_reasons():
-    return insights_store.get_flag_reasons_frequency()
+def get_flag_reasons(year: str = None, state: str = None, mp_name: str = None, work_category: str = None):
+    filters = {"year": year, "state": state, "mp_name": mp_name, "work_category": work_category}
+    return insights_store.get_flag_reasons_frequency(filters=filters)
 
 @app.get("/dashboard/insights/flag-rate-cross-tab")
-def get_flag_rate_cross_tab():
-    return insights_store.get_flag_rate_cross_tab()
+def get_flag_rate_cross_tab(year: str = None, state: str = None, mp_name: str = None, work_category: str = None):
+    filters = {"year": year, "state": state, "mp_name": mp_name, "work_category": work_category}
+    return insights_store.get_flag_rate_cross_tab(filters=filters)
 
 
 if __name__ == "__main__":

@@ -1,11 +1,19 @@
 import { InsightsPageClient } from "@/components/InsightsPageClient";
+import { ClientFilterBar } from "@/components/ClientFilterBar";
 import { API_BASE_URL } from "@/lib/api";
+import { Suspense } from "react";
 
 export const dynamic = "force-dynamic";
 
-async function fetchData(endpoint: string) {
+async function fetchData(endpoint: string, searchParams: any) {
   try {
-    const res = await fetch(`${API_BASE_URL}/dashboard/insights/${endpoint}`, {
+    const url = new URL(`${API_BASE_URL}/dashboard/insights/${endpoint}`);
+    if (searchParams.year) url.searchParams.append("year", searchParams.year);
+    if (searchParams.state) url.searchParams.append("state", searchParams.state);
+    if (searchParams.mp_name) url.searchParams.append("mp_name", searchParams.mp_name);
+    if (searchParams.work_category) url.searchParams.append("work_category", searchParams.work_category);
+
+    const res = await fetch(url.toString(), {
       next: { revalidate: 300 },
     });
     if (!res.ok) return endpoint.includes("cross-tab") ? { by_category: [], by_state: [] } : [];
@@ -15,7 +23,8 @@ async function fetchData(endpoint: string) {
   }
 }
 
-export default async function InsightsPage() {
+export default async function InsightsPage({ searchParams }: { searchParams: any }) {
+  const params = await searchParams;
   const [
     utilizationByMp,
     timeToRelease,
@@ -32,20 +41,20 @@ export default async function InsightsPage() {
     flagReasons,
     flagRateCrossTab,
   ] = await Promise.all([
-    fetchData("utilization-by-mp"),
-    fetchData("time-to-release"),
-    fetchData("sanction-completion-bubble"),
-    fetchData("sanctioned-by-state"),
-    fetchData("sc-st-comparison"),
-    fetchData("category-mix-by-state"),
-    fetchData("mp-leaderboard"),
-    fetchData("house-comparison"),
-    fetchData("amount-vs-photos"),
-    fetchData("repeated-descriptions"),
-    fetchData("project-pipeline"),
-    fetchData("stalled-projects"),
-    fetchData("flag-reasons"),
-    fetchData("flag-rate-cross-tab"),
+    fetchData("utilization-by-mp", params),
+    fetchData("time-to-release", params),
+    fetchData("sanction-completion-bubble", params),
+    fetchData("sanctioned-by-state", params),
+    fetchData("sc-st-comparison", params),
+    fetchData("category-mix-by-state", params),
+    fetchData("mp-leaderboard", params),
+    fetchData("house-comparison", params),
+    fetchData("amount-vs-photos", params),
+    fetchData("repeated-descriptions", params),
+    fetchData("project-pipeline", params),
+    fetchData("stalled-projects", params),
+    fetchData("flag-reasons", params),
+    fetchData("flag-rate-cross-tab", params),
   ]);
 
   return (
@@ -63,10 +72,9 @@ export default async function InsightsPage() {
 
         {/* Filter Bar */}
         <div className="flex items-center gap-3">
-          <FilterPill icon="calendar_month" label="Time Period" value="All Years" />
-          <FilterPill icon="location_on" label="State" value="All States" />
-          <FilterPill icon="person" label="MP" value="All MPs" />
-          <FilterPill icon="category" label="Work Category" value="All Categories" />
+          <Suspense fallback={<div className="h-12 w-64 animate-pulse bg-gray-200 rounded-lg"></div>}>
+            <ClientFilterBar />
+          </Suspense>
         </div>
       </div>
 
@@ -87,38 +95,6 @@ export default async function InsightsPage() {
         flagReasons={flagReasons}
         flagRateCrossTab={flagRateCrossTab}
       />
-    </div>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   Filter Pill — Compact filter chip for the top bar
-   ═══════════════════════════════════════════════════════════════════ */
-function FilterPill({
-  icon,
-  label,
-  value,
-}: {
-  icon: string;
-  label: string;
-  value: string;
-}) {
-  return (
-    <div className="hidden lg:flex items-center gap-2 px-3 py-2 rounded-lg border border-outline-variant/40 bg-surface-container-lowest hover:bg-surface-container-low cursor-pointer transition-colors">
-      <span className="material-symbols-outlined text-[16px] text-on-surface-variant">
-        {icon}
-      </span>
-      <div className="flex flex-col">
-        <span className="text-[9px] text-on-surface-variant uppercase tracking-wider font-medium leading-none">
-          {label}
-        </span>
-        <span className="text-[12px] font-semibold text-on-surface leading-tight">
-          {value}
-        </span>
-      </div>
-      <span className="material-symbols-outlined text-[14px] text-on-surface-variant ml-1">
-        expand_more
-      </span>
     </div>
   );
 }

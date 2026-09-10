@@ -5,3 +5,113 @@ INFO:     Started server process [9451]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 INFO:     127.0.0.1:56178 - "GET /dashboard/year-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56198 - "GET /dashboard/insights/amount-vs-photos HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56190 - "GET /dashboard/insights/utilization-by-mp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56193 - "GET /dashboard/insights/sanctioned-by-state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56195 - "GET /dashboard/insights/category-mix-by-state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56194 - "GET /dashboard/insights/sc-st-comparison HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56199 - "GET /dashboard/insights/repeated-descriptions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56191 - "GET /dashboard/insights/time-to-release HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56201 - "GET /dashboard/insights/stalled-projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56197 - "GET /dashboard/insights/house-comparison HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56192 - "GET /dashboard/insights/sanction-completion-bubble HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56200 - "GET /dashboard/insights/project-pipeline HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56203 - "GET /dashboard/insights/flag-rate-cross-tab HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56196 - "GET /dashboard/insights/mp-leaderboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56202 - "GET /dashboard/insights/flag-reasons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56571 - "GET /dashboard/insights/utilization-by-mp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56574 - "GET /dashboard/insights/sanctioned-by-state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56575 - "GET /dashboard/insights/sc-st-comparison HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56579 - "GET /dashboard/insights/amount-vs-photos HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56577 - "GET /dashboard/insights/mp-leaderboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56572 - "GET /dashboard/insights/time-to-release HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56576 - "GET /dashboard/insights/category-mix-by-state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56583 - "GET /dashboard/insights/flag-reasons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56578 - "GET /dashboard/insights/house-comparison HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56573 - "GET /dashboard/insights/sanction-completion-bubble HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56584 - "GET /dashboard/insights/flag-rate-cross-tab HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56580 - "GET /dashboard/insights/repeated-descriptions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56581 - "GET /dashboard/insights/project-pipeline HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56582 - "GET /dashboard/insights/stalled-projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56610 - "GET /dashboard/insights/utilization-by-mp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56618 - "GET /dashboard/insights/amount-vs-photos HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56613 - "GET /dashboard/insights/sanctioned-by-state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56622 - "GET /dashboard/insights/flag-reasons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56614 - "GET /dashboard/insights/sc-st-comparison HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56615 - "GET /dashboard/insights/category-mix-by-state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56616 - "GET /dashboard/insights/mp-leaderboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56611 - "GET /dashboard/insights/time-to-release HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56619 - "GET /dashboard/insights/repeated-descriptions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56617 - "GET /dashboard/insights/house-comparison HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56623 - "GET /dashboard/insights/flag-rate-cross-tab HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56612 - "GET /dashboard/insights/sanction-completion-bubble HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56621 - "GET /dashboard/insights/stalled-projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56620 - "GET /dashboard/insights/project-pipeline HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56634 - "GET /dashboard/mp-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56635 - "GET /dashboard/year-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56634 - "GET /dashboard/mp-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56635 - "GET /dashboard/year-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56610 - "GET /projects/search?page=1&limit=6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56632 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56611 - "GET /dashboard/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56632 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56633 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56632 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'insights_stats.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [9451]
+INFO:     Started server process [9862]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'insights_stats.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [9862]
+INFO:     Started server process [9878]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'insights_stats.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [9878]
+INFO:     Started server process [9890]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'insights_stats.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [9890]
+INFO:     Started server process [9899]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [9899]
+INFO:     Started server process [9905]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [9905]
+INFO:     Started server process [9913]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [9913]
+INFO:     Started server process [9919]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:56804 - "GET /dashboard/insights/project-pipeline?year=2023 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56808 - "GET /dashboard/insights/project-pipeline HTTP/1.1" 200 OK
