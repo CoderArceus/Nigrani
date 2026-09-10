@@ -108,38 +108,8 @@ export default function OverviewPage() {
       </div>
 
       {/* Visualizations Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
-        {/* Status Donut */}
-        <div className="bg-white rounded-[16px] border border-[#E2E8F0] p-6 shadow-sm flex flex-col">
-          <h3 className="font-bold text-[16px] text-[#1E293B] mb-6">Project Status Distribution</h3>
-          <div className="flex items-center justify-center gap-8 mt-4">
-            <div className="relative w-[180px] h-[180px] shrink-0">
-              <svg viewBox="0 0 42 42" className="w-full h-full transform -rotate-90">
-                {/* Completed */}
-                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#16A34A" strokeWidth="9" strokeDasharray={`${completedPct} ${100 - completedPct}`} strokeDashoffset="0" />
-                {/* In Progress */}
-                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#2563EB" strokeWidth="9" strokeDasharray={`${inProgressPct} ${100 - inProgressPct}`} strokeDashoffset={`-${completedPct}`} />
-                {/* Not Started */}
-                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F59E0B" strokeWidth="9" strokeDasharray={`${notStartedPct} ${100 - notStartedPct}`} strokeDashoffset={`-${completedPct + inProgressPct}`} />
-                {/* Require Attention */}
-                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#DC2626" strokeWidth="9" strokeDasharray={`${delaysPct} ${100 - delaysPct}`} strokeDashoffset={`-${completedPct + inProgressPct + notStartedPct}`} />
-              </svg>
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="font-display font-bold text-[28px] text-[#1E293B] leading-none">{totalProjects.toLocaleString()}</span>
-                <span className="text-[12px] text-[#64748B] mt-1.5 font-medium">Total Projects</span>
-              </div>
-            </div>
-            
-            <div className="flex flex-col gap-4 w-[160px]">
-              <LegendItem color="bg-[#16A34A]" label="Completed" value={completed} pct={completedPct} />
-              <LegendItem color="bg-[#2563EB]" label="In Progress" value={inProgress} pct={inProgressPct} />
-              <LegendItem color="bg-[#F59E0B]" label="Not Started" value={notStarted} pct={notStartedPct} />
-              <LegendItem color="bg-[#DC2626]" label="Require Attention" value={sanctionDelays} pct={delaysPct} />
-            </div>
-          </div>
-        </div>
-
         {/* Projects by Sector */}
         <div className="bg-white rounded-[16px] border border-[#E2E8F0] p-6 shadow-sm">
           <div className="flex items-center justify-between mb-6">
