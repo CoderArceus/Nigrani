@@ -24,7 +24,7 @@ export default function DashboardLayout({
       : { title: "Dashboard", search: "Search..." });
 
   return (
-    <AppShell title={config.title} searchPlaceholder={config.search}>
+    <AppShell title={config.title}>
       {children}
     </AppShell>
   );

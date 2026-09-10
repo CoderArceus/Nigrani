@@ -24,11 +24,8 @@ export function AppShell({
           {topBar ?? (
             <header className="bg-surface-container-lowest border-b border-border-translucent h-[72px] flex items-center justify-between px-8 shrink-0">
               <div className="flex-1 flex items-center">
-                {/* Search Input */}
+                {/* Removed Search Input */}
                 <div className="hidden md:block w-full max-w-[760px]">
-                  <Suspense fallback={<div className="h-10 w-full" />}>
-                    <UnifiedSearchBar placeholder={searchPlaceholder} />
-                  </Suspense>
                 </div>
               </div>
 

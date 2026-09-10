@@ -238,3 +238,7 @@ INFO:     127.0.0.1:56931 - "GET /projects/search?page=1&limit=10 HTTP/1.1" 200 
 INFO:     127.0.0.1:56931 - "GET /projects/search?page=1&limit=10 HTTP/1.1" 200 OK
 INFO:     127.0.0.1:56939 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
 INFO:     127.0.0.1:56939 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56970 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56970 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56971 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56970 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
