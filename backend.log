@@ -2463,3 +2463,430 @@ INFO:     127.0.0.1:58341 - "GET /projects/search?limit=3 HTTP/1.1" 200 OK
 INFO:     127.0.0.1:58394 - "GET /dashboard/review-queue HTTP/1.1" 200 OK
 INFO:     127.0.0.1:58394 - "GET /dashboard/review-queue HTTP/1.1" 200 OK
 INFO:     127.0.0.1:58404 - "GET /dashboard/review-queue HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58471 - "GET /dashboard/review-queue HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58471 - "GET /dashboard/review-queue HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58480 - "GET /dashboard/review-queue HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58480 - "GET /dashboard/review-queue HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58482 - "GET /projects/search?page=1&limit=6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58480 - "GET /dashboard/state-summary HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+        pool_request.request
+    )
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/connection.py", line 103, in handle_request
+    return self._connection.handle_request(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 187, in handle_request
+    raise exc
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 150, in handle_request
+    status, headers = self._receive_response(
+                      ~~~~~~~~~~~~~~~~~~~~~~^
+        request=request, stream_id=stream_id
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 294, in _receive_response
+    event = self._receive_stream_event(request, stream_id)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 336, in _receive_stream_event
+    self._receive_events(request, stream_id)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 364, in _receive_events
+    events = self._read_incoming_data(request)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 438, in _read_incoming_data
+    raise self._read_exception  # pragma: nocover
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+        pool_request.request
+    )
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/connection.py", line 103, in handle_request
+    return self._connection.handle_request(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 187, in handle_request
+    raise exc
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 150, in handle_request
+    status, headers = self._receive_response(
+                      ~~~~~~~~~~~~~~~~~~~~~~^
+        request=request, stream_id=stream_id
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 294, in _receive_response
+    event = self._receive_stream_event(request, stream_id)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 336, in _receive_stream_event
+    self._receive_events(request, stream_id)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 364, in _receive_events
+    events = self._read_incoming_data(request)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 455, in _read_incoming_data
+    raise exc
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 441, in _read_incoming_data
+    data = self._network_stream.read(self.READ_NUM_BYTES, timeout)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_backends/sync.py", line 126, in read
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ReadError: [Errno 35] Resource temporarily unavailable
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/uvicorn/protocols/http/httptools_impl.py", line 422, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 96, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 154, in simple_response
+    await self.app(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/routing.py", line 670, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 1281, in handle
+    await super().handle(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/routing.py", line 280, in handle
+    await self.app(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 354, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/anyio/to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 2706, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 1100, in run
+    result = context.run(func, *args)
+  File "/Users/aryan/Downloads/mplads/main.py", line 47, in wrapper
+    data = func(*args, **kwargs)
+  File "/Users/aryan/Downloads/mplads/main.py", line 621, in state_summary
+    .execute()
+     ~~~~~~~^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/postgrest/_sync/request_builder.py", line 90, in execute
+    r = send_with_retry(self.request)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/postgrest/_sync/request_builder.py", line 51, in send_with_retry
+    resp = req.send(headers)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/postgrest/base_request_builder.py", line 90, in send
+    return self.session.request(
+           ~~~~~~~~~~~~~~~~~~~~^
+        self.http_method,
+        ^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        auth=self.auth,
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpx/_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+        request,
+    ...<2 lines>...
+        history=[],
+    )
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+        request,
+        follow_redirects=follow_redirects,
+        history=history,
+    )
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ReadError: [Errno 35] Resource temporarily unavailable
+INFO:     127.0.0.1:58483 - "GET /dashboard/overview HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+        pool_request.request
+    )
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/connection.py", line 103, in handle_request
+    return self._connection.handle_request(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 187, in handle_request
+    raise exc
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 150, in handle_request
+    status, headers = self._receive_response(
+                      ~~~~~~~~~~~~~~~~~~~~~~^
+        request=request, stream_id=stream_id
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 294, in _receive_response
+    event = self._receive_stream_event(request, stream_id)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 336, in _receive_stream_event
+    self._receive_events(request, stream_id)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 364, in _receive_events
+    events = self._read_incoming_data(request)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 438, in _read_incoming_data
+    raise self._read_exception  # pragma: nocover
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+        pool_request.request
+    )
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/connection.py", line 103, in handle_request
+    return self._connection.handle_request(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 187, in handle_request
+    raise exc
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 150, in handle_request
+    status, headers = self._receive_response(
+                      ~~~~~~~~~~~~~~~~~~~~~~^
+        request=request, stream_id=stream_id
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 294, in _receive_response
+    event = self._receive_stream_event(request, stream_id)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 336, in _receive_stream_event
+    self._receive_events(request, stream_id)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 364, in _receive_events
+    events = self._read_incoming_data(request)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 455, in _read_incoming_data
+    raise exc
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_sync/http2.py", line 441, in _read_incoming_data
+    data = self._network_stream.read(self.READ_NUM_BYTES, timeout)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_backends/sync.py", line 126, in read
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ReadError: [Errno 35] Resource temporarily unavailable
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/uvicorn/protocols/http/httptools_impl.py", line 422, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 88, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/routing.py", line 670, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 1281, in handle
+    await super().handle(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/routing.py", line 280, in handle
+    await self.app(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 354, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/anyio/to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 2706, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 1100, in run
+    result = context.run(func, *args)
+  File "/Users/aryan/Downloads/mplads/main.py", line 47, in wrapper
+    data = func(*args, **kwargs)
+  File "/Users/aryan/Downloads/mplads/main.py", line 558, in get_dashboard_overview
+    .execute()
+     ~~~~~~~^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/postgrest/_sync/request_builder.py", line 90, in execute
+    r = send_with_retry(self.request)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/postgrest/_sync/request_builder.py", line 51, in send_with_retry
+    resp = req.send(headers)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/postgrest/base_request_builder.py", line 90, in send
+    return self.session.request(
+           ~~~~~~~~~~~~~~~~~~~~^
+        self.http_method,
+        ^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        auth=self.auth,
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpx/_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+        request,
+    ...<2 lines>...
+        history=[],
+    )
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+        request,
+        follow_redirects=follow_redirects,
+        history=history,
+    )
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ReadError: [Errno 35] Resource temporarily unavailable
+INFO:     127.0.0.1:58484 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58484 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58486 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58484 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58486 - "GET /dashboard/review-queue HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58486 - "GET /dashboard/review-queue HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58486 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58484 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58486 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58486 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58487 - "GET /projects/search?limit=3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58486 - "GET /projects/search?limit=3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58488 - "GET /dashboard/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58486 - "GET /dashboard/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58486 - "GET /dashboard/review-queue HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58486 - "GET /dashboard/review-queue HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58486 - "GET /dashboard/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58487 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58488 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58486 - "GET /dashboard/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58488 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58487 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58484 - "GET /projects/search?limit=3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58486 - "GET /projects/search?limit=3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58486 - "GET /dashboard/review-queue HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58486 - "GET /dashboard/review-queue HTTP/1.1" 200 OK

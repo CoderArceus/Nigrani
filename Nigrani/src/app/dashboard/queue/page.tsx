@@ -173,45 +173,45 @@ export default function ReviewQueuePage() {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-        <div className="bg-white border border-[#E2E8F0] rounded-[12px] p-5 flex items-start gap-4 shadow-sm">
-          <div className="bg-[#FEF2F2] rounded-full p-2.5 flex items-center justify-center border border-[#FECACA]">
-            <span className="material-symbols-outlined text-[#DC2626] text-[24px]">warning</span>
+        <div className="bg-[#FEF2F2] border border-[#FECACA] rounded-[12px] p-5 flex items-start gap-4 shadow-sm">
+          <div className="bg-white rounded-full p-2.5 flex items-center justify-center shadow-sm shrink-0">
+            <span className="material-symbols-outlined text-[#EF4444] text-[24px]">warning</span>
           </div>
           <div>
-            <div className="text-[28px] font-bold text-[#0F172A] leading-none mb-1">{totalProjects}</div>
+            <div className="text-[28px] font-bold text-[#1E293B] leading-none mb-1">{totalProjects}</div>
             <div className="text-[14px] font-medium text-[#1E293B]">Projects to Review</div>
             <div className="text-[12px] text-[#64748B]">Require your attention</div>
           </div>
         </div>
 
-        <div className="bg-white border border-[#E2E8F0] rounded-[12px] p-5 flex items-start gap-4 shadow-sm">
-          <div className="bg-[#FFF7ED] rounded-full p-2.5 flex items-center justify-center border border-[#FFEDD5]">
-            <span className="material-symbols-outlined text-[#EA580C] text-[24px]">schedule</span>
+        <div className="bg-[#FFFBEB] border border-[#FDE68A] rounded-[12px] p-5 flex items-start gap-4 shadow-sm">
+          <div className="bg-white rounded-full p-2.5 flex items-center justify-center shadow-sm shrink-0">
+            <span className="material-symbols-outlined text-[#F59E0B] text-[24px]">schedule</span>
           </div>
           <div>
-            <div className="text-[28px] font-bold text-[#0F172A] leading-none mb-1">{highPriority}</div>
+            <div className="text-[28px] font-bold text-[#1E293B] leading-none mb-1">{highPriority}</div>
             <div className="text-[14px] font-medium text-[#1E293B]">High Priority</div>
             <div className="text-[12px] text-[#64748B]">Wait time &gt; 7 days</div>
           </div>
         </div>
 
-        <div className="bg-white border border-[#E2E8F0] rounded-[12px] p-5 flex items-start gap-4 shadow-sm">
-          <div className="bg-[#FFF7ED] rounded-full p-2.5 flex items-center justify-center border border-[#FFEDD5]">
-            <span className="material-symbols-outlined text-[#EA580C] text-[24px]">schedule</span>
+        <div className="bg-[#FFFBEB] border border-[#FDE68A] rounded-[12px] p-5 flex items-start gap-4 shadow-sm">
+          <div className="bg-white rounded-full p-2.5 flex items-center justify-center shadow-sm shrink-0">
+            <span className="material-symbols-outlined text-[#F59E0B] text-[24px]">schedule</span>
           </div>
           <div>
-            <div className="text-[28px] font-bold text-[#0F172A] leading-none mb-1">{mediumPriority}</div>
+            <div className="text-[28px] font-bold text-[#1E293B] leading-none mb-1">{mediumPriority}</div>
             <div className="text-[14px] font-medium text-[#1E293B]">Medium Priority</div>
             <div className="text-[12px] text-[#64748B]">Wait time 3-7 days</div>
           </div>
         </div>
 
-        <div className="bg-white border border-[#E2E8F0] rounded-[12px] p-5 flex items-start gap-4 shadow-sm">
-          <div className="bg-[#EFF6FF] rounded-full p-2.5 flex items-center justify-center border border-[#DBEAFE]">
-            <span className="material-symbols-outlined text-[#2563EB] text-[24px]">schedule</span>
+        <div className="bg-[#F0F9FF] border border-[#BAE6FD] rounded-[12px] p-5 flex items-start gap-4 shadow-sm">
+          <div className="bg-white rounded-full p-2.5 flex items-center justify-center shadow-sm shrink-0">
+            <span className="material-symbols-outlined text-[#3B82F6] text-[24px]">schedule</span>
           </div>
           <div>
-            <div className="text-[28px] font-bold text-[#0F172A] leading-none mb-1">{lowPriority}</div>
+            <div className="text-[28px] font-bold text-[#1E293B] leading-none mb-1">{lowPriority}</div>
             <div className="text-[14px] font-medium text-[#1E293B]">Low Priority</div>
             <div className="text-[12px] text-[#64748B]">Recently flagged</div>
           </div>
