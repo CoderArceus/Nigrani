@@ -58,22 +58,36 @@ export function UnifiedSearchBar({ placeholder = "Search by ID, name, or locatio
 
   const hasActiveFilters = activeState || activeDistrict || activeSector || activeStatus;
 
+  const fetchWithRetry = async (url: string, retries = 3, delay = 1000) => {
+    for (let i = 0; i < retries; i++) {
+      try {
+        const res = await fetch(url);
+        if (res.ok) {
+          return await res.json();
+        }
+      } catch (err) {
+        console.warn(`Attempt ${i + 1} failed for ${url}`);
+      }
+      if (i < retries - 1) {
+        await new Promise(resolve => setTimeout(resolve, delay));
+      }
+    }
+    throw new Error(`Failed to fetch ${url} after ${retries} retries`);
+  };
+
   useEffect(() => {
-    fetch(`${API_BASE_URL}/dashboard/state-summary`)
-      .then(res => res.json())
+    fetchWithRetry(`${API_BASE_URL}/dashboard/state-summary`)
       .then(data => setStatesList(data.states.map((s: any) => s.state).sort()))
       .catch(console.error);
       
-    fetch(`${API_BASE_URL}/dashboard/category-summary`)
-      .then(res => res.json())
+    fetchWithRetry(`${API_BASE_URL}/dashboard/category-summary`)
       .then(data => setSectorsList(data.categories.map((c: any) => c.work_category).sort()))
       .catch(console.error);
   }, []);
 
   useEffect(() => {
     if (activeState) {
-      fetch(`${API_BASE_URL}/dashboard/district-summary?state=${encodeURIComponent(activeState)}`)
-        .then(res => res.json())
+      fetchWithRetry(`${API_BASE_URL}/dashboard/district-summary?state=${encodeURIComponent(activeState)}`)
         .then(data => setDistrictsList(data.districts.map((d: any) => d.district).sort()))
         .catch(console.error);
     } else {
