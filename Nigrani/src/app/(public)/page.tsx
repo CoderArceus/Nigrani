@@ -22,18 +22,45 @@ async function fetchProjects(searchParams: any, page: number, limit: number) {
   if (searchParams.order) url.searchParams.append("order", searchParams.order);
   if (searchParams.q) url.searchParams.append("q", searchParams.q);
   
-  const res = await fetch(url.toString(), { cache: "no-store" });
-  if (!res.ok) {
-    console.error(`API Error in fetchProjects: ${res.status} ${res.statusText}`);
-    return { projects: [], count: 0, total_pages: 0, error: true };
+  let retries = 3;
+  while (retries > 0) {
+    try {
+      const res = await fetch(url.toString(), { cache: "no-store" });
+      if (res.ok) {
+        return await res.json();
+      }
+      console.error(`API Error in fetchProjects: ${res.status} ${res.statusText}`);
+    } catch (err) {
+      console.error(`Fetch exception in fetchProjects:`, err);
+    }
+    retries--;
+    if (retries > 0) {
+      // wait 500ms before retrying
+      await new Promise((resolve) => setTimeout(resolve, 500));
+    }
   }
-  return res.json();
+  
+  return { projects: [], count: 0, total_pages: 0, error: true };
 }
 
 async function fetchStats() {
-  const res = await fetch(`${API_BASE_URL}/dashboard/overview`, { cache: "no-store" });
-  if (!res.ok) return null;
-  return res.json();
+  let retries = 3;
+  while (retries > 0) {
+    try {
+      const res = await fetch(`${API_BASE_URL}/dashboard/overview`, { cache: "no-store" });
+      if (res.ok) {
+        return await res.json();
+      }
+      console.error(`API Error in fetchStats: ${res.status} ${res.statusText}`);
+    } catch (err) {
+      console.error(`Fetch exception in fetchStats:`, err);
+    }
+    retries--;
+    if (retries > 0) {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+    }
+  }
+  return null;
 }
 
 export default async function PublicTransparencyPage(props: {
