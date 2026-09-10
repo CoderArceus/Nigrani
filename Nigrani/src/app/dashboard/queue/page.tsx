@@ -148,7 +148,7 @@ export default function ReviewQueuePage() {
   if (error) return <div className="p-8 text-red-600">{error}</div>;
 
   return (
-    <div className="max-w-[1400px] mx-auto flex flex-col pb-12 font-sans bg-[#F8FAFC] min-h-screen -mt-6 pt-6">
+    <div className="max-w-[1400px] mx-auto flex flex-col pb-12 font-sans bg-transparent min-h-screen -mt-6 pt-6">
       
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">

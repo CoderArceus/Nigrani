@@ -7,7 +7,7 @@ export default function PublicLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
+    <div className="flex h-screen overflow-hidden bg-transparent">
       <PublicSidebar />
       <div className="flex-1 flex flex-col h-screen overflow-hidden relative">
         {/* Scrollable Main Area */}

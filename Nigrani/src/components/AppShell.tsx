@@ -19,7 +19,7 @@ export function AppShell({
     <>
       <div className="flex h-screen overflow-hidden">
         <Sidebar />
-        <main className="flex-1 flex flex-col h-full overflow-hidden bg-background relative">
+        <main className="flex-1 flex flex-col h-full overflow-hidden bg-transparent relative">
           {/* TopBar */}
           {topBar}
           <div className="flex-1 overflow-y-auto p-6 lg:px-8">

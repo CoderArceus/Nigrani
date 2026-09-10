@@ -33,7 +33,16 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
+      <body className={`${inter.variable} ${spaceGrotesk.variable} antialiased text-[#0F172A]`}>
+        <div 
+          className="fixed inset-0 z-[-1]"
+          style={{
+            backgroundImage: "url('/global-bg.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat"
+          }}
+        />
         {children}
       </body>
     </html>
