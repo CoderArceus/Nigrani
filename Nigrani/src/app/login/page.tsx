@@ -22,10 +22,10 @@ export default function LoginPage() {
         backgroundRepeat: "no-repeat"
       }}
     >
-      {/* Light overlay to ensure form readability if needed, without blurring the beautiful background */}
-      <div className="absolute inset-0 bg-white/40"></div>
+      {/* Removed the light overlay to ensure the background remains exactly as provided, in full clarity */}
       
-      <div className="relative z-10 w-full max-w-[480px] flex flex-col items-center">
+      {/* Scaled down by ~35-40% using CSS transform (scale-75 to scale-65 is roughly that range) */}
+      <div className="relative z-10 w-full max-w-[480px] flex flex-col items-center scale-[0.70] origin-center">
         <div className="bg-white/95 backdrop-blur-xl border border-white/60 rounded-[20px] p-10 w-full flex flex-col items-center shadow-[0_20px_60px_rgba(0,0,0,0.08)]">
           {/* Wordmark */}
           <div className="text-center flex flex-col items-center w-full">
