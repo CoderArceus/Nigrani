@@ -142,10 +142,6 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Footer text */}
-        <div className="mt-8 text-[14px] font-bold text-[#64748B] tracking-wide">
-          Transparent Projects <span className="mx-2 text-[#94A3B8]">•</span> Stronger India
-        </div>
       </div>
     </div>
   );
