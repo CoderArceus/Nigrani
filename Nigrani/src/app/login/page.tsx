@@ -1,17 +1,11 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
-import Image from "next/image";
+import { useActionState, useState } from "react";
+import { login } from "./actions";
 
 export default function LoginPage() {
-  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-
-  const handleLogin = (e: FormEvent) => {
-    e.preventDefault();
-    router.push("/dashboard");
-  };
+  const [state, formAction, isPending] = useActionState(login, null);
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative bg-[#F8FAFC]">
@@ -67,7 +61,7 @@ export default function LoginPage() {
 
           {/* Right Column (Form) */}
           <div className="p-10 md:p-12 flex flex-col justify-center flex-1 relative z-10">
-            <form className="w-full space-y-6" onSubmit={handleLogin}>
+            <form className="w-full space-y-6" action={formAction}>
               
               {/* Email Input */}
               <div className="relative">
@@ -76,6 +70,7 @@ export default function LoginPage() {
                 </span>
                 <input
                   type="email"
+                  name="email"
                   placeholder="Institutional email address"
                   className="w-full bg-transparent border border-[#CBD5E1] rounded-[10px] py-3.5 pl-12 pr-4 font-sans text-[14px] font-medium text-[#1E293B] placeholder:text-[#94A3B8] focus:border-[#0014D1] focus:ring-1 focus:ring-[#0014D1] outline-none transition-colors"
                   required
@@ -83,25 +78,31 @@ export default function LoginPage() {
               </div>
 
               {/* Password Input */}
-              <div className="relative">
-                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#94A3B8] text-[20px]">
-                  lock
-                </span>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Password"
-                  className="w-full bg-transparent border border-[#CBD5E1] rounded-[10px] py-3.5 pl-12 pr-12 font-sans text-[14px] font-medium text-[#1E293B] placeholder:text-[#94A3B8] focus:border-[#0014D1] focus:ring-1 focus:ring-[#0014D1] outline-none transition-colors"
-                  required
-                />
-                <button 
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#94A3B8] hover:text-[#475569] transition-colors"
-                >
-                  <span className="material-symbols-outlined text-[20px]">
-                    {showPassword ? "visibility_off" : "visibility"}
+              <div className="relative flex flex-col">
+                <div className="relative">
+                  <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#94A3B8] text-[20px]">
+                    lock
                   </span>
-                </button>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    placeholder="Password"
+                    className="w-full bg-transparent border border-[#CBD5E1] rounded-[10px] py-3.5 pl-12 pr-12 font-sans text-[14px] font-medium text-[#1E293B] placeholder:text-[#94A3B8] focus:border-[#0014D1] focus:ring-1 focus:ring-[#0014D1] outline-none transition-colors"
+                    required
+                  />
+                  <button 
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-[#94A3B8] hover:text-[#475569] transition-colors"
+                  >
+                    <span className="material-symbols-outlined text-[20px]">
+                      {showPassword ? "visibility_off" : "visibility"}
+                    </span>
+                  </button>
+                </div>
+                {state?.error && (
+                  <span className="text-red-500 text-[13px] mt-2 font-medium">{state.error}</span>
+                )}
               </div>
 
               <div className="flex items-center justify-between mt-2">
@@ -121,12 +122,15 @@ export default function LoginPage() {
 
               <button
                 type="submit"
-                className="w-full bg-[#0014D1] text-white rounded-[10px] py-3.5 px-6 font-sans text-[15px] font-semibold hover:bg-[#000EB3] hover:shadow-[0_8px_24px_rgba(0,20,209,0.25)] hover:-translate-y-[1px] transition-all duration-200 flex items-center justify-center gap-2 mt-4"
+                disabled={isPending}
+                className="w-full bg-[#0014D1] text-white rounded-[10px] py-3.5 px-6 font-sans text-[15px] font-semibold hover:bg-[#000EB3] hover:shadow-[0_8px_24px_rgba(0,20,209,0.25)] hover:-translate-y-[1px] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2 mt-4"
               >
-                Sign In
-                <span className="material-symbols-outlined text-[18px]">
-                  arrow_forward
-                </span>
+                {isPending ? "Signing in..." : "Sign In"}
+                {!isPending && (
+                  <span className="material-symbols-outlined text-[18px]">
+                    arrow_forward
+                  </span>
+                )}
               </button>
             </form>
           </div>
