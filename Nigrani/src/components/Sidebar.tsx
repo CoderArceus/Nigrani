@@ -29,12 +29,26 @@ export function Sidebar() {
 
   return (
     <nav
-      className={`hidden md:flex flex-col h-screen sticky top-0 border-r border-outline-variant/30 bg-surface-container-lowest flex-shrink-0 z-40 transition-all duration-300 ${
+      className={`hidden md:flex flex-col h-screen sticky top-0 border-r border-outline-variant/30 bg-surface-container-lowest flex-shrink-0 z-40 transition-all duration-300 relative overflow-hidden ${
         isCollapsed ? "w-[80px]" : "w-[260px]"
       }`}
     >
+      {/* Sidebar's own background illustration */}
+      <div
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{
+          backgroundImage: "url('/sidebar-bg.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "left bottom",
+          backgroundRepeat: "no-repeat",
+          opacity: 0.85,
+        }}
+      />
+      {/* Subtle white overlay so content stays readable */}
+      <div className="absolute inset-0 z-0 bg-white/40 pointer-events-none" />
+
       {/* Brand */}
-      <div className="px-6 py-6 border-b border-outline-variant/30 flex flex-col gap-1 items-center md:items-start relative">
+      <div className="px-6 py-6 border-b border-outline-variant/30 flex flex-col gap-1 items-center md:items-start relative z-10">
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
           className={`absolute ${
@@ -59,7 +73,7 @@ export function Sidebar() {
       </div>
 
       {/* Main Nav */}
-      <div className="flex-1 py-4 flex flex-col gap-1 px-3">
+      <div className="flex-1 py-4 flex flex-col gap-1 px-3 relative z-10">
         {navItems.map((item) => {
           const active = isActive(item.href);
           return (
@@ -112,7 +126,7 @@ export function Sidebar() {
         </div>
         
         {/* Profile */}
-        <div className={`flex items-center gap-3 cursor-pointer group ${isCollapsed ? 'justify-center p-2' : 'px-4 py-3'} mt-2 border-t border-outline-variant/30`}>
+        <div className={`flex items-center gap-3 cursor-pointer group ${isCollapsed ? 'justify-center p-2' : 'px-4 py-3'} mt-2 border-t border-outline-variant/30 relative z-10`}>
           <div className="w-10 h-10 rounded-full bg-[#334155] text-white flex shrink-0 items-center justify-center font-display font-medium text-[14px]">
             O
           </div>
