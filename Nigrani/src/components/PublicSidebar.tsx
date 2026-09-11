@@ -32,7 +32,7 @@ export function PublicSidebar() {
         style={{
           backgroundImage: "url('/sidebar-bg.jpg')",
           backgroundSize: "cover",
-          backgroundPosition: "center bottom",
+          backgroundPosition: "left bottom",
           backgroundRepeat: "no-repeat",
           opacity: 0.7,
         }}
