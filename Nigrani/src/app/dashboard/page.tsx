@@ -1,84 +1,37 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getDashboardOverview, API_BASE_URL } from "@/lib/api";
 
-export default function OverviewPage() {
-  const [data, setData] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [recentProjects, setRecentProjects] = useState<any[]>([]);
-  const [categories, setCategories] = useState<any[]>([]);
-  const [statesData, setStatesData] = useState<any[]>([]);
+export const dynamic = "force-dynamic";
 
-  useEffect(() => {
-    let isMounted = true;
-    
-    const loadOverviewAndProjects = async () => {
-      try {
-        const overviewData = await getDashboardOverview().catch(e => {
-          console.error("Overview fetch failed", e);
-          return { total_projects: 0, completed: 0, in_progress: 0, sanction_delays: 0, total_sanctioned_amount: 0, total_released_amount: 0 };
-        });
-        if (isMounted) setData(overviewData);
+export default async function OverviewPage() {
+  let data: any = { total_projects: 0, completed: 0, in_progress: 0, sanction_delays: 0, total_sanctioned_amount: 0, total_released_amount: 0 };
+  let recentProjects: any[] = [];
+  let categories: any[] = [];
+  let statesData: any[] = [];
+  let error: string | null = null;
 
-        const projectsData = await fetch(`${API_BASE_URL}/projects/search?limit=3`).then(res => {
-          if (!res.ok) throw new Error("Projects API failed");
-          return res.json();
-        }).catch(e => {
-          console.error(e);
-          return { projects: [] };
-        });
-        if (isMounted && projectsData && projectsData.projects) {
-          setRecentProjects(projectsData.projects);
-        }
-      } catch (err) {
-        console.error(err);
-        if (isMounted) setError("Unable to load overview data");
-      } finally {
-        if (isMounted) setLoading(false);
-      }
-    };
+  try {
+    const [overviewData, projectsData, categoryData, stateSummaryData] = await Promise.all([
+      getDashboardOverview().catch(e => {
+        console.error("Overview fetch failed", e);
+        return { total_projects: 0, completed: 0, in_progress: 0, sanction_delays: 0, total_sanctioned_amount: 0, total_released_amount: 0 };
+      }),
+      fetch(`${API_BASE_URL}/projects/search?limit=3`).then(res => res.ok ? res.json() : { projects: [] }).catch(() => ({ projects: [] })),
+      fetch(`${API_BASE_URL}/dashboard/category-summary`).then(res => res.ok ? res.json() : { categories: [] }).catch(() => ({ categories: [] })),
+      fetch(`${API_BASE_URL}/dashboard/state-summary`).then(res => res.ok ? res.json() : { states: [] }).catch(() => ({ states: [] }))
+    ]);
 
-    const loadCharts = async () => {
-      try {
-        const categoryData = await fetch(`${API_BASE_URL}/dashboard/category-summary`).then(res => {
-          if (!res.ok) throw new Error("Category API failed");
-          return res.json();
-        }).catch(e => {
-          console.error(e);
-          return { categories: [] };
-        });
-        if (isMounted && categoryData && categoryData.categories) {
-          setCategories(categoryData.categories);
-        }
+    data = overviewData;
+    if (projectsData && projectsData.projects) recentProjects = projectsData.projects;
+    if (categoryData && categoryData.categories) categories = categoryData.categories;
+    if (stateSummaryData && stateSummaryData.states) statesData = stateSummaryData.states;
 
-        const stateSummaryData = await fetch(`${API_BASE_URL}/dashboard/state-summary`).then(res => {
-          if (!res.ok) throw new Error("State API failed");
-          return res.json();
-        }).catch(e => {
-          console.error(e);
-          return { states: [] };
-        });
-        if (isMounted && stateSummaryData && stateSummaryData.states) {
-          setStatesData(stateSummaryData.states);
-        }
-      } catch (err) {
-        console.error("Failed to load chart data", err);
-      }
-    };
-    
-    loadOverviewAndProjects().then(loadCharts);
-
-    return () => { isMounted = false; };
-  }, []);
-
-  if (loading) {
-    return <div className="p-8 text-on-surface">Loading dashboard...</div>;
+  } catch (err) {
+    console.error("Failed to load dashboard data", err);
+    error = "Unable to load overview data";
   }
 
-  if (error || !data) {
+  if (error) {
     return <div className="p-8 text-red-600">{error}</div>;
   }
 
