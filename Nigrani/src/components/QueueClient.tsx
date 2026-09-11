@@ -3,6 +3,7 @@
 import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { getReviewQueue } from "@/lib/api";
+import { globalClaimedIds, globalClearedIds } from "@/lib/mockStore";
 
 function getWaitTime(id: string): number {
   let hash = 0;
@@ -27,20 +28,8 @@ const getCategoryIcon = (cat: string) => {
 export default function QueueClient({ initialData }: { initialData: any[] }) {
   const [activeTab, setActiveTab] = useState<"available" | "claimed" | "cleared">("available");
   const [globalJurisdiction, setGlobalJurisdiction] = useState<string>("All States");
-  const [claimedIds, setClaimedIds] = useState<Set<string>>(new Set());
-  const [clearedIds, setClearedIds] = useState<Set<string>>(new Set());
-
-  // Load clearedIds from localStorage on mount
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem("clearedProjects");
-      if (stored) {
-        setClearedIds(new Set(JSON.parse(stored)));
-      }
-    } catch (e) {
-      console.error("Failed to load cleared projects", e);
-    }
-  }, []);
+  const [claimedIds, setClaimedIds] = useState<Set<string>>(globalClaimedIds);
+  const [clearedIds, setClearedIds] = useState<Set<string>>(globalClearedIds);
 
   // Hydrate data with derived wait time and priority based on wait time
   const reviewData = useMemo(() => {
@@ -118,19 +107,13 @@ export default function QueueClient({ initialData }: { initialData: any[] }) {
   const paginatedData = filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   const handleClaim = (id: string) => {
-    setClaimedIds((prev) => {
-      const next = new Set(prev);
-      next.add(id);
-      return next;
-    });
+    globalClaimedIds.add(id);
+    setClaimedIds(new Set(globalClaimedIds));
   };
 
   const handleRelease = (id: string) => {
-    setClaimedIds((prev) => {
-      const next = new Set(prev);
-      next.delete(id);
-      return next;
-    });
+    globalClaimedIds.delete(id);
+    setClaimedIds(new Set(globalClaimedIds));
   };
 
   // KPI calculations

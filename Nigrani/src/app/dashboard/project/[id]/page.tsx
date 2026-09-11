@@ -3,6 +3,7 @@
 import { use, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { globalClearedIds } from "@/lib/mockStore";
 
 import {
   Card,
@@ -27,12 +28,7 @@ export default function ProjectDetailPage({
 
   const handleMarkAsReviewed = () => {
     try {
-      const stored = localStorage.getItem("clearedProjects");
-      const cleared = stored ? JSON.parse(stored) : [];
-      if (!cleared.includes(id)) {
-        cleared.push(id);
-        localStorage.setItem("clearedProjects", JSON.stringify(cleared));
-      }
+      globalClearedIds.add(id);
       router.push("/dashboard/queue");
     } catch (e) {
       console.error(e);
