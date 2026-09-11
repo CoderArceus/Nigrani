@@ -34,7 +34,7 @@ export function PublicSidebar() {
           backgroundSize: "cover",
           backgroundPosition: "left bottom",
           backgroundRepeat: "no-repeat",
-          opacity: 0.6,
+          opacity: 0.85,
         }}
       />
       {/* Subtle white overlay so content stays readable */}
