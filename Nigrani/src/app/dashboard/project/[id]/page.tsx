@@ -2,6 +2,7 @@
 
 import { use, useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import {
   Card,
@@ -18,10 +19,25 @@ export default function ProjectDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = use(params);
+  const router = useRouter();
 
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const handleMarkAsReviewed = () => {
+    try {
+      const stored = localStorage.getItem("clearedProjects");
+      const cleared = stored ? JSON.parse(stored) : [];
+      if (!cleared.includes(id)) {
+        cleared.push(id);
+        localStorage.setItem("clearedProjects", JSON.stringify(cleared));
+      }
+      router.push("/dashboard/queue");
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   useEffect(() => {
     getProjectExplanation(id)
@@ -454,6 +470,7 @@ export default function ProjectDetailPage({
                 <PrimaryButton
                   icon="done_all"
                   className="w-full"
+                  onClick={handleMarkAsReviewed}
                 >
                   Mark as Reviewed
                 </PrimaryButton>

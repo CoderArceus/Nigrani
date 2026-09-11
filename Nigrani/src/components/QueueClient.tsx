@@ -25,10 +25,23 @@ const getCategoryIcon = (cat: string) => {
 };
 
 export default function QueueClient({ initialData }: { initialData: any[] }) {
-  const [activeTab, setActiveTab] = useState<"available" | "claimed">("available");
+  const [activeTab, setActiveTab] = useState<"available" | "claimed" | "cleared">("available");
   const [globalJurisdiction, setGlobalJurisdiction] = useState<string>("All States");
   const [claimedIds, setClaimedIds] = useState<Set<string>>(new Set());
-  
+  const [clearedIds, setClearedIds] = useState<Set<string>>(new Set());
+
+  // Load clearedIds from localStorage on mount
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("clearedProjects");
+      if (stored) {
+        setClearedIds(new Set(JSON.parse(stored)));
+      }
+    } catch (e) {
+      console.error("Failed to load cleared projects", e);
+    }
+  }, []);
+
   // Hydrate data with derived wait time and priority based on wait time
   const reviewData = useMemo(() => {
     return (initialData || []).map((p: any) => {
@@ -66,8 +79,9 @@ export default function QueueClient({ initialData }: { initialData: any[] }) {
       if (globalJurisdiction !== "All States" && row.state !== globalJurisdiction) return false;
       
       // Tab filter
-      if (activeTab === "available" && claimedIds.has(row.work_id)) return false;
-      if (activeTab === "claimed" && !claimedIds.has(row.work_id)) return false;
+      if (activeTab === "available" && (claimedIds.has(row.work_id) || clearedIds.has(row.work_id))) return false;
+      if (activeTab === "claimed" && (!claimedIds.has(row.work_id) || clearedIds.has(row.work_id))) return false;
+      if (activeTab === "cleared" && !clearedIds.has(row.work_id)) return false;
 
       // Dropdown filters
       if (priorityFilter !== "Priority" && row.derivedPriority !== priorityFilter) return false;
@@ -97,7 +111,7 @@ export default function QueueClient({ initialData }: { initialData: any[] }) {
     });
 
     return result;
-  }, [reviewData, globalJurisdiction, activeTab, claimedIds, priorityFilter, sectorFilter, stateFilter, districtFilter, searchQuery, sortBy]);
+  }, [reviewData, globalJurisdiction, activeTab, claimedIds, clearedIds, priorityFilter, sectorFilter, stateFilter, districtFilter, searchQuery, sortBy]);
 
   // Pagination Logic
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
@@ -222,6 +236,16 @@ export default function QueueClient({ initialData }: { initialData: any[] }) {
           }`}
         >
           My Assigned Reviews
+        </button>
+        <button
+          onClick={() => { setActiveTab("cleared"); setCurrentPage(1); }}
+          className={`pb-3 text-[15px] font-semibold transition-colors border-b-[3px] ${
+            activeTab === "cleared"
+              ? "text-[#2563EB] border-[#2563EB]"
+              : "text-[#64748B] border-transparent hover:text-[#1E293B]"
+          }`}
+        >
+          Cleared Projects
         </button>
       </div>
 
@@ -367,12 +391,19 @@ export default function QueueClient({ initialData }: { initialData: any[] }) {
                         >
                           Claim Project
                         </button>
-                      ) : (
+                      ) : activeTab === "claimed" ? (
                         <Link
                           href={`/dashboard/project/${row.work_id}`}
                           className="px-4 py-1.5 rounded-full bg-[#2563EB] text-white text-[13px] font-semibold hover:bg-[#1D4ED8] transition-colors inline-block"
                         >
                           Start Review
+                        </Link>
+                      ) : (
+                        <Link
+                          href={`/dashboard/project/${row.work_id}`}
+                          className="px-4 py-1.5 rounded-full bg-[#F1F5F9] text-[#475569] text-[13px] font-semibold hover:bg-[#E2E8F0] transition-colors inline-block"
+                        >
+                          View Project
                         </Link>
                       )}
                     </td>
