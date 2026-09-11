@@ -31,10 +31,10 @@ export function PublicSidebar() {
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
           backgroundImage: "url('/sidebar-bg.jpg')",
-          backgroundSize: "cover",
+          backgroundSize: "160% auto",
           backgroundPosition: "left bottom",
           backgroundRepeat: "no-repeat",
-          opacity: 0.7,
+          opacity: 0.6,
         }}
       />
       {/* Subtle white overlay so content stays readable */}
