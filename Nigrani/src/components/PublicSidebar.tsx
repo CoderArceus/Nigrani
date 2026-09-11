@@ -73,10 +73,10 @@ export function PublicSidebar() {
               key={item.label}
               href={item.href}
               title={isCollapsed ? item.label : undefined}
-              className={`flex items-center gap-3.5 px-4 py-3 rounded-xl transition-all duration-150 ease-in-out font-sans text-[15px] font-semibold relative ${
+              className={`flex items-center gap-3.5 px-4 py-3 rounded-xl transition-all duration-150 ease-in-out font-sans text-[15px] font-semibold relative border ${
                 active
-                  ? "bg-[#EFF6FF]/80 text-[#2563EB]"
-                  : "text-[#475569] hover:text-[#2563EB] hover:bg-white/50"
+                  ? "bg-[#EFF6FF]/80 border-[#BFDBFE] text-[#2563EB]"
+                  : "bg-transparent border-[#E2E8F0] text-[#1E293B] hover:text-[#2563EB] hover:bg-white/50 hover:border-[#CBD5E1]"
               } ${isCollapsed ? "justify-center px-0" : ""}`}
             >
               {/* Active indicator bar */}
