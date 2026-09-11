@@ -181,12 +181,6 @@ function SectionCard({
             {number}. {title}
           </h2>
         </div>
-        <span className="text-[12px] font-medium text-primary cursor-pointer hover:underline flex items-center gap-1">
-          View More
-          <span className="material-symbols-outlined text-[14px]">
-            arrow_forward
-          </span>
-        </span>
       </div>
       {children}
     </div>
