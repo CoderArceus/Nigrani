@@ -231,6 +231,69 @@ def search_projects(
         "total_pages": total_pages,
         "projects": results
     }
+FLAG_META = {
+    "amount_zscore_in_category": {
+        "label": "Unusually High Project Cost",
+        "description": "Sanctioned budget significantly deviates from historical average costs for similar works in this sector."
+    },
+    "release_ratio": {
+        "label": "Atypical Fund Disbursement",
+        "description": "Ratio between sanctioned and released funds does not match standard milestone completion schedules."
+    },
+    "days_sanction_to_completion": {
+        "label": "Abnormal Execution Timeline",
+        "description": "Project duration between sanction and completion is significantly longer or shorter than peer projects."
+    },
+    "days_rec_to_sanction": {
+        "label": "Prolonged Approval Delay",
+        "description": "Time taken between initial MP recommendation and administrative sanction far exceeds regional benchmarks."
+    },
+    "over_release_flag": {
+        "label": "Disbursement Exceeds Sanction",
+        "description": "Total funds disbursed exceed the maximum approved sanctioned amount for this work."
+    },
+    "is_round_amount": {
+        "label": "Lump-Sum Round Amount",
+        "description": "Budget sanctioned as an exact round figure without granular line-item cost estimation."
+    },
+    "no_photo_flag": {
+        "label": "Missing Photographic Proof",
+        "description": "Project is recorded as completed but has zero physical inspection photos uploaded."
+    },
+    "desc_generic_flag": {
+        "label": "Templated / Boilerplate Description",
+        "description": "Work description matches a cluster of repetitive generic templates with minimal site-specific detail."
+    },
+    "network_risk_flag": {
+        "label": "Vendor / Agency Network Risk",
+        "description": "Contractor or implementing agency exhibits unusually high centrality in the regional fund network."
+    },
+    "vendor_work_count": {
+        "label": "High Contractor Project Volume",
+        "description": "Contractor has been awarded an unusually high concentration of works in this constituency."
+    },
+    "vendor_total_amount": {
+        "label": "High Cumulative Contractor Value",
+        "description": "Total cumulative funding allocated to this specific contractor exceeds safe concentration limits."
+    },
+    "vendor_degree_centrality": {
+        "label": "Centralized Vendor Hub",
+        "description": "Contractor is connected across an unusually high number of independent agencies and regions."
+    },
+    "agency_betweenness": {
+        "label": "Agency Intermediary Bottleneck",
+        "description": "Implementing agency controls a disproportionately large share of regional fund approvals."
+    },
+    "payment_before_sanction": {
+        "label": "Payment Prior to Sanction",
+        "description": "Disbursement records indicate funds released before formal administrative sanction."
+    },
+    "impossible_speed_completion": {
+        "label": "Implausibly Accelerated Completion",
+        "description": "Work was recorded as finished in a timeframe physically implausible for this category of civil work."
+    }
+}
+
 @app.get("/projects/{work_id}/explanation")
 def project_explanation(work_id: str):
 
@@ -265,17 +328,26 @@ def project_explanation(work_id: str):
     anomaly = anomaly_response.data
 
     # ---------------------------------
-    # Convert reasons into list
+    # Convert reasons into list and detailed explanations
     # ---------------------------------
 
     reasons = []
+    reasons_detailed = []
 
-    if anomaly["top_flag_reasons"]:
-
-        reasons = [
-            reason.strip()
-            for reason in anomaly["top_flag_reasons"].split(",")
-        ]
+    if anomaly and anomaly.get("top_flag_reasons"):
+        for reason in anomaly["top_flag_reasons"].split(","):
+            clean_code = reason.strip()
+            if clean_code:
+                reasons.append(clean_code)
+                meta = FLAG_META.get(clean_code, {
+                    "label": clean_code.replace("_", " ").title(),
+                    "description": f"Statistical anomaly detected in {clean_code.replace('_', ' ')}."
+                })
+                reasons_detailed.append({
+                    "code": clean_code,
+                    "label": meta["label"],
+                    "description": meta["description"]
+                })
 
     # ---------------------------------
     # Return explanation
@@ -283,13 +355,14 @@ def project_explanation(work_id: str):
 
     return {
         "work_id": work_id,
-        "risk_level": anomaly["risk_level"],
-        "risk_priority": anomaly["risk_priority"],
-        "ensemble_score": anomaly["ensemble_score"],
-        "flagged_by_model": anomaly["flagged_by_model"],
-        "network_risk_flag": anomaly["network_risk_flag"],
+        "risk_level": anomaly["risk_level"] if anomaly else "Normal",
+        "risk_priority": anomaly["risk_priority"] if anomaly else 3,
+        "ensemble_score": anomaly["ensemble_score"] if anomaly else 0,
+        "flagged_by_model": anomaly["flagged_by_model"] if anomaly else False,
+        "network_risk_flag": anomaly["network_risk_flag"] if anomaly else False,
         "reasons": reasons,
-        "model_version": anomaly["model_version"],
+        "reasons_detailed": reasons_detailed,
+        "model_version": anomaly.get("model_version") if anomaly else "1.0",
         "project": {
             "mp_name": project["mp_name"],
             "state": project["state"],
@@ -327,9 +400,23 @@ def get_project_details(work_id: str):
         .execute()
     )
 
+    benchmarks = {}
+    if project_response.data and not insights_store.df.empty:
+        category = project_response.data.get("work_category")
+        if category:
+            cat_df = insights_store.df[insights_store.df["work_category"] == category]
+            if not cat_df.empty:
+                benchmarks = {
+                    "category_mean_amount": float(cat_df["sanctioned_amount"].mean()),
+                    "category_median_amount": float(cat_df["sanctioned_amount"].median()),
+                    "category_median_duration": float(cat_df["execution_duration_days"].dropna().median()) if len(cat_df["execution_duration_days"].dropna()) > 0 else 140.0,
+                    "category_median_delay": float(cat_df["approval_delay_days"].dropna().median()) if len(cat_df["approval_delay_days"].dropna()) > 0 else 31.0,
+                }
+
     return {
         "project": project_response.data,
-        "ml_analysis": anomaly_response.data
+        "ml_analysis": anomaly_response.data,
+        "benchmarks": benchmarks
     }
 @app.get("/vendors")
 def get_vendors():

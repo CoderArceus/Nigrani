@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Card } from "@/components/ui";
 import { notFound } from "next/navigation";
 import { API_BASE_URL } from "@/lib/api";
+import { parseFlagReasons } from "@/lib/flagReasons";
 
 export const dynamic = "force-dynamic";
 
@@ -64,6 +65,17 @@ export default async function PublicProjectDetailPage({
   const score = mlAnalysis?.ensemble_score ?? 0;
   const isFlagged = score >= 0.50;
   const flagReasons = mlAnalysis?.top_flag_reasons || "";
+  const parsedFlags = parseFlagReasons(flagReasons, {
+    sanctioned_amount: project.sanctioned_amount,
+    released_amount: project.released_amount,
+    recommendation_date: project.recommendation_date,
+    sanction_date: project.sanction_date,
+    completion_date: project.completion_date,
+    photo_count: project.photo_count,
+    work_category: project.work_category,
+    status: project.status,
+    benchmarks: data.benchmarks,
+  });
 
   // Dynamic Status Badge
   const statusCardBg = isFlagged ? "bg-red-50/50 border-red-100" : "bg-green-50/50 border-green-100";
@@ -298,90 +310,244 @@ export default async function PublicProjectDetailPage({
 
       {/* AI Review Signal */}
       <Card className="flex flex-col !p-0 overflow-hidden mt-4">
-        <div className="p-6 md:p-8 bg-surface">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
-              <span className="material-symbols-outlined text-[24px]">psychology</span>
-            </div>
-            <h2 className="font-display text-[22px] font-bold text-on-surface">AI Review Signal</h2>
-          </div>
-          <p className="font-sans text-[14px] text-on-surface-variant ml-[52px]">
-            Model flags unusual patterns in cost, timing, or documentation (not a fraud accusation).
-          </p>
-
-          <div className="flex flex-col md:flex-row gap-12 mt-10 md:ml-12">
-            {/* Score & Slider */}
-            <div className="flex-1">
-              <div className="flex items-center gap-2 mb-8">
-                <span className="font-sans text-[16px] font-semibold text-on-surface">Anomaly Score</span>
-                <span className="material-symbols-outlined text-[16px] text-on-surface-variant cursor-help" title="Model confidence score">info</span>
+        {/* Header */}
+        <div className="px-6 pt-6 md:px-8 md:pt-8 pb-4 bg-surface flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                <span className="material-symbols-outlined text-[24px]">psychology</span>
               </div>
-              <div className="flex flex-col md:flex-row md:items-end gap-6">
-                <span className="font-display text-[56px] font-bold text-on-surface leading-none">
+              <h2 className="font-display text-[22px] font-bold text-on-surface">AI Review Signal</h2>
+            </div>
+            <p className="font-sans text-[14px] text-on-surface-variant ml-[52px] leading-relaxed">
+              Our model has detected unusual patterns in this project&apos;s cost, timing, or documentation.<br />
+              <span className="text-on-surface-variant/70">This is not a fraud accusation, but a recommendation for closer review.</span>
+            </p>
+          </div>
+          <details className="group relative shrink-0">
+            <summary className="flex items-center gap-2 font-sans text-[13px] text-on-surface-variant font-medium cursor-pointer list-none [&::-webkit-details-marker]:hidden bg-white px-4 py-2 rounded-full border border-outline-variant/50 shadow-sm whitespace-nowrap hover:bg-surface-container-low transition-colors">
+              <span className="material-symbols-outlined text-[16px] text-primary/70">info</span>
+              How is this calculated?
+              <span className="material-symbols-outlined text-[16px] group-open:rotate-180 transition-transform">expand_more</span>
+            </summary>
+            <div className="absolute right-0 top-[calc(100%+8px)] w-72 bg-white border border-outline-variant/50 shadow-lg rounded-xl p-4 text-[12px] text-on-surface-variant z-50 hidden group-open:block leading-relaxed">
+              The score is calculated using multiple factors including cost, timeline, fund release patterns, and document completeness. A higher score means more differences from expected patterns.
+            </div>
+          </details>
+        </div>
+
+        {/* Two Column Body */}
+        <div className="flex flex-col lg:flex-row">
+          
+          {/* LEFT: Anomaly Score Panel */}
+          <div className="flex-1 px-6 md:px-8 py-4 flex flex-col gap-4">
+            {/* Score Card */}
+            <div className="bg-surface-container-low/50 rounded-2xl border border-outline-variant/20 p-6">
+              <div className="flex items-center gap-2 mb-5">
+                <span className="font-sans text-[16px] font-bold text-on-surface">Anomaly Score</span>
+                <span className="material-symbols-outlined text-[16px] text-on-surface-variant/60 cursor-help" title="How unusual this project looks compared to similar ones">info</span>
+              </div>
+              
+              {/* Score Number + Slider Row */}
+              <div className="flex items-center gap-6">
+                <span className="font-display text-[64px] font-bold text-on-surface leading-none tracking-tight shrink-0">
                   {score.toFixed(2)}
                 </span>
                 
-                <div className="flex-1 relative pb-6 mb-2 mt-4 md:mt-0">
-                  <div className="h-[6px] w-full bg-outline-variant/30 rounded-full relative">
+                <div className="flex-1 relative pt-6 pb-6">
+                  {/* Score bubble */}
+                  <div 
+                    className="absolute top-0 z-10"
+                    style={{ left: `calc(${Math.min(Math.max(score, 0), 1) * 100}% - 18px)` }}
+                  >
+                    <div className="text-[11px] font-bold px-2.5 py-1 rounded-lg shadow-sm bg-primary text-white">
+                      {score.toFixed(2)}
+                    </div>
+                  </div>
+                  
+                  {/* Track */}
+                  <div className="h-[8px] w-full bg-gradient-to-r from-green-300 via-amber-300 to-red-400 rounded-full relative overflow-visible">
+                    {/* Score dot */}
                     <div 
-                      className="absolute top-1/2 -translate-y-1/2 w-[18px] h-[18px] rounded-full bg-primary shadow-sm z-10"
-                      style={{ left: `calc(${Math.min(Math.max(score, 0), 1) * 100}% - 9px)` }}
+                      className="absolute top-1/2 -translate-y-1/2 w-[16px] h-[16px] rounded-full border-[3px] border-white shadow-md z-10 bg-on-surface"
+                      style={{ left: `calc(${Math.min(Math.max(score, 0), 1) * 100}% - 8px)` }}
                     />
+                    {/* Threshold marker */}
                     <div 
-                      className="absolute top-1/2 -translate-y-1/2 w-[2px] h-[24px] bg-red-500 z-0 border-x border-white"
+                      className="absolute top-1/2 -translate-y-1/2 w-[2px] h-[20px] bg-red-500 z-0"
                       style={{ left: '50%' }}
                     />
                   </div>
-                  <div className="flex justify-between w-full text-[11px] font-bold text-on-surface-variant mt-3">
-                    <span>0.00</span>
-                    <div className="flex flex-col items-center absolute left-1/2 -translate-x-1/2 mt-3">
-                      <span>0.50</span>
-                      <span className="text-red-500 whitespace-nowrap mt-1">Review Threshold</span>
+                  <div className="flex justify-between w-full text-[11px] text-on-surface-variant mt-2">
+                    <div className="flex flex-col">
+                      <span className="font-bold">0.00</span>
+                      <span className="text-[10px] text-green-600">Low Risk</span>
                     </div>
-                    <span>1.00</span>
+                    <div className="flex flex-col items-center absolute left-1/2 -translate-x-1/2" style={{ bottom: '-4px' }}>
+                      <span className="font-bold text-[11px]">0.50</span>
+                    </div>
+                    <div className="flex flex-col items-end">
+                      <span className="font-bold">1.00</span>
+                      <span className="text-[10px] text-red-600">High Risk</span>
+                    </div>
                   </div>
                 </div>
               </div>
+
+              {/* Requires Review Badge */}
+              {isFlagged && (
+                <div className="flex items-center gap-2 mt-2">
+                  <span className="material-symbols-outlined text-red-600 text-[20px]">warning</span>
+                  <span className="font-sans text-[14px] font-bold text-red-600">Requires Review</span>
+                </div>
+              )}
             </div>
 
-            {/* Status Box */}
-            <div className={`md:w-[380px] rounded-xl p-5 border ${isFlagged ? 'bg-red-50 border-red-100' : 'bg-[#F0FDF4] border-[#DCFCE7]'}`}>
-              <div className="flex items-start gap-3">
-                <div className={`min-w-6 w-6 h-6 rounded-full flex items-center justify-center mt-0.5 ${isFlagged ? 'bg-red-500' : 'bg-green-500'}`}>
-                  <span className="material-symbols-outlined text-white text-[16px]">
-                    {isFlagged ? "warning" : "check"}
-                  </span>
+            {/* Threshold Message */}
+            {isFlagged && (
+              <div className="flex items-start gap-3 bg-red-50/60 rounded-2xl p-5 border border-red-100/80">
+                <div className="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center shrink-0">
+                  <span className="material-symbols-outlined text-red-600 text-[18px]">warning</span>
                 </div>
-                <div className="flex flex-col gap-1.5">
-                  <span className={`font-sans font-bold text-[16px] ${isFlagged ? 'text-red-900' : 'text-green-900'}`}>
-                    {isFlagged ? "Review Recommended" : "Within normal range"}
-                  </span>
-                  <span className={`font-sans text-[13.5px] leading-relaxed ${isFlagged ? 'text-red-800' : 'text-green-800'}`}>
-                    {isFlagged 
-                      ? "This project's score is above the review threshold. Flag reasons: " + flagReasons.split(",").join(", ")
-                      : "This project's score is below the review threshold for similar irrigation projects."}
-                  </span>
+                <p className="text-[13px] text-red-800 leading-relaxed mt-1">
+                  This project&apos;s score is above the review threshold (0.50). The following factors contributed to this flag.
+                </p>
+              </div>
+            )}
+
+            {/* What this means */}
+            <div className="bg-surface-container-low/50 rounded-2xl border border-outline-variant/20 p-5">
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center shrink-0 mt-0.5">
+                  <span className="material-symbols-outlined text-amber-600 text-[18px]">lightbulb</span>
+                </div>
+                <div>
+                  <span className="font-sans text-[14px] font-bold text-on-surface block mb-1">What this means</span>
+                  <p className="text-[13px] text-on-surface-variant leading-relaxed">
+                    The project shows unusual patterns compared to similar projects based on historical data. Please review the details and take appropriate action.
+                  </p>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* RIGHT: Key Flag Reasons Panel */}
+          <div className="flex-1 px-6 md:px-8 py-4 lg:border-l border-outline-variant/20">
+            <div className="mb-5">
+              <h3 className="font-display text-[20px] font-bold text-on-surface mb-1">Key Flag Reasons</h3>
+              <p className="text-[13px] text-on-surface-variant">The model identified the following indicators:</p>
+            </div>
+
+            <div className="flex flex-col gap-4">
+              {parsedFlags.length > 0 ? (
+                parsedFlags.map((flag, idx) => {
+                  const severityColors = {
+                    critical: { bg: 'bg-red-50/60', icon: 'bg-red-100 text-red-600', border: 'border-red-100/80', badgeBg: 'bg-red-50', badgeText: 'text-red-700' },
+                    warning: { bg: 'bg-amber-50/60', icon: 'bg-amber-100 text-amber-600', border: 'border-amber-100/80', badgeBg: 'bg-amber-50', badgeText: 'text-amber-700' },
+                    info: { bg: 'bg-blue-50/60', icon: 'bg-blue-100 text-blue-600', border: 'border-blue-100/80', badgeBg: 'bg-blue-50', badgeText: 'text-blue-700' },
+                  };
+                  const colors = severityColors[flag.severity as keyof typeof severityColors] || severityColors.warning;
+                  
+                  return (
+                    <div
+                      key={idx}
+                      className={`${colors.bg} rounded-xl p-4 border ${colors.border}`}
+                    >
+                      <div className="flex items-start gap-3.5">
+                        {/* Colored Circle Icon */}
+                        <div className={`w-10 h-10 rounded-full ${colors.icon} flex items-center justify-center shrink-0 mt-1`}>
+                          <span className="material-symbols-outlined text-[20px]">
+                            {flag.icon}
+                          </span>
+                        </div>
+                        
+                        {/* Title + Description */}
+                        <div className="flex-1 min-w-0">
+                          <span className="font-sans font-bold text-[14px] text-on-surface leading-tight block mb-1.5">
+                            {flag.label}
+                          </span>
+                          <p className="text-[12.5px] text-on-surface-variant leading-relaxed">
+                            {flag.deviationDetail || flag.description}
+                          </p>
+                        </div>
+
+                        {/* Right-aligned Stat Block */}
+                        {flag.deviationBadge && (
+                          <div className={`flex flex-col items-center shrink-0 rounded-xl px-3 py-2 min-w-[80px] ${
+                            flag.deviationType === "stalled"
+                              ? "bg-amber-50 border border-amber-200"
+                              : flag.deviationType === "increase"
+                              ? "bg-red-50 border border-red-200"
+                              : flag.deviationType === "decrease"
+                              ? "bg-blue-50 border border-blue-200"
+                              : "bg-gray-50 border border-gray-200"
+                          }`}>
+                            <span className={`text-[15px] font-bold leading-tight ${
+                              flag.deviationType === "stalled"
+                                ? "text-amber-700"
+                                : flag.deviationType === "increase"
+                                ? "text-red-700"
+                                : flag.deviationType === "decrease"
+                                ? "text-blue-700"
+                                : "text-gray-700"
+                            }`}>
+                              {flag.deviationBadge}
+                            </span>
+                            <span className={`text-[10px] mt-0.5 text-center leading-tight ${
+                              flag.deviationType === "stalled"
+                                ? "text-amber-600"
+                                : flag.deviationType === "increase"
+                                ? "text-red-600"
+                                : flag.deviationType === "decrease"
+                                ? "text-blue-600"
+                                : "text-gray-600"
+                            }`}>
+                              {flag.code === "amount_zscore_in_category" ? "vs. category\naverage" :
+                               flag.code === "release_ratio" ? "funds\nreleased" :
+                               flag.code === "days_sanction_to_completion" ? "completion\ndate" :
+                               flag.code === "days_rec_to_sanction" ? "approval\ntime" :
+                               flag.code === "over_release_flag" ? "over\nbudget" :
+                               flag.code === "no_photo_flag" ? "photos\nuploaded" :
+                               flag.code === "is_round_amount" ? "budget\ntype" :
+                               flag.code === "desc_generic_flag" ? "similar\nprojects" :
+                               flag.code === "network_risk_flag" ? "network\nrank" :
+                               "metric"}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="flex items-center gap-3 bg-green-50 rounded-xl p-4 border border-green-100">
+                  <div className="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                    <span className="material-symbols-outlined text-[20px]">check_circle</span>
+                  </div>
+                  <div>
+                    <span className="font-sans font-bold text-[14px] text-green-900">No issues found</span>
+                    <p className="text-[12px] text-green-700 mt-0.5">This project looks normal compared to similar projects.</p>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Comparison Note */}
+            <div className="flex items-start gap-2.5 mt-5 pt-4 border-t border-outline-variant/20">
+              <span className="material-symbols-outlined text-[18px] text-primary/60 mt-0.5 shrink-0">bar_chart</span>
+              <p className="text-[12px] text-on-surface-variant leading-relaxed">
+                These indicators are based on comparisons with similar projects in your state and across India.
+              </p>
             </div>
           </div>
         </div>
         
         {/* Footer Disclaimer */}
-        <div className="bg-surface-container-low px-6 py-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-t border-outline-variant/30">
-          <div className="flex items-start md:items-center gap-3 text-[13px] text-on-surface-variant md:max-w-[75%]">
-            <span className="material-symbols-outlined text-[18px] text-primary/70 mt-0.5 md:mt-0">info</span>
-            <p>A higher score indicates that the project has some unusual characteristics and may warrant closer review. It does not imply wrongdoing.</p>
-          </div>
-          <details className="group relative">
-            <summary className="flex items-center gap-1 font-sans text-[13px] text-on-surface-variant font-medium cursor-pointer list-none [&::-webkit-details-marker]:hidden bg-white px-3 py-1.5 rounded-md border border-outline-variant/50 shadow-sm whitespace-nowrap">
-              How is this calculated?
-              <span className="material-symbols-outlined text-[16px] group-open:rotate-180 transition-transform">expand_more</span>
-            </summary>
-            <div className="absolute right-0 bottom-[calc(100%+8px)] w-64 bg-white border border-outline-variant/50 shadow-lg rounded-lg p-3 text-[12px] text-on-surface z-50 hidden group-open:block">
-              Derived from an Isolation Forest ML model analyzing deviations in standard implementation patterns.
-            </div>
-          </details>
+        <div className="bg-surface-container-low px-6 py-4 flex items-start gap-3 border-t border-outline-variant/20">
+          <span className="material-symbols-outlined text-[16px] text-primary/60 mt-0.5 shrink-0">info</span>
+          <p className="text-[12px] text-on-surface-variant leading-relaxed">
+            The anomaly score is calculated using multiple factors including cost, timeline, fund release patterns, and document completeness. A higher score means more differences from expected patterns. This does not mean anything is wrong.
+          </p>
         </div>
       </Card>
 

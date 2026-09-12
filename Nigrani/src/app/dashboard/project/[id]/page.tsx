@@ -13,6 +13,7 @@ import {
 } from "@/components/ui";
 
 import { getProjectExplanation } from "@/lib/api";
+import { parseFlagReasons } from "@/lib/flagReasons";
 
 export default function ProjectDetailPage({
   params,
@@ -72,26 +73,16 @@ export default function ProjectDetailPage({
   const riskLevel = data.risk_level ?? "Normal";
 
   const reasons: string[] = data.reasons ?? [];
-
-  const reasonLabels: Record<string, string> = {
-    is_round_amount: "Round sanctioned amount",
-    vendor_work_count: "High vendor work count",
-    vendor_total_amount: "High vendor total amount",
-    vendor_degree_centrality: "High vendor network centrality",
-    agency_betweenness: "High agency network centrality",
-    network_risk_flag: "Network risk detected",
-    desc_generic_flag: "Generic/templated description",
-    no_photo_flag: "No photo evidence",
-    over_release_flag: "Released amount exceeds sanctioned amount",
-    payment_before_sanction: "Payment before sanction",
-    impossible_speed_completion: "Unusual completion speed",
-    duplicate_generic_description: "Duplicate/generic description",
-    round_number_bias: "Round-number amount pattern",
-  };
-
-  const readableReasons = reasons.map(
-    (reason) => reasonLabels[reason] ?? reason
-  );
+  const parsedReasons = parseFlagReasons(reasons, {
+    sanctioned_amount: project.sanctioned_amount,
+    released_amount: project.released_amount,
+    recommendation_date: project.recommendation_date,
+    sanction_date: project.sanction_date,
+    completion_date: project.completion_date,
+    photo_count: project.photo_count,
+    work_category: project.work_category,
+    status: project.status,
+  });
 
   const sanctionedAmount = Number(project.sanctioned_amount ?? 0);
   const releasedAmount = Number(project.released_amount ?? 0);
@@ -349,19 +340,49 @@ export default function ProjectDetailPage({
                 <div className="space-y-2 mb-6">
 
                   <p className="font-sans text-[13px] font-semibold text-on-surface">
-                    Detection signals
+                    Detection signals ({parsedReasons.length})
                   </p>
 
-                  {readableReasons.length > 0 ? (
-                    readableReasons.map((reason, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center gap-2 font-sans text-[13px] text-text-muted"
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full bg-negative" />
-                        {reason}
-                      </div>
-                    ))
+                  {parsedReasons.length > 0 ? (
+                    <div className="flex flex-col gap-2.5">
+                      {parsedReasons.map((reason, index) => (
+                        <div
+                          key={index}
+                          className="flex items-start gap-2.5 p-3 rounded-xl bg-surface-container-high/50 border border-border-translucent"
+                        >
+                          <div className="w-5 h-5 rounded flex items-center justify-center shrink-0 mt-0.5 bg-red-100/80 text-red-600">
+                            <span className="material-symbols-outlined text-[14px]">
+                              {reason.icon}
+                            </span>
+                          </div>
+                          <div className="flex flex-col min-w-0 flex-1">
+                            <div className="flex items-center justify-between gap-2 flex-wrap">
+                              <span className="font-sans text-[13px] font-semibold text-on-surface leading-tight">
+                                {reason.label}
+                              </span>
+                              {reason.deviationBadge && (
+                                <span className="text-[10.5px] font-bold px-2 py-0.5 rounded-full border bg-surface-container text-primary border-outline-variant/40 font-mono whitespace-nowrap">
+                                  {reason.deviationBadge}
+                                </span>
+                              )}
+                            </div>
+
+                            {reason.deviationDetail && (
+                              <div className="text-[11px] font-medium text-text-muted bg-surface/60 rounded px-2 py-1 mt-1 border border-border-translucent flex items-center gap-1.5">
+                                <span className="material-symbols-outlined text-[12px] text-primary shrink-0">
+                                  analytics
+                                </span>
+                                <span>{reason.deviationDetail}</span>
+                              </div>
+                            )}
+
+                            <span className="font-sans text-[11.5px] text-text-muted leading-snug mt-1">
+                              {reason.description}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   ) : (
                     <p className="font-sans text-[13px] text-text-muted">
                       No specific signals recorded.

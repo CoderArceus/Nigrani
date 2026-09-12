@@ -3144,3 +3144,413 @@ INFO:     127.0.0.1:59740 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
 INFO:     127.0.0.1:59740 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
 INFO:     127.0.0.1:59739 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
 INFO:     127.0.0.1:59739 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59797 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59798 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59798 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59797 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60418 - "GET /dashboard/overview HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/uvicorn/protocols/http/httptools_impl.py", line 422, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 88, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/routing.py", line 670, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 1281, in handle
+    await super().handle(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/routing.py", line 280, in handle
+    await self.app(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 354, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/anyio/to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 2706, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 1100, in run
+    result = context.run(func, *args)
+  File "/Users/aryan/Downloads/mplads/main.py", line 47, in wrapper
+    data = func(*args, **kwargs)
+  File "/Users/aryan/Downloads/mplads/main.py", line 515, in get_dashboard_overview
+    .execute()
+     ~~~~~~~^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/postgrest/_sync/request_builder.py", line 96, in execute
+    raise APIError(dict(json_obj))
+postgrest.exceptions.APIError: {'message': 'JWT issued at future', 'code': 'PGRST303', 'hint': None, 'details': None}
+INFO:     127.0.0.1:60417 - "GET /projects/search?page=1&limit=6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60427 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60428 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60427 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60428 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60463 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60464 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60463 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60464 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60464 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60463 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60463 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60464 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60468 - "GET /projects/search?page=1&limit=6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60455 - "GET /dashboard/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60465 - "GET /dashboard/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60469 - "GET /dashboard/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60479 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60480 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60481 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60482 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'frontend/node_modules/flatted/python/flatted.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [15175]
+INFO:     Started server process [16800]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:60501 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60501 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60500 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60500 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60531 - "GET /projects/search?page=1&limit=6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60532 - "GET /dashboard/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60540 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60541 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60540 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60541 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60567 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60568 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60567 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60568 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60585 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60586 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60585 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60586 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60613 - "GET /dashboard/category-summary HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/uvicorn/protocols/http/httptools_impl.py", line 422, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 96, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 154, in simple_response
+    await self.app(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/routing.py", line 670, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 1281, in handle
+    await super().handle(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/routing.py", line 280, in handle
+    await self.app(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 354, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/anyio/to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 2706, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 1100, in run
+    result = context.run(func, *args)
+  File "/Users/aryan/Downloads/mplads/main.py", line 47, in wrapper
+    data = func(*args, **kwargs)
+  File "/Users/aryan/Downloads/mplads/main.py", line 834, in category_summary
+    .execute()
+     ~~~~~~~^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/postgrest/_sync/request_builder.py", line 96, in execute
+    raise APIError(dict(json_obj))
+postgrest.exceptions.APIError: {'message': 'JWT issued at future', 'code': 'PGRST303', 'hint': None, 'details': None}
+INFO:     127.0.0.1:60605 - "GET /projects/search?page=1&limit=6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60606 - "GET /dashboard/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60616 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60617 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60614 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60614 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60629 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60630 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60629 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60630 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60629 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60629 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60632 - "GET /dashboard/insights/utilization-by-mp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60634 - "GET /dashboard/insights/sanctioned-by-state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60635 - "GET /dashboard/insights/category-mix-by-state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60636 - "GET /dashboard/insights/sc-st-comparison HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60637 - "GET /dashboard/insights/house-comparison HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60638 - "GET /dashboard/insights/repeated-descriptions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60643 - "GET /dashboard/insights/amount-vs-photos HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60633 - "GET /dashboard/insights/sanction-completion-bubble HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60650 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60629 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60631 - "GET /dashboard/insights/time-to-release HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60651 - "GET /dashboard/mp-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60652 - "GET /dashboard/year-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60641 - "GET /dashboard/insights/stalled-projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60650 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60629 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60651 - "GET /dashboard/mp-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60639 - "GET /dashboard/insights/project-pipeline HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60652 - "GET /dashboard/year-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60640 - "GET /dashboard/insights/mp-leaderboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60644 - "GET /dashboard/insights/flag-rate-cross-tab HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60642 - "GET /dashboard/insights/flag-reasons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60650 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60629 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60650 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60629 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60668 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60669 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60668 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60669 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60668 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60669 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60668 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60669 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60668 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60669 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60668 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60669 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60669 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60668 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60669 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60668 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60668 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60669 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60668 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60669 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60678 - "GET /dashboard/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60677 - "GET /projects/search?page=1&limit=6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60688 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60689 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60690 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60691 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60745 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60746 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60745 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60746 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60745 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60746 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60745 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60746 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60755 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60756 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60755 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60756 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60755 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60755 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61064 - "GET /projects/search?page=1&limit=6 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/uvicorn/protocols/http/httptools_impl.py", line 422, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 88, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/routing.py", line 670, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 1281, in handle
+    await super().handle(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/routing.py", line 280, in handle
+    await self.app(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/fastapi/routing.py", line 354, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/anyio/to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 2706, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 1100, in run
+    result = context.run(func, *args)
+  File "/Users/aryan/Downloads/mplads/main.py", line 195, in search_projects
+    projects_response = query.range(start, end).execute()
+  File "/Users/aryan/Downloads/mplads/venv/lib/python3.14/site-packages/postgrest/_sync/request_builder.py", line 96, in execute
+    raise APIError(dict(json_obj))
+postgrest.exceptions.APIError: {'message': 'JWT issued at future', 'code': 'PGRST303', 'hint': None, 'details': None}
+INFO:     127.0.0.1:61065 - "GET /dashboard/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61074 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61073 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61074 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61073 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61092 - "GET /projects/search?page=1&limit=6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61100 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61101 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61100 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61101 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61110 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61111 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61110 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61111 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61110 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61111 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61110 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61111 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61110 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61110 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61116 - "GET /dashboard/insights/sanctioned-by-state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61114 - "GET /dashboard/insights/utilization-by-mp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61122 - "GET /dashboard/insights/amount-vs-photos HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61117 - "GET /dashboard/insights/sc-st-comparison HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61120 - "GET /dashboard/insights/mp-leaderboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61126 - "GET /dashboard/insights/flag-reasons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61113 - "GET /dashboard/insights/time-to-release HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61119 - "GET /dashboard/insights/house-comparison HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61118 - "GET /dashboard/insights/category-mix-by-state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61125 - "GET /dashboard/insights/flag-rate-cross-tab HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61124 - "GET /dashboard/insights/stalled-projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61111 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61110 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61127 - "GET /dashboard/mp-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61121 - "GET /dashboard/insights/project-pipeline HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61128 - "GET /dashboard/year-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61115 - "GET /dashboard/insights/sanction-completion-bubble HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61123 - "GET /dashboard/insights/repeated-descriptions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61110 - "GET /dashboard/category-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61111 - "GET /dashboard/state-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61128 - "GET /dashboard/mp-summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61127 - "GET /dashboard/year-summary HTTP/1.1" 200 OK
